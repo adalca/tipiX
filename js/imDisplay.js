@@ -180,11 +180,11 @@ function getDiscretePosition(pos, canvasLen, nDiscretes) {
 	pos = Math.max(pos, 0);
 	pos = Math.min(pos, canvasLen);
 	
-	// normalize the position to be between (nDiscrets/canvasLen)/2 and 1
-	normPos = Math.max(pos / canvasLen, (nDiscretes / canvasLen) / 2);
-	debugMsg = sprintf('%d, %2.2f, %2.2f', 
-			Math.ceil(normPos * nDiscretes) - 1, normPos * nDiscretes, pos);
-	writeDebug(debugMsg);
+	// normalize the position to be between (1/canvasLen)/2 and 1
+	normPos = Math.max(pos / canvasLen, (1 / canvasLen) / 2);
+	debugMsg = sprintf('%d, %2.2f, %2.2f, %d.', 
+			Math.ceil(normPos * nDiscretes) - 1, normPos * nDiscretes, pos, nDiscretes);
+	writeDebug(debugMsg);	
 	return (Math.ceil(normPos * nDiscretes) - 1);
 }
 
@@ -255,7 +255,18 @@ function drawImage(pos) {
 		// display the image
 		if (pictureBox.loaded) {
 			document.getElementById('imgnr').innerHTML = msg;
-			context.drawImage(pictureBox.img, 0, 0);
+			
+			
+			
+			picWidth = pictureBox.img.width;
+			picHeight = pictureBox.img.height;
+			// TODO - should have asserted ONLOAD that picWidth and picHeight are within canvas size. 
+			canWidth = canvas.width;
+			canHeight = canvas.height;
+			
+			startX = Math.ceil((canWidth - picWidth)/2);
+			startY = Math.ceil((canHeight - picHeight)/2);
+			context.drawImage(pictureBox.img, startX, startY);
 		}
 		
 		// color the load box 

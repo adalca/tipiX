@@ -46,6 +46,9 @@ function launchDisplay(choice) {
 	// canvas should be turned on
 	canvasOn = true;
 	
+	// close nav
+	nav(currentTab);
+	
 	// return the images
 	return pictureBoxes;
 }
@@ -119,6 +122,8 @@ var pictureBoxes = [];
 var startTime = 0;
 var loadObj = new Object();
 var curPictureBox = null;
+var currentTab = 'about';
+var currentTabState = true;
 
 // canvas and listener
 var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas

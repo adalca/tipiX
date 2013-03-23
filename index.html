@@ -1,132 +1,200 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <link href="style/style.css" rel="stylesheet" type="text/css">
-    <script src="ext-js/sprintf-0.7-beta1.js" type="text/javascript"></script>
-    <script src="ext-js/jquery-1.9.1.min.js" type="text/javascript"></script>
-    <script src="intDisplayFcns.js"  type="text/javascript"></script>
-    <script src="other.js"  type="text/javascript"></script>
+    <link href="style\style.css" rel="stylesheet" type="text/css">
+    <script src="ext-js\sprintf-0.7-beta1.js" type="text/javascript"></script>
+    <script src="ext-js\jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="js\imDisplay.js"  type="text/javascript"></script>
+    <script src="js\nav.js"  type="text/javascript"></script>
   </head>
-  <body>
+  <body >
   
   
-  	<h1>Dataset Exploration</h1>
+  	<h1>tipiX</h1>
 
-<p style="text-align: center ;">This tool is in development, and is currently just for exploration, although there are several plans to expand it. <br>
-  <strong>Test a dataset</strong>: click on one of the example datasets below to load it. Quickly explore the dataset by moving your mouse over the canvas. <br>
-  Or: load and explore <a href="#userSet">your own dataset</a>! </p>
+
+<!-- Info Container. Current_data, Load_data, TODOs, itneraction interface -->
+  
+  <div id="info-container">
+	  <div id="tab-title-container">
+  		<a id="about-tab-title" class="tab-title" onClick="nav('about')" href="#">
+	        About
+        </a>
+  		<a id="sets-tab-title" class="tab-title" onClick="nav('sets')" href="#">
+	        Load example datasets
+        </a>
+  		<a id="userSets-tab-title" class="tab-title" onClick="nav('userSets')" href="#">
+    	    Load your dataset.
+        </a>
+  		<a id="todos-tab-title" class="tab-title" onClick="nav('todos')" href="#">
+    	    Todos
+        </a>
+  		<a id="edit-tab-title" class="tab-title" onClick="nav('edit')" href="#">
+    	    Editing Interface
+        </a>
+	  </div>
+      
+      <div id="tab-container">
+
+			 <div id="about-tab" class="tab" > 
+    <div style="text-align: center; width:1200px; padding:10px;"><strong>tipiX - time picture explorer</strong> <br /> is an experimental tool for exploring time (or other dimensions) of image sets, generally images from similar view points (e.g. <strong>frames from timelapses</strong>). <br>
+    
+    Take a test drive by trying an example dataset or load your own. Once loaded, movement with the mouse along x or y can explore difference dimensions of the data. </div>
+             </div>
+
+            <div id="sets-tab" class="tab"> 
+                <div id="sets-wrapper">
+                
+                <div class="set-container">
+                    <a href="#" onClick="launchDisplay('boston4day');">
+                    <img alt="boston4day" src="./thumbs/boston4day.jpg">
+                    </a>
+                    <strong>Boston 4 day (2D)</strong> <br/>
+                    1-hour averages of several shots<br />
+                    yAxis: hour of day (top=morning) <br />
+                    xAxis: days 1 through 5
+                </div>
+            
+                <div class="set-container">
+                    <a href="#" onClick="launchDisplay('boston5day');">
+                    <img alt="boston4day" src="./thumbs/boston5day.jpg" >
+                    </a>
+                    <strong>Boston 5 day (2D)</strong> <br/>
+                    1-hour averages of several shots<br />
+                    yAxis: hour of day (top=midnight) <br />
+                    xAxis: days 1 through 5 <br />
+                    [GOPRO, 33476->94]
+                </div>
+            
+                <div class="set-container">
+                    <a href="#" onClick="launchDisplay('bostonStorm');">
+                    <img alt="bostonStorm" src="./thumbs/bostonStorm.jpg" >
+                    </a>
+                    <strong>Boston Storm (1D)</strong> <br /> 
+                    xAxis: average shots per hour <br />
+                    [GOPRO, 12340->30]
+                </div>
+                
+                <div class="set-container">
+                    <a href="#" onClick="launchDisplay('lakePlacidDrive');">
+                    <img alt="lakePlacidDrive" src="./thumbs/lakePlacidDrive.jpg" >
+                    </a>
+                    <strong>Lake Placid Drive (1D)</strong> <br />
+                    Each shot = average over 10 mins <br />
+                    Canadian border to Lake Placid
+                </div>
+            
+                <div class="set-container">
+                    <a href="#" onClick="launchDisplay('vermontDrive');">
+                    <img alt="vermontDrive" src="./thumbs/vermontDrive.jpg">
+                    </a>
+                    <strong>Vermont Drive (1D)</strong> <br />
+                    Each shot = average over some time
+                </div>
+            
+                <div class="set-container">
+                    <a href="#" onClick="launchDisplay('emerald');">
+                    <img alt="Emerald Lake" src="./thumbs/emerald.jpg">
+                    </a>
+                    <strong>Emerald (1D)</strong> <br />
+                    Timelapse of Emerald Lake
+                </div>
+				</div>
+            </div>
+            
+            
+            
+            <div id="userSets-tab" class="tab">
+                <p><strong>Load your own dataset</strong><br>
+                  You should have the files online in some folder, with some naming scheme where the <strong>only</strong> changing element is the file number, from 1 to N.<br>
+                  For example: in <em>http://www.mywebsite/mydata/</em> you might have <em>file_1.jpg</em>, <em>file_2.jpg</em>, <em>file_3.jpg</em> ... <em>file_57.jpg</em><br>
+                  This would be a one-dimentional (only one number is changing) dataset with xBins=<em>57</em> and filename=<em>http://www.mywebsite/mydata/file_%d.jpg</em><br>
+                  You can have missing files (they will just show up as red in the load matrix).</p>
+                <p>For 2D, use: <em>file_1_1.jpg</em>, <em>file_1_2.jpg</em>, ... <em>file_1_15.jpg</em>, <em>file_2_1.jpg</em>, ... where the first number will be used as the y (rows) coordinate in the 2D matrix.</p>
+                <form style="text-align:left;" id="userSet">
+                  
+                  Number of dimensions to explore: 1D
+                    <input type="radio" name="nDims" value="1"  id="nDims1"checked>
+                2D
+                <input type="radio" name="nDims" value="2" id="nDims2">
+                 <br />
+                 <div id="yBins">
+                yBins: <input name="yBins" type="text" value="1" size="4" maxlength="4" > <br />
+                </div>
+                xBins: <input name="xBins" type="text" value="30" size="4" maxlength="4"> <br />
+                fName: <input name="filename" type="text" value="http://www.mit.edu/~adalca/dataview/imageSets/bostonStorm//l_average_img_%d.jpg" size="100"> <br />
+                
+                <input type="button" onclick="launchDisplay('userSet');" value="Load!">
+                
+                
+                </form>
+            
+            </div>
+      
+      
+      
+      
+      		<div id="todos-tab" class="tab">
+				<ul>
+                  <li>change of set should really clear all variables, etc.</li>
+                  <li>clean-up css</li>
+                  <li>Put this project on git</li>
+                  <li>Add some information about the original images (Camera Make, Total Count, ETC)</li>
+                  <li>Put an initial image in the canvas (both Before loading and After loading)</li>
+                  <li>have datasets tabs</li>
+                  <li>design this navigation separatedly in the code</li>
+			  </ul>
+			</div> <!-- todos-container -->
+            
+             <div id="edit-tab" class="tab" > 
+             Some tagging/editing stuff can/will be here
+             </div>
+            
+            
+         </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
 
   <div id="main-container">
-  <div id="side-container">
-    
-  	<div id="left-container">
-    	
+        <div id="side-container">
         
-        
-      <div>
-      <hr>
-      TODO: preview
-      </div>  
-        
-        
-        
-    </div>
-    
-
+            <div id="left-container">
+              <div>
+                Preview
+              </div>        
+            </div>
+        </div>
   
-
+  
+        <div id="display-container">
+            <canvas id="mainDisplay" width="1200" height="900"></canvas>
+        </div>
+    
+        <div id="right-container">
+            <div id="debug">Debugger</div>
+            <div id="imgnr">Position</div>
+            <div id="time">Time taken</div>
+            <div id="loadMatrix">Time taken</div>
+        </div>
   </div>
   
-  
-  	<div id="display-container">
-    	<canvas id="mainDisplay" width="1200" height="900"></canvas>
-    </div>
-    
-  	<div id="right-container">
-  	<div id="debug">Debugger</div>
-    <div id="imgnr">Position</div>
-	<div id="time">Time taken</div>
-	<div id="loadMatrix">Time taken</div>
-    </div>
-  </div>
+
+
   
   
-  <br />
-  <div id="sets-container" > 
-    <div id="sets-wrapper">
-    <div class="set-container">
-	    <a href="#" onClick="launchDisplay('boston4day');">
-        <img alt="boston4day" src="./thumbs/boston4day.jpg" >
-		</a>
-        Boston 4 day (2D)
-	</div>
-
-	<div class="set-container">
-		<a href="#" onClick="launchDisplay('boston5day');">
-        <img alt="boston4day" src="./thumbs/boston5day.jpg" >
-		</a>
-        Boston 5 day (2D) <br />
-		[GOPRO, 33476->94]
-    </div>
-
-	<div class="set-container">
-	    <a href="#" onClick="launchDisplay('bostonStorm');">
-        <img alt="bostonStorm" src="./thumbs/bostonStorm.jpg" >
-		</a>
-        Boston Storm (1D), <br /> [GOPRO, 12340->30]
-    </div>
-    
-    <div class="set-container">
-	    <a href="#" onClick="launchDisplay('lakePlacidDrive');">
-        <img alt="lakePlacidDrive" src="./thumbs/lakePlacidDrive.jpg" >
-        </a>
-        Lake Placid Drive (1D)
-    </div>
-
-    <div class="set-container">
-	    <a href="#" onClick="launchDisplay('vermontDrive');">
-        <img alt="vermontDrive" src="./thumbs/vermontDrive.jpg">
-        </a>
-        Vermont Drive (1D)
-	</div>
-
-    <div class="set-container">
-	    <a href="#" onClick="launchDisplay('emerald');">
-        <img alt="vermontDrive" src="./thumbs/emerald.jpg">
-        </a>
-        Emerald (1D)
-	</div>
-    </div>
-</div>
 
 
 <a name="userSet"></a>
-<div id="userSet-container">
-<p>[new] <strong>Load your own dataset</strong>!<br>
-  You should have the files online in some folder, with some naming scheme where the <strong>only</strong> changing element is the file number, from 1 to N.<br>
-  For example: in http://www.mywebsite/mydata/ you might have file_1.jpg, file_2.jpg, file_3.jpg ... file_57.jpg<br>
-  This would be a one-dimentional (only one number is changing) dataset with xBins=<em>57</em> and filename=<em>http://www.mywebsite/mydata/file_%d.jpg</em><br>
-  You can have missing file (they will just show up as red in the load matrix).</p>
-<p>For 2D, use: file_1_1.jpg, file_1_2.jpg, ... file_1_15.jpg, file_2_1.jpg, ... where the first number will be used as the y (rows) coordinate in the 2D matrix.</p>
-<form style="text-align:left;" id="userSet">
-  
-  Number of dimensions to explore: 1D
-    <input type="radio" name="nDims" value="1"  id="nDims1"checked>
-2D
-<input type="radio" name="nDims" value="2" id="nDims2">
- <br />
- <div id="yBins">
-yBins: <input name="yBins" type="text" value="1" size="4" maxlength="4" > <br />
-</div>
-xBins: <input name="xBins" type="text" value="30" size="4" maxlength="4"> <br />
-fName: <input name="filename" type="text" value="http://www.mit.edu/~adalca/dataview/imageSets/bostonStorm//l_average_img_%d.jpg" size="100"> <br />
 
-<input type="button" onclick="launchDisplay('userSet');" value="Load!">
-
-
-</form>
-
-</div>
 
 
   
@@ -135,18 +203,8 @@ fName: <input name="filename" type="text" value="http://www.mit.edu/~adalca/data
 	<br />
       
       
-      
-      
-  <p>TODOs:
-    <script src="intDisplay.js"></script>	
-  </p>
-	<ul>
-	  <li>change of set should really clear all variables, etc.</li>
-	  <li>clean-up css</li>
-	  <li>Put this project on git</li>
-	  <li>Add some information about the original images (Camera Make, Total Count, ETC)</li>
-	  <li>Put an initial image in the canvas (both Before loading and After loading)</li>
-  </ul>
+    <script src="js\core.js"></script>	
+  
   
   
   
