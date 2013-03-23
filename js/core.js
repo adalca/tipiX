@@ -45,6 +45,9 @@ function launchDisplay(choice) {
 	
 	// canvas should be turned on
 	canvasOn = true;
+
+	var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
+	canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
 	
 	// close nav
 	nav(currentTab);
@@ -57,7 +60,7 @@ function loadBoston4Day() {
 	loadObj.nDims = 2;
 	loadObj.xBins = 5;
 	loadObj.yBins = 24;
-	loadObj.fileName = './imageSets/boston4day/average_img_%d_%d.jpg'; 
+	loadObj.fileName = CORE_SET_PATH + '/imageSets/boston4day/average_img_%d_%d.jpg'; 
 	return loadObj;
 }
 
@@ -65,35 +68,35 @@ function loadBoston5Day() {
 	loadObj.nDims = 2;
 	loadObj.xBins = 5;
 	loadObj.yBins = 24;
-	loadObj.fileName = './imageSets/boston5day/l_average_img_%d_%d.jpg'; 
+	loadObj.fileName = CORE_SET_PATH + '/imageSets/boston5day/l_average_img_%d_%d.jpg'; 
 	return loadObj;
 }
 
 function loadBostonStorm() {
 	loadObj.nDims = 1;
 	loadObj.xBins = 30;
-	loadObj.fileName = './imageSets/bostonStorm/l_average_img_%d.jpg'; 
+	loadObj.fileName = CORE_SET_PATH + '/imageSets/bostonStorm/l_average_img_%d.jpg'; 
 	return loadObj;
 }
 
 function loadVermontDrive() {
 	loadObj.nDims = 1;
 	loadObj.xBins = 60;
-	loadObj.fileName = './imageSets/vermontDrive/l_average_img_%d.jpg';
+	loadObj.fileName = CORE_SET_PATH + '/imageSets/vermontDrive/l_average_img_%d.jpg';
 	return loadObj;
 }
 
 function loadLakePlacidDrive() {
 	loadObj.nDims = 1;
 	loadObj.xBins = 26;
-	loadObj.fileName = './imageSets/lakePlacidDrive/l_average_img_%d.jpg';
+	loadObj.fileName = CORE_SET_PATH + '/imageSets/lakePlacidDrive/l_average_img_%d.jpg';
 	return loadObj;
 }
 
 function loadEmerald() {
 	loadObj.nDims = 1;
 	loadObj.xBins = 337;
-	loadObj.fileName = './imageSets/emerald/img (%d).jpg';
+	loadObj.fileName = CORE_SET_PATH + '/imageSets/emerald/img (%d).jpg';
 	return loadObj;
 }
 
@@ -124,6 +127,7 @@ var loadObj = new Object();
 var curPictureBox = null;
 var currentTab = 'about';
 var currentTabState = true;
+var CORE_SET_PATH = 'http://www.mit.edu/~adalca/tipiX';
 
 // canvas and listener
 var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas

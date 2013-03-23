@@ -1,11 +1,12 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <link href="style\style.css" rel="stylesheet" type="text/css">
-    <script src="ext-js\sprintf-0.7-beta1.js" type="text/javascript"></script>
-    <script src="ext-js\jquery-1.9.1.min.js" type="text/javascript"></script>
-    <script src="js\imDisplay.js"  type="text/javascript"></script>
-    <script src="js\nav.js"  type="text/javascript"></script>
+    <link href="style/style.css" rel="stylesheet" type="text/css">
+    <link href="style/nav.css" rel="stylesheet" type="text/css">
+    <script src="ext-js/sprintf-0.7-beta1.js" type="text/javascript"></script>
+    <script src="ext-js/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="js/imDisplay.js"  type="text/javascript"></script>
+    <script src="js/nav.js"  type="text/javascript"></script>
   </head>
   <body >
   
@@ -39,7 +40,9 @@
 			 <div id="about-tab" class="tab" > 
     <div style="text-align: center; width:1200px; padding:10px;"><strong>tipiX - time picture explorer</strong> <br /> is an experimental tool for exploring time (or other dimensions) of image sets, generally images from similar view points (e.g. <strong>frames from timelapses</strong>). <br>
     
-    Take a test drive by trying an example dataset or load your own. Once loaded, movement with the mouse along x or y can explore difference dimensions of the data. </div>
+    Take a test drive by trying an example dataset or load your own. Once loaded, movement with the mouse along x or y can explore difference dimensions of the data. <br />
+    
+    <a href="https://github.com/adalca/tipiX">https://github.com/adalca/tipiX</a> </div>
              </div>
 
             <div id="sets-tab" class="tab"> 
@@ -47,7 +50,7 @@
                 
                 <div class="set-container">
                     <a href="#" onClick="launchDisplay('boston4day');">
-                    <img alt="boston4day" src="./thumbs/boston4day.jpg">
+                    <img alt="boston4day" src="http://www.mit.edu/~adalca/tipiX/thumbs/boston4day.jpg">
                     </a>
                     <strong>Boston 4 day (2D)</strong> <br/>
                     1-hour averages of several shots<br />
@@ -57,7 +60,7 @@
             
                 <div class="set-container">
                     <a href="#" onClick="launchDisplay('boston5day');">
-                    <img alt="boston4day" src="./thumbs/boston5day.jpg" >
+                    <img alt="boston4day" src="http://www.mit.edu/~adalca/tipiX/thumbs/boston5day.jpg" >
                     </a>
                     <strong>Boston 5 day (2D)</strong> <br/>
                     1-hour averages of several shots<br />
@@ -68,7 +71,7 @@
             
                 <div class="set-container">
                     <a href="#" onClick="launchDisplay('bostonStorm');">
-                    <img alt="bostonStorm" src="./thumbs/bostonStorm.jpg" >
+                    <img alt="bostonStorm" src="http://www.mit.edu/~adalca/tipiX/thumbs/bostonStorm.jpg" >
                     </a>
                     <strong>Boston Storm (1D)</strong> <br /> 
                     xAxis: average shots per hour <br />
@@ -77,7 +80,7 @@
                 
                 <div class="set-container">
                     <a href="#" onClick="launchDisplay('lakePlacidDrive');">
-                    <img alt="lakePlacidDrive" src="./thumbs/lakePlacidDrive.jpg" >
+                    <img alt="lakePlacidDrive" src="http://www.mit.edu/~adalca/tipiX/thumbs/lakePlacidDrive.jpg" >
                     </a>
                     <strong>Lake Placid Drive (1D)</strong> <br />
                     Each shot = average over 10 mins <br />
@@ -86,7 +89,7 @@
             
                 <div class="set-container">
                     <a href="#" onClick="launchDisplay('vermontDrive');">
-                    <img alt="vermontDrive" src="./thumbs/vermontDrive.jpg">
+                    <img alt="vermontDrive" src="http://www.mit.edu/~adalca/tipiX/thumbs/vermontDrive.jpg">
                     </a>
                     <strong>Vermont Drive (1D)</strong> <br />
                     Each shot = average over some time
@@ -94,7 +97,7 @@
             
                 <div class="set-container">
                     <a href="#" onClick="launchDisplay('emerald');">
-                    <img alt="Emerald Lake" src="./thumbs/emerald.jpg">
+                    <img alt="Emerald Lake" src="http://www.mit.edu/~adalca/tipiX/thumbs/emerald.jpg">
                     </a>
                     <strong>Emerald (1D)</strong> <br />
                     Timelapse of Emerald Lake
@@ -122,7 +125,7 @@
                 yBins: <input name="yBins" type="text" value="1" size="4" maxlength="4" > <br />
                 </div>
                 xBins: <input name="xBins" type="text" value="30" size="4" maxlength="4"> <br />
-                fName: <input name="filename" type="text" value="http://www.mit.edu/~adalca/dataview/imageSets/bostonStorm//l_average_img_%d.jpg" size="100"> <br />
+                fName: <input name="filename" type="text" value="http://www.mit.edu/~adalca/tipiX/imageSets/bostonStorm//l_average_img_%d.jpg" size="100"> <br />
                 
                 <input type="button" onclick="launchDisplay('userSet');" value="Load!">
                 
@@ -139,7 +142,6 @@
                   <li>maintain a separate page with *many* datasets?.</li>
                   <li>change of set should really clear all variables, etc.</li>
                   <li>clean-up css</li>
-                  <li>Put this project on git</li>
                   <li>Add some information about the original images (Camera Make, Total Count, ETC)</li>
                   <li>Put an initial image in the canvas (both Before loading and After loading)</li>
                   <li>have datasets tabs</li>
@@ -204,7 +206,7 @@
 	<br />
       
       
-    <script src="js\core.js"></script>	
+    <script src="js/core.js"></script>	
   
   
   
