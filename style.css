@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* CSS Document */
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:100,200,300,300italic,400,500);
+
+
+#main-container {
+	margin:auto;
+	width:1600px;
+}
+
+#side-container {
+	left:0px;
+	width:200px;
+	height:900px;
+	float:left;
+}
+
+#right-container {
+	left:0px;
+	width:200px;
+	height:900px;
+	float:right;
+}
+
+#display-container {
+	position:relative;
+	width:1200px;
+	height:900px;
+	text-align:center;
+	float:left;
+}
+
+#mainDisplay {
+	border: 1px solid #EFEFEF;
+	width:1200px;
+	height:900px;
+}
+
+
+#left-container {
+	width:200px;
+	text-align:center;
+	height:600px;
+}
+
+#sets-container {
+	width:1600px;
+	height:250px;
+	overflow-x: auto;	
+	margin:auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+
+#sets-wrapper {
+	width:10000px;
+}
+
+#sets-container img {
+	padding: 17px 10px 3px 10px;
+	width:180px;
+}
+
+.set-container {
+	width: 200px;
+	height:200px;
+	float:left;
+	text-align:center;	
+	display:inline-block;
+	 white-space: normal;
+}
+
+#userSet-container {
+	width:1600px;
+	margin:auto;
+	border: 1px solid #EFEFEF;
+}
+
+body {
+	font: 14px "Roboto",Helvetica,Helvetica Neue,Arial;	
+}
+
+h1 {
+	font: 36px "Roboto",Helvetica,Helvetica Neue,Arial;
+	text-align:center;
+}
+
+
+
+
+#imgnr {
+	margin:auto;
+	width:190px;
+	height:90px;
+	margin:5px;
+}
+
+#time  {
+	margin:auto;
+	width:190px;
+	height:90px;
+	margin:5px;
+}
+#debug {
+	margin:auto;
+	width:190px;
+	height:90px;
+	margin:5px;
+}
+#loadMatrix {
+	margin:auto;
+	width:190px;
+	height:90px;
+	margin:5px;
+}
+
+.loadBox {
+	height:10px;
+/*	float:left;*/
+}
