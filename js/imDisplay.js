@@ -100,6 +100,7 @@ function loadImage(loadObj, idx) {
 		imgBoxSet(pictureBox.loadBoxName, "#99db99", loadObj.xBins);
 		pictureBox.loaded = true;
 		writeLoadingTime();
+		drawImage(this, canvas);
 	};
 
 	// set css and write loading time for this image
@@ -203,9 +204,8 @@ function writeDebug(msg) {
  * 
  * @param pos - the position of the mouse
  */
-function drawImage(pos) {
+function drawImageAtPosition(pos) {
 	nDims = loadObj.nDims;
-	var context = canvas.getContext('2d');
 
 	var redraw = false;
 	if (nDims == 1) {
@@ -255,18 +255,7 @@ function drawImage(pos) {
 		// display the image
 		if (pictureBox.loaded) {
 			document.getElementById('imgnr').innerHTML = msg;
-			
-			
-			
-			picWidth = pictureBox.img.width;
-			picHeight = pictureBox.img.height;
-			// TODO - should have asserted ONLOAD that picWidth and picHeight are within canvas size. 
-			canWidth = canvas.width;
-			canHeight = canvas.height;
-			
-			startX = Math.ceil((canWidth - picWidth)/2);
-			startY = Math.ceil((canHeight - picHeight)/2);
-			context.drawImage(pictureBox.img, startX, startY);
+			drawImage(pictureBox.img, canvas);
 		}
 		
 		// color the load box 
@@ -275,6 +264,25 @@ function drawImage(pos) {
 	}
 	curPictureBox = pictureBox;
 }
+
+
+
+function drawImage(img, canvas) {
+	picWidth = img.width;
+	picHeight = img.height;
+	// TODO - should have asserted ONLOAD that picWidth and picHeight are within canvas size. 
+	canWidth = canvas.width;
+	canHeight = canvas.height;
+	
+	startX = Math.ceil((canWidth - picWidth)/2);
+	startY = Math.ceil((canHeight - picHeight)/2);
+	
+	// draw image
+	var context = canvas.getContext('2d');
+	context.drawImage(img, startX, startY);
+}
+
+
 
 /** Obtain mouse position
  * 

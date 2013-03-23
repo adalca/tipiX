@@ -134,6 +134,6 @@ var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
 canvas.addEventListener('mousemove', function(evt) {
 	if (canvasOn) {
 		var mousePos = getMousePos(canvas, evt);
-		drawImage(mousePos);
+		drawImageAtPosition(mousePos);
 	}
 }, false);
