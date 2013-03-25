@@ -10,11 +10,27 @@ body {
 }
 
 h1 {
-	font: 36px "Roboto",Helvetica,Helvetica Neue,Arial;
+	font: 40px "Roboto",Helvetica,Helvetica Neue,Arial;
 	text-align:center;
+	margin-bottom:0px;
+	padding-bottom:0px;
+	font-weight:200;
 }
 
+h3 {
+	font: 18px "Roboto",Helvetica,Helvetica Neue,Arial;
+	text-align:center;
+	font-weight:300;
+	margin-top:10px;
+}
 
+a {
+	text-decoration:none;
+}
+
+a:hover {
+	color:#F90;
+}
 
 #main-container {
 	margin-left:auto;

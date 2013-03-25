@@ -70,6 +70,7 @@
 	margin-top:50px;
 	width:1200px;
 	border: 1px solid #EFEFEF;	
+	border-top: 1px solid #787878;	/* this is ugly, should be made to work in tab-title-container, border:bottom */
 }
 
 .tab {
