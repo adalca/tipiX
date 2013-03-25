@@ -3,16 +3,22 @@
   <head>
     <link href="style/style.css" rel="stylesheet" type="text/css">
     <link href="style/nav.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+    body,td,th {
+	font-family: Roboto, Helvetica, "Helvetica Neue", Arial;
+}
+    </style>
     <script src="ext-js/sprintf-0.7-beta1.js" type="text/javascript"></script>
     <script src="ext-js/jquery-1.9.1.min.js" type="text/javascript"></script>
     <script src="js/imDisplay.js"  type="text/javascript"></script>
     <script src="js/nav.js"  type="text/javascript"></script>
+  <meta charset="utf-8">
   </head>
   <body >
   
   
   	<h1>tipiX - time picture explorer</h1>
-  	<a href="http://www.mit.edu/~adalca/"><h3>Adrian Dalca</h3></a>
+  <a href="http://www.mit.edu/~adalca/"><h3>Adrian Dalca</h3></a>
 
 
 <!-- Info Container. Current_data, Load_data, TODOs, itneraction interface -->
@@ -107,12 +113,12 @@
             
             
             <div id="userSets-tab" class="tab">
-                <p><strong>Load your own dataset</strong><br>
+                <p style="margin-top:0px;"><strong>Load your own dataset</strong><br>
                   You should have the files online in some folder, with some naming scheme where the <strong>only</strong> changing element is the file number, from 1 to N.<br>
                   For example: in <em>http://www.mywebsite/mydata/</em> you might have <em>file_1.jpg</em>, <em>file_2.jpg</em>, <em>file_3.jpg</em> ... <em>file_57.jpg</em><br>
-                  This would be a one-dimentional (only one number is changing) dataset with xBins=<em>57</em> and filename=<em>http://www.mywebsite/mydata/file_%d.jpg</em><br>
+                  This would be image exploration with one changing variable (e.g. time) dataset with xBins=<em>57</em> and filename=<em>http://www.mywebsite/mydata/file_%d.jpg</em><br>
                   You can have missing files (they will just show up as red in the load matrix).</p>
-                <p>For 2D, use: <em>file_1_1.jpg</em>, <em>file_1_2.jpg</em>, ... <em>file_1_15.jpg</em>, <em>file_2_1.jpg</em>, ... where the first number will be used as the y (rows) coordinate in the 2D matrix.</p>
+                <p>For exploring data in 2 dimensions (e.g. time and exposure), use: <em>file_1_1.jpg</em>, <em>file_1_2.jpg</em>, ... <em>file_1_15.jpg</em>, <em>file_2_1.jpg</em>, ... where the first number will be used as the y (rows) coordinate in the 2D matrix.</p>
                 <form style="text-align:left;" id="userSet">
                   
                   Number of dimensions to explore: 1D
@@ -188,30 +194,8 @@
             <div id="loadMatrix"></div>
         </div>
   </div>
-  
-
-
-  
-  
-
-
-<a name="userSet"></a>
-
-
-
-  
-  <br />
-	<br />
-	<br />
-      
-      
-    <script src="js/core.js"></script>	
-  
-  
-  
-  
-  
-  
+     
+	<script src="js/core.js"></script>	
   
   
   

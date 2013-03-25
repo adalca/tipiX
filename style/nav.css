@@ -17,6 +17,7 @@
 	width:180px;
 	padding-right:10px;
 	float:left;
+	border:0px;
 }
 
 .set-container {
@@ -32,6 +33,7 @@
 	width:1200px;
 	margin:auto;
 	border: 1px solid #EFEFEF;
+	padding:10px;
 }
 
 
