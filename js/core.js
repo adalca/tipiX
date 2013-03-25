@@ -48,6 +48,7 @@ function launchDisplay(choice) {
 
 	var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
 	canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
+	drawLogo();
 	
 	// close nav
 	nav(currentTab);
@@ -128,6 +129,8 @@ var curPictureBox = null;
 var currentTab = 'about';
 var currentTabState = true;
 var CORE_SET_PATH = 'http://www.mit.edu/~adalca/tipiX';
+var logoImage;
+
 
 // canvas and listener
 var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas

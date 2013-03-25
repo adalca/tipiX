@@ -16,6 +16,12 @@ $(document).ready(function(){
 	tabTitle = currentTab + '-tab-title';
 	document.getElementById(tabTitle).style.backgroundColor = '#ABCDFF';
 
+	// fill in logo. 
+	logoImage = new Image();
+	logoImage.onload = function () { drawLogo() };
+	logoImage.src = 'http://www.mit.edu/~adalca/tipiX/images/logo.png'
+	
+
 	// form hide yBins by default
 	$('#yBins').hide();
 	$('#userSet').change(function() {

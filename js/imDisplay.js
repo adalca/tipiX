@@ -100,7 +100,6 @@ function loadImage(loadObj, idx) {
 		imgBoxSet(pictureBox.loadBoxName, "#99db99", loadObj.xBins);
 		pictureBox.loaded = true;
 		writeLoadingTime();
-		drawImage(this, canvas);
 	};
 
 	// set css and write loading time for this image
@@ -339,4 +338,10 @@ function imgBoxSet(loadBoxName, color, xBins) {
 	document.getElementById(loadBoxName).style.backgroundColor = color;
 	document.getElementById(loadBoxName).style.width = "" + binWidth + "px";
 	document.getElementById(loadBoxName).style.cssFloat = "left";
+}
+
+
+function drawLogo() {
+	canvas = document.getElementById(DRAW_CANVAS_NAME);
+	drawImage(logoImage, canvas);
 }
