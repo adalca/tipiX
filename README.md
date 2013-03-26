@@ -7,7 +7,7 @@ Take a test drive by trying an example dataset or load your own. Once loaded, mo
 TODOs:
 ------
 - maintain a separate page with *many* of my own datasets.
--- Add some information about the original images (Camera Make, Total Count, ETC)
+ - Add some information about the original images (Camera Make, Total Count, ETC)
 - change of set should really clear all variables, etc.
 - clean-up css
 - put images in preview div as they load
