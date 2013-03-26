@@ -30,7 +30,6 @@
 }
 
 #userSets-tab {
-	width:1200px;
 	margin:auto;
 	border: 1px solid #EFEFEF;
 	padding:10px;
@@ -81,5 +80,9 @@
 
 
 #about-tab {
-		text-align:center;	
+	text-align:center;	
+}
+
+#tutorial-tab {
+	padding:10px;
 }
