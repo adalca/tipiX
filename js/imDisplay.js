@@ -85,6 +85,7 @@ function loadImage(loadObj, idx) {
 	var pictureBox = {};
 	pictureBox.img = new Image();
 	pictureBox.loaded = false;
+	pictureBox.error = false;
 	
 	if (idx.length == 1) {
 		pictureBox.fileName = sprintf(loadObj.fileName, idx[0]);
@@ -99,12 +100,15 @@ function loadImage(loadObj, idx) {
 	pictureBox.img.onload = function() {
 		imgBoxSet(pictureBox.loadBoxName, "#99db99", loadObj.xBins);
 		pictureBox.loaded = true;
+		checkLoaded(loadObj)
 		writeLoadingTime();
 	};
 
 	// set css and write loading time for this image
 	pictureBox.img.onerror = function() {
 		imgBoxSet(pictureBox.loadBoxName, "#db9999", loadObj.xBins);
+		pictureBox.error = true;
+		checkLoaded(loadObj)
 		writeLoadingTime();
 	};
 
@@ -131,11 +135,13 @@ function loadImages(loadObj) {
 	assert(loadObj.nDims == 1 || loadObj.nDims == 2);
 
 	// some setup
-	document.getElementById('time').innerHTML = "Loading...";
+	document.getElementById('loadTime').innerHTML = "Loading...";
 	buildLoadMatrix(loadObj);
+	writeLoadingPerc(0); // clean loading percentage
 	
 	// record starting time
 	startTime = new Date().getTime();
+	writeLoadingTime(startTime); // clean loading times
 
 	// should be xBins if nDims == 1, yBins otherwise
 	mainBins = (loadObj.nDims == 1 ? loadObj.xBins : loadObj.yBins);
@@ -313,16 +319,29 @@ function assert(expression, msg) {
 }
 
 /** 
- * Writes loading time to the time div.
+ * Writes loading time to the loadTime span.
  * TODO: eliminate need for startTime being global 
  * @requires global variable startTime
  */
-function writeLoadingTime() {
+function writeLoadingTime(endTime) {
 	// write the time difference from global var startTime.
-	var end = new Date().getTime();
-	var time = end - startTime;
+	if (endTime == undefined) {
+		var endTime = new Date().getTime();
+	}
+	var time = endTime - startTime;
 	var timeMsg = 'Loading time:' + time + ' millis';
-	document.getElementById('time').innerHTML = timeMsg;
+	document.getElementById('loadTime').innerHTML = timeMsg;
+}
+
+/** 
+ * Writes loading percentage to the loadPerc span.
+ * TODO: eliminate need for startTime being global 
+ * @requires global variable startTime
+ */
+function writeLoadingPerc(perc) {
+
+	var percMsg = sprintf('Loading percentage: %3d%%', perc);
+	document.getElementById('loadPerc').innerHTML = percMsg;
 }
 
 /** Set the image box (div) with the given color and size
@@ -344,4 +363,33 @@ function imgBoxSet(loadBoxName, color, xBins) {
 function drawLogo() {
 	canvas = document.getElementById(DRAW_CANVAS_NAME);
 	drawImage(logoImage, canvas);
+}
+
+function checkLoaded(loadObj) {
+	assert(loadObj.nDims == 1 || loadObj.nDims == 2);
+	
+	if (loadObj.nDims == 1) {
+		var nLoaded = 0
+		for (var i = 0; i < loadObj.xBins; i++) {
+			if (pictureBoxes[i].loaded || pictureBoxes[i].error) {
+				nLoaded++;
+			}
+		}
+		var perc = nLoaded/loadObj.xBins * 100;
+		
+	} else {
+		assert(loadObj.nDims == 2);
+		
+		var nLoaded = 0
+		for (var i = 0; i < loadObj.yBins; i++) {
+			for (var j = 0; j < loadObj.xBins; j++) {
+				if (pictureBoxes[i][j].loaded || pictureBoxes[i][j].error) {
+					nLoaded++;
+				}
+			}
+		}
+		var perc = nLoaded/(loadObj.xBins * loadObj.yBins) * 100;
+	}
+
+	writeLoadingPerc(perc);	
 }

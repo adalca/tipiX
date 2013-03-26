@@ -132,6 +132,7 @@ var CORE_SET_PATH = 'http://www.mit.edu/~adalca/tipiX';
 var logoImage;
 
 
+
 // canvas and listener
 var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
 canvas.addEventListener('mousemove', function(evt) {
