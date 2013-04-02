@@ -1,4 +1,15 @@
-// JavaScript Document
+/** tipiX - TIme PIcture eXplorer
+ * 
+ * Copyright (c) 2013 TIPIX <adalca@mit.edu>
+ *
+ * tipiX is licensed under the MIT License:
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ * See LICENSE file for more information
+ *
+ * Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
+ */
+
 
 $(document).ready(function(){
 

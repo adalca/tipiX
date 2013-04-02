@@ -16,3 +16,9 @@ TODOs:
 Demo:
 -----
 http://www.mit.edu/~adalca/tipiX/
+
+License Info:
+-------------
+tipiX is licensed under the MIT License:
+http://www.opensource.org/licenses/mit-license.php
+See LICENSE file for more information

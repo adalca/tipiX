@@ -1,8 +1,12 @@
-/** Data viewer code. 
- * Warning: this is very rough code still.
+/** tipiX - TIme PIcture eXplorer
  * 
- * see intDisplayFcns.js for main working functions. 
- * 
+ * Copyright (c) 2013 TIPIX <adalca@mit.edu>
+ *
+ * tipiX is licensed under the MIT License:
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ * See LICENSE file for more information
+ *
  * Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
  */
 
