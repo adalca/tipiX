@@ -18,6 +18,9 @@ $(document).ready(function(){
 	$('#sets-container').hide();
 	$('#userSet-container').hide();
 	$('#todos-container').hide();
+	
+	// hide preview matrix link
+	document.getElementById('previewMatrixLink').style.display = 'none';
 
 	// show selected tab
 	tabName = currentTab + '-tab';
@@ -29,7 +32,7 @@ $(document).ready(function(){
 
 	// fill in logo. 
 	logoImage = new Image();
-	logoImage.onload = function () { drawLogo() };
+	logoImage.onload = function () { drawLogo(); };
 	logoImage.src = 'http://www.mit.edu/~adalca/tipiX/images/logo.png'
 	
 

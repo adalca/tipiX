@@ -15,30 +15,35 @@
  */
 
 
+
+
 /**
  * Build the loading html matrix
  * 
  * @param loadObj - the main loading object for this set, see spec 
  * 	@ launchDisplay() 
+ * @param type - the type of matrix, e.g. "load" or "preview"
  */
-function buildLoadMatrix(loadObj) {
+function buildMatrix(loadObj, type) {
 
+	matrixID = sprintf('%sMatrix', type);
+	
 	// if one-dimension
 	if (loadObj.nDims == 1) {
 
-		// write to div element loadMatrix a set of smaller divs which will 
+		// write to div element typeMatrix a set of smaller divs which will 
 		// indicate loading, or lack thereof
-		txt = 'Load Matrix: <br /> <br />';
+		txt = sprintf('%s Matrix: <br />', type);
 		for ( var i = 0; i < loadObj.xBins; i++) {
-			divTxt = sprintf('<div class="loadBox" id="#load_%d"></div>', i + 1);
+			divTxt = sprintf('<div class="%sBox" id="#%s_%d"></div>', type, type, i + 1);
 			txt = txt + divTxt;
 		}		
-		document.getElementById('loadMatrix').innerHTML = txt;
+		document.getElementById(matrixID).innerHTML = txt;
 		
 		// color the new divs in with grey
 		// TODO: clean this - this is duplicate code with loadImage!
 		for ( var i = 0; i < loadObj.xBins; i++) {
-			loadBoxName = sprintf('#load_%d', i+1); 
+			loadBoxName = sprintf('#%s_%d', type, i+1); 
 			imgBoxSet(loadBoxName, "#AAAAAA", loadObj.xBins);
 		}				
 		
@@ -47,27 +52,29 @@ function buildLoadMatrix(loadObj) {
 		
 		// write to div element loadMatrix a set of smaller divs which will 
 		// indicate loading, or lack thereof
-		txt = 'Load Matrix: <br /> <br />';
+		txt = sprintf('%s Matrix: <br />', type);
 		for ( var i = 0; i < loadObj.yBins; i++) {
 			for ( var j = 0; j < loadObj.xBins; j++) {
 				divTxt = sprintf(
-						'<div class="loadBox" id="#load_%d_%d"></div>', i + 1,
+						'<div class="%sBox" id="#%s_%d_%d"></div>', type, type, i + 1,
 						j + 1);
 				txt += divTxt;
 			}
 		}
-		document.getElementById('loadMatrix').innerHTML = txt;
+		document.getElementById(matrixID).innerHTML = txt;
 		
 		// color the new divs in with grey
 		// TODO: clean this - this is duplicate code with loadImage!
 		for ( var i = 0; i < loadObj.yBins; i++) {
 			for ( var j = 0; j < loadObj.xBins; j++) {
-				loadBoxName = sprintf('#load_%d_%d', i + 1, j + 1); // TODO: - fix copied code with loadImage!
+				loadBoxName = sprintf('#%s_%d_%d', type, i + 1, j + 1); // TODO: - fix copied code with loadImage!
 				imgBoxSet(loadBoxName, "#AAAAAA", loadObj.xBins);
 			}
 		}
 	}
 }
+
+
 
 /**
  * Load an image
@@ -95,25 +102,29 @@ function loadImage(loadObj, idx) {
 	if (idx.length == 1) {
 		pictureBox.fileName = sprintf(loadObj.fileName, idx[0]);
 		pictureBox.loadBoxName = sprintf('#load_%d', idx[0]);
+		pictureBox.previewBoxName = sprintf('#preview_%d', idx[0]);
 
 	} else {
 		pictureBox.fileName = sprintf(loadObj.fileName, idx[0], idx[1]);
 		pictureBox.loadBoxName = sprintf('#load_%d_%d', idx[0], idx[1]);
+		pictureBox.previewBoxName = sprintf('#preview_%d_%d', idx[0], idx[1]);
 	}
 	
 	// set css and write loading time for this image 	
 	pictureBox.img.onload = function() {
 		imgBoxSet(pictureBox.loadBoxName, "#99db99", loadObj.xBins);
+		//imgBoxSet(pictureBox.previewBoxName, pictureBox.fileName, loadObj.xBins);
 		pictureBox.loaded = true;
-		checkLoaded(loadObj)
+		checkLoaded(loadObj);
 		writeLoadingTime();
 	};
 
 	// set css and write loading time for this image
 	pictureBox.img.onerror = function() {
 		imgBoxSet(pictureBox.loadBoxName, "#db9999", loadObj.xBins);
+		imgBoxSet(pictureBox.previewBoxName, "#db9999", loadObj.xBins);
 		pictureBox.error = true;
-		checkLoaded(loadObj)
+		checkLoaded(loadObj);
 		writeLoadingTime();
 	};
 
@@ -141,7 +152,9 @@ function loadImages(loadObj) {
 
 	// some setup
 	document.getElementById('loadTime').innerHTML = "Loading...";
-	buildLoadMatrix(loadObj);
+	buildMatrix(loadObj, 'load');
+	buildMatrix(loadObj, 'preview');
+	document.getElementById('previewMatrixLink').style.display = 'inherit';
 	writeLoadingPerc(0); // clean loading percentage
 	
 	// record starting time
@@ -174,6 +187,49 @@ function loadImages(loadObj) {
 	return pictureBoxes;
 }
 
+
+function loadPreviewMatrix(loadObj) {
+	
+	if (loadObj.xBins == undefined) {
+		alert('Please first load a dataset!');
+		return;
+	}
+	
+	if (loadObj.xBins > 36) {
+		alert('Dataset too large for preview!');
+		return;
+	}	
+	
+	var ans = confirm("Warning: Preview can be *very* memory intensive! Continue?");
+	if (!ans) return;
+	
+	if (loadObj.nDims == 1) {
+		for (var j = 0; j < loadObj.xBins; j++) {
+			if (pictureBoxes[j].loaded){
+				imgBoxSet(pictureBoxes[j].previewBoxName, pictureBoxes[j].fileName, loadObj.xBins);
+			}
+		}
+		
+	} else {	
+		for ( var i = 0; i < loadObj.yBins; i++) {
+			for (var j = 0; j < loadObj.xBins; j++) {
+				if (pictureBoxes[i][j].loaded){
+					imgBoxSet(pictureBoxes[i][j].previewBoxName, pictureBoxes[i][j].fileName, loadObj.xBins);
+				}
+			}
+		}
+	}
+}
+
+function clearPreviewMatrix(loadObj) {
+	
+	if (loadObj.xBins == undefined) {
+		alert('Please first load a dataset!');
+		return;
+	} 
+	
+	buildMatrix(loadObj, 'preview');
+}
 
 
 /** get a discrete position in the range of 1..nDiscretes
@@ -269,7 +325,7 @@ function drawImageAtPosition(pos) {
 		}
 		
 		// color the load box 
-		curColor = (pictureBox.loaded) ? "green" : "red";
+		curColor = (pictureBox.loaded) ? "#00FF00" : "#FF0000";
 		imgBoxSet(pictureBox.loadBoxName, curColor, loadObj.xBins);
 	}
 	curPictureBox = pictureBox;
@@ -353,13 +409,22 @@ function writeLoadingPerc(perc) {
  * TODO: should set size and float at initiation!. 
  * 
  * @param loadBoxName
- * @param color
+ * @param bgStr
  * @param xBins
  */
-function imgBoxSet(loadBoxName, color, xBins) {
+function imgBoxSet(loadBoxName, bgStr, xBins) {
 	var width = document.getElementById('loadMatrix').offsetWidth;
 	var binWidth = Math.floor(width / xBins);
-	document.getElementById(loadBoxName).style.backgroundColor = color;
+	
+	
+	if (bgStr[0] == '#') { // if it's a color
+		document.getElementById(loadBoxName).style.backgroundColor = bgStr;
+	} else {
+		document.getElementById(loadBoxName).style.backgroundColor = "transparent";
+		document.getElementById(loadBoxName).style.backgroundImage = sprintf("url('%s')", bgStr);
+		document.getElementById(loadBoxName).style.backgroundSize = sprintf("%dpx 10px", binWidth);
+	}
+	
 	document.getElementById(loadBoxName).style.width = "" + binWidth + "px";
 	document.getElementById(loadBoxName).style.cssFloat = "left";
 }
@@ -374,7 +439,7 @@ function checkLoaded(loadObj) {
 	assert(loadObj.nDims == 1 || loadObj.nDims == 2);
 	
 	if (loadObj.nDims == 1) {
-		var nLoaded = 0
+		var nLoaded = 0;
 		for (var i = 0; i < loadObj.xBins; i++) {
 			if (pictureBoxes[i].loaded || pictureBoxes[i].error) {
 				nLoaded++;
@@ -385,7 +450,7 @@ function checkLoaded(loadObj) {
 	} else {
 		assert(loadObj.nDims == 2);
 		
-		var nLoaded = 0
+		var nLoaded = 0;
 		for (var i = 0; i < loadObj.yBins; i++) {
 			for (var j = 0; j < loadObj.xBins; j++) {
 				if (pictureBoxes[i][j].loaded || pictureBoxes[i][j].error) {
