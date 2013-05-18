@@ -141,18 +141,21 @@ var currentTab = 'about';
 var currentTabState = true;
 var CORE_SET_PATH = 'http://www.mit.edu/~adalca/tipiX';
 var logoImage;
-var previouspos = new Object();
-previouspos.x = 0;
-previouspos.y = 0;
+var lockx = false;
+var locky = false;
 
 
-var mouseDown = 0;
-document.body.onmousedown = function() { 
-  ++mouseDown;
-}
-document.body.onmouseup = function() {
-  --mouseDown;
-}
+// key presses
+$(document).keyup(function(e) {
+  if (e.keyCode == 88) { 
+  	lockx = !lockx; 
+	}   // x
+  if (e.keyCode == 89) { 
+  	locky = !locky; 
+	}   // x
+
+	
+});
 
 
 // canvas and listener

@@ -11,6 +11,7 @@
  */
 
 
+
 $(document).ready(function(){
 
 
@@ -35,6 +36,8 @@ $(document).ready(function(){
 	logoImage.onload = function () { drawLogo(); };
 	logoImage.src = 'http://www.mit.edu/~adalca/tipiX/images/logo.png'
 	
+	
+
 
 	// form hide yBins by default
 	$('#yBins').hide();

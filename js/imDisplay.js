@@ -273,8 +273,11 @@ function writeDebug(msg) {
 function drawImageAtPosition(pos) {
 	nDims = loadObj.nDims;
 	
-	if (mouseDown > 0) {
+	if (lockx) {
 		pos.x = previouspos.x
+	}
+	if (locky) {
+		pos.y = previouspos.y
 	}
 	previouspos = pos;
 
