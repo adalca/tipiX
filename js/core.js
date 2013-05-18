@@ -107,7 +107,14 @@ function loadEmerald() {
 
 function loadUserSet() {
 	var oForm = document.getElementById('userSet');
-	loadObj.nDims = parseInt(oForm.elements['nDims'].value);
+	
+	var radios = document.getElementsByName('nDims');
+	for (var i = 0, length = radios.length; i < length; i++) {
+		if (radios[i].checked) {
+			loadObj.nDims = radios[i].value;
+		}
+	}
+	
 	loadObj.xBins = parseInt(oForm.elements['xBins'].value);
 	if (loadObj.nDims == 2) {
 		loadObj.yBins = parseInt(oForm.elements['yBins'].value);	

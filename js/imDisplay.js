@@ -148,7 +148,7 @@ function loadImage(loadObj, idx) {
 function loadImages(loadObj) {
 
 	// should have one or two dimensions
-	assert(loadObj.nDims == 1 || loadObj.nDims == 2);
+	assert(loadObj.nDims == 1 || loadObj.nDims == 2, 'nDims is not 1 or 2');
 
 	// some setup
 	document.getElementById('loadTime').innerHTML = "Loading...";
