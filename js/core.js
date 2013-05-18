@@ -141,7 +141,18 @@ var currentTab = 'about';
 var currentTabState = true;
 var CORE_SET_PATH = 'http://www.mit.edu/~adalca/tipiX';
 var logoImage;
+var previouspos = new Object();
+previouspos.x = 0;
+previouspos.y = 0;
 
+
+var mouseDown = 0;
+document.body.onmousedown = function() { 
+  ++mouseDown;
+}
+document.body.onmouseup = function() {
+  --mouseDown;
+}
 
 
 // canvas and listener

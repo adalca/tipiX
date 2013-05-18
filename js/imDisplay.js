@@ -272,6 +272,11 @@ function writeDebug(msg) {
  */
 function drawImageAtPosition(pos) {
 	nDims = loadObj.nDims;
+	
+	if (mouseDown > 0) {
+		pos.x = previouspos.x
+	}
+	previouspos = pos;
 
 	var redraw = false;
 	if (nDims == 1) {
