@@ -273,6 +273,7 @@ function writeDebug(msg) {
 function drawImageAtPosition(pos) {
 	nDims = loadObj.nDims;
 	
+	// TODO: add lockx, locky information on screen
 	if (lockx) {
 		pos.x = previouspos.x
 	}
