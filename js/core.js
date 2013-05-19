@@ -153,7 +153,10 @@ $(document).keyup(function(e) {
   if (e.keyCode == 89) { 
   	locky = !locky; 
 	}   // x
-
+  if (e.keyCode == 27) { 
+  	lockx = false; 
+  	locky = false; 
+	}   // x
 	
 });
 
