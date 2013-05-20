@@ -304,6 +304,8 @@ function drawImageAtPosition(pos) {
 		discreteY = getDiscretePosition(pos.y, canvas.height,
 				pictureBoxes.length);
 
+		global_x = discreteX;
+
 		if (currentX != discreteX) {
 			redraw = true;
 			currentX = discreteX;

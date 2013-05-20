@@ -143,6 +143,7 @@ var CORE_SET_PATH = 'http://www.mit.edu/~adalca/tipiX';
 var logoImage;
 var lockx = false;
 var locky = false;
+var global_x = -1;
 
 
 // key presses
@@ -163,6 +164,7 @@ $(document).keyup(function(e) {
 
 // canvas and listener
 var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
+canvas.onclick = function () { console.log((global_x+1).toString()); };
 canvas.addEventListener('mousemove', function(evt) {
 	if (canvasOn) {
 		var mousePos = getMousePos(canvas, evt);
