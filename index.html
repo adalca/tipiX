@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
-<html>
-<head>
+<html><head>
   <link href="style/style.css" rel="stylesheet" type="text/css">
   <link href="style/nav.css" rel="stylesheet" type="text/css">
   
   <!-- scripts -->
   <script src="ext-js/sprintf-0.7-beta1.js" type="text/javascript"></script>
+  <script src="ext-js/sscanf.js" type="text/javascript"></script>
   <script src="ext-js/jquery-1.9.1.min.js" type="text/javascript"></script>
   <script src="js/imDisplay.js"  type="text/javascript"></script>
   <script src="js/nav.js"  type="text/javascript"></script>
@@ -24,152 +24,184 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
   
 <meta charset="utf-8">
 </head>
-<body >
+<body onload="reshapeCanvas();" onResize="reshapeCanvas();">
   
   
-  	<h1>tipiX - time picture explorer</h1>
-  <a href="http://www.mit.edu/~adalca/"><h3>Adrian Dalca</h3></a>
 
-
-<!-- Info Container. Current_data, Load_data, TODOs, itneraction interface -->
   
-  <div id="info-container">
-	  <div id="tab-title-container">
-  		<a id="about-tab-title" class="tab-title" onClick="nav('about')" href="#">
+<div id="nav-container">
+	<h1>tipiX - time picture explorer</h1>
+
+		<a id="examples-tab-title" onClick="nav('examples')" href="#">
+			Examples
+        </a>
+		<a id="userSets-tab-title" onClick="nav('userSets')" href="#">
+			Load
+        </a>
+  		<a id="about-tab-title"  onClick="nav('about')" href="#">
 	        About
         </a>
-  		<a id="tutorial-tab-title" class="tab-title" onClick="nav('tutorial')" href="#">
-	        Tutorial
-        </a>
-  		<a id="sets-tab-title" class="tab-title" onClick="nav('sets')" href="#">
-	        Load example datasets
-        </a>
-  		<a id="userSets-tab-title" class="tab-title" onClick="nav('userSets')" href="#">
-    	    &nbsp;&nbsp;&nbsp;Load your dataset
-        </a>
-  		<a id="edit-tab-title" class="tab-title" onClick="nav('edit')" href="#">
-    	    Editing Interface
-        </a>
-	  </div>
-      
+</div>
+  
+  	<!--
+  <a href="http://www.mit.edu/~adalca/"><h3>Adrian Dalca</h3></a>
+  -->
+
+
+
+  
+  <div id="menu-container">
+	  
       <div id="tab-container">
       
 
 			 <div id="about-tab" class="tab" > 
-    <div style="text-align: center; width:1200px; padding:10px;"> This is an experimental tool for exploring time (or other dimensions) of image sets, generally images from similar view points (e.g. <strong>frames from timelapses</strong>). <br>
+             <div class="close_button"><a href="#" onClick="nav('about')">x</a></div>
+             <h2> About tipiX </h2>
+tipiX is an experimental tool for very quickly visualizing and exploring image sets, for example pictures from similar view points (e.g. <strong>frames from timelapses</strong>) or a medical dataset. Try an <a href="#" onClick="nav('examples')">example</a> dataset or <a href="#" onClick="nav('userSets')">load your own</a> dataset. 
+
+Once loaded, movement with the mouse along x or y can explore difference dimensions of the data. tipiX is written and maintained by <a href="http://adalca.mit.edu">Adrian Dalca</a>, and is shared on github: <a href="https://github.com/adalca/tipiX">https://github.com/adalca/tipiX</a>
+    <br /> <br />
+    <div style="width:300px; display:inline-block;">
     
-    Take a test drive by trying an example dataset or load your own. Once loaded, movement with the mouse along x or y can explore difference dimensions of the data. <br /> There are plans for various types of interactions and control over the dataset. The project is up on github: <a href="https://github.com/adalca/tipiX">https://github.com/adalca/tipiX</a> </div>
+        <h2 style> Control shortcuts </h2>
+        <div id="control-text">
+            <a href="">Fix x (x) </a>
+            <a href="">Fix y (y) </a>
+            <a href="">toggle info panel (i)</a>
+            <a href="">toggle control/about panel (c)</a>
+            <a href="">reset state (esc)</a>
+        </div>
+	</div>
+    
+    <div style="width:300px; display:inline-block; float:right; ">
+    	<h2 style> Quick Load </h2>
+			<div id="load-local-main"  class="loadtab" style="height:120px; width:300px; ">
+                <input type="file" id="files" name="files[]" multiple />
+                <div id="drop_zone_main" onMouseOver="onOff('drop_zone_main');" onMouseOut="onOff('drop_zone_main');" onClick="$('#files').click();">
+                    <div id="drop_zone_main_text" >
+                        <strong>click</strong> or <strong>drag and drop</strong> <br />
+                        to load images                        	 
+                    </div>
+                </div>                
+            </div>
+    </div>
+             
+             
              </div>
 
-	      	 <div id="tutorial-tab" class="tab" > 
-                A quick interactive tutorial is under construction. Until then, here's a quick way to get started:
-                    </p>
-                    <ul>
-                      <li>Click &quot;Load Example datasets&quot; above, and select a dataset. </li>
-                      <li>Wait until most of it loads (see &quot;Loading Percentage&quot; on the right once the pictures start loading)</li>
-                      <li>Move the mouse on top of the image container below to control the dataset.</li>
-                  </ul>
-             </div>
-
-            <div id="sets-tab" class="tab"> 
-                <div id="sets-wrapper">
+	   
+       	<div id="examples-tab" class="tab"> 
+             <div class="close_button"><a href="#" onClick="nav('examples')">x</a></div>
+                
+                <h2> Example Datasets </h2>
                 
                 <div class="set-container">
                     <a href="#" onClick="launchDisplay('boston4day');">
-                    <img alt="boston4day" src="http://www.mit.edu/~adalca/tipiX/thumbs/boston4day.jpg">
-                    </a>
-                    <strong>Boston 4 day (2D)</strong> <br/>
+                    <img alt="boston4day" src="http://www.mit.edu/~adalca/tipiX/thumbs/boston4day.jpg"> 
+                    </a><br />
+                    <strong>Boston hours & days</strong> <br/>
                     1-hour averages of several shots<br />
-                    yAxis: hour of day (top=morning) <br />
-                    xAxis: days 1 through 5
+                    y axis: hour of day (top=morning) <br />
+                    x axis: days 1 through 5
                 </div>
             
                 <div class="set-container">
-                    <a href="#" onClick="launchDisplay('boston5day');">
-                    <img alt="boston4day" src="http://www.mit.edu/~adalca/tipiX/thumbs/boston5day.jpg" >
-                    </a>
-                    <strong>Boston 5 day (2D)</strong> <br/>
-                    1-hour averages of several shots<br />
-                    yAxis: hour of day (top=midnight) <br />
-                    xAxis: days 1 through 5 <br />
-                    [GOPRO, 33476->94]
+                    <a href="#" onClick="launchDisplay('lupus');">
+                    <img alt="T1" src="http://www.mit.edu/~adalca/tipiX/thumbs/T1.jpg" >
+                    </a> <br />
+                    <strong>Brain MRIs</strong> <br/>
+                    <a href="http://www.insight-journal.org/midas/collection/view/191" target="_blank">NAMIC: Lupus White Matter Lesion</a><br />
+                    y axis: slices of a patient <br />
+                    x axis: different patients 
                 </div>
             
             
                 <div class="set-container">
                     <a href="#" onClick="launchDisplay('emerald');">
                     <img alt="Emerald Lake" src="http://www.mit.edu/~adalca/tipiX/thumbs/emerald.jpg">
-                    </a>
-                    <strong>Emerald (1D)</strong> <br />
-                    Timelapse of Emerald Lake <br />
-                    337 shots.
-                </div>
-            
-                <div class="set-container">
-                    <a href="#" onClick="launchDisplay('bostonStorm');">
-                    <img alt="bostonStorm" src="http://www.mit.edu/~adalca/tipiX/thumbs/bostonStorm.jpg" >
-                    </a>
-                    <strong>Boston Storm (1D)</strong> <br /> 
-                    xAxis: average shots per hour <br />
-                    [GOPRO, 12340->30]
-                </div>
-                
-                <div class="set-container">
-                    <a href="#" onClick="launchDisplay('lakePlacidDrive');">
-                    <img alt="lakePlacidDrive" src="http://www.mit.edu/~adalca/tipiX/thumbs/lakePlacidDrive.jpg" >
-                    </a>
-                    <strong>Lake Placid Drive (1D)</strong> <br />
-                    Each shot = average over 10 mins <br />
-                    Canadian border to Lake Placid
-                </div>
-            
-                <div class="set-container">
-                    <a href="#" onClick="launchDisplay('vermontDrive');">
-                    <img alt="vermontDrive" src="http://www.mit.edu/~adalca/tipiX/thumbs/vermontDrive.jpg">
-                    </a>
-                    <strong>Vermont Drive (1D)</strong> <br />
-                    Each shot = average over some time
+                    </a> <br />
+                    <strong>Timelapse of Emerald Lake</strong> <br />
+                    337 shots <br />
+                    x axis: timelapse
                 </div>
 
-				</div>
             </div>
+
+
+
+
+
+
             
             
+            <!-- Loading Dataset -->
             
             <div id="userSets-tab" class="tab">
-                <p style="margin-top:0px;"><strong>Load your own dataset</strong><br>
-                  You should have the files online in some folder, with some naming scheme where the <strong>only</strong> changing element is the file number, from 1 to N.<br>
-                  For example: in <em>http://www.mywebsite/mydata/</em> you might have <em>file_1.jpg</em>, <em>file_2.jpg</em>, <em>file_3.jpg</em> ... <em>file_57.jpg</em><br>
-                  This would be image exploration with one changing variable (e.g. time) dataset with xBins=<em>57</em> and filename=<em>http://www.mywebsite/mydata/file_%d.jpg</em><br>
-                  You can have missing files (they will just show up as red in the load matrix).</p>
-                <p>For exploring data in 2 dimensions (e.g. time and exposure), use: <em>file_1_1.jpg</em>, <em>file_1_2.jpg</em>, ... <em>file_1_15.jpg</em>, <em>file_2_1.jpg</em>, ... where the first number will be used as the y (rows) coordinate in the 2D matrix.</p>
-                <form style="text-align:left;" id="userSet">
-                  
-                  Number of dimensions to explore: 1D
-                    <input type="radio" name="nDims" value="1"  id="nDims1" checked>
-                2D
-                <input type="radio" name="nDims" value="2" id="nDims2">
-                 <br />
-                 <div id="yBins">
-                yBins: <input name="yBins" type="text" value="1" size="4" maxlength="4" > <br />
-                </div>
-                xBins: <input name="xBins" type="text" value="30" size="4" maxlength="4"> <br />
-                fName: <input name="filename" type="text" value="http://www.mit.edu/~adalca/tipiX/imageSets/bostonStorm//l_average_img_%d.jpg" size="100"> <br />
-                
-                <input type="button" onclick="launchDisplay('userSet');" value="Load!">
-                
-                
-                </form>
             
+             <div class="close_button"><a href="#" onClick="nav('userSets')">x</a></div>
+                <h2>Load dataset</h2>
+                
+                
+                  The files should be numbered similar to: 
+                   <em>file_1.jpg</em>, <em>file_2.jpg</em>, ... <em>file_57.jpg</em><br>
+                  You can have missing file (they will just show up as red in the load matrix).</p>
+                <p>For exploring data in 2 directions (e.g. time and exposure), use: <em>file_1_1.jpg</em>, <em>file_1_2.jpg</em>, ... <em>file_1_15.jpg</em>, <em>file_2_1.jpg</em>. <br />The first number will be used as the y (rows) coordinate in the 2D matrix.</p>
+                
+                
+                <div id="userSets-menu">
+                    <a id="load-local-title" class="loadtab-title" onClick="navLoad('local')" href="#">
+                        Load from computer
+                    </a>
+                    <a id="load-web-title" class="loadtab-title" onClick="navLoad('web')" href="#">
+                        Load from Web
+                    </a>
+        		</div>
+                
+                
+                
+                <div id="loadtab-wrapper">
+                
+                
+                    <div  id="load-local"  class="loadtab">
+                        <input type="file" id="files" name="files[]" multiple />
+                        <div id="drop_zone" onMouseOver="onOff('drop_zone');" onMouseOut="onOff('drop_zone');" onClick="$('#files').click();">
+                            <div id="drop_zone_text" >
+                                <strong>click</strong> or <strong>drag and drop</strong> <br />
+                                to load images                        	 
+                            </div>
+                        </div>                
+                    </div>
+
+            
+            
+            		<div id="load-web" class="loadtab">
+                        For example, for monthly images, one might use xBins=<em>12</em> and filenames=<em>http://www.mywebsite/mydata/month_%d.jpg</em> <br/> 
+                        or for hourly and monthy data: yBins=<em>24</em>, xBins=<em>12</em> and filenames=<em>http://www.mywebsite/mydata/hourMonth_%d_%d.jpg</em> <br/> <br />
+                        
+                        <form style="text-align:left;" id="userSet">
+                          
+                          Number of dimensions to explore: 1D
+                            <input type="radio" name="nDims" value="1"  id="nDims1" checked>
+                        2D
+                        <input type="radio" name="nDims" value="2" id="nDims2">
+                         <br />
+                         <span id="yBins" style="display:inline">
+                        yBins: <input name="yBins" type="text" value="1" size="4" maxlength="4" > &nbsp; &nbsp; &nbsp;
+                        </span>
+                        xBins: <input name="xBins" type="text" value="30" size="4" maxlength="4"> <br />
+                        filename: <input name="filename" type="text" value="http://www.mit.edu/~adalca/tipiX/imageSets/bostonStorm//l_average_img_%d.jpg" size="100"> <br />
+                        
+                        <input type="button" onclick="launchDisplay('userSet');" value="Load!">
+                        </form>
+                    </div> 
+                </div>
             </div>
       
       
       
       
             
-             <div id="edit-tab" class="tab" > 
-             Some tagging/editing stuff can/will be here
-             </div>
             
             
     </div>
@@ -186,33 +218,66 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
 
 
 <div id="main-container">
-      <div id="side-container">
-      
-          <div id="left-container">
-          
-			<div id="previewMatrixLink">
-            	<a href="#" onClick="loadPreviewMatrix(loadObj);">Preview Data</a> | <a href="#" onClick="clearPreviewMatrix(loadObj);">Clear</a>
-            </div>   
-          
-            <div id="loadMatrix"></div>
-            <div id="previewMatrix"></div>
-          </div>
-      </div>
-
-
       <div id="display-container">
           <canvas id="mainDisplay" width="1200" height="900"></canvas>
       </div>
+</div>
   
-      <div id="right-container">
+  
+<!-- Info Container. Current_data, Load_data, TODOs, itneraction interface -->
+  
+<a href="#" id="info-clip" class="off" onMouseDown="onOff('info-clip'); updownContainer('info-container');">
+	i
+</a>  
+
+
+
+<div id="info-container" class="down">
+	<div id="info-title">
+          <h3>Information </h3>
+	</div>
+    <hr>
+    <div id="info-text">
+    <span class="title">Mouse Position:</span><span id="mouse-position"></span> <br />
+    <span class="title">Filename:</span><span id="file-name"></span>  <br />
+    <span class="title">Load Time:</span><span id="loadTime"></span>  <br />
+    <span class="title">Load Percentage:</span><span id="loadPerc"> </span> <br />
+    <span class="title">Lockx:</span><span id="lockx"> </span> <br />
+    <span class="title">Locky:</span><span id="locky"> </span> <br />
+    </div>
+    
+    <hr>
+    
+      <div id="loading-canvas-container">
+      <h3>Loading </h3>
+
+      <div id="loadMatrix"></div>
+<!--		<canvas id="loadingCanvas" width="200"></canvas>-->
+      </div>
+      
+      <hr>
+      
+       <div id="preview-canvas-container">
+       <h3>Preview </h3>
+       <div id="previewMatrixLink">
+            	
+
+       <a href="#" onClick="loadPreviewMatrix(loadObj);">Preview Data</a> | <a href="#" onClick="clearPreviewMatrix(loadObj);">Clear</a>
+                   </div>   
+      	<div id="previewMatrix"></div>
+        
+<!--          <canvas id="previewCanvas" width="200" height="450"></canvas> -->
+      </div>
+      
           <div id="debug"></div>
           <div id="imgnr"></div>
-          <div id="time"><span id="loadTime"> </span> <br /> <span id="loadPerc"> </span></div>
-          
-      </div>
+          <div id="time"></div>
+          <output id="list"></output> 
 </div>
-     
-	
+  
+ 
+    
+    
 <script src="js/core.js"></script>	
   
   
@@ -230,3 +295,5 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
 
   </body>
 </html>
+
+

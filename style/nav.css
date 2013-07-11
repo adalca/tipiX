@@ -13,8 +13,50 @@
 @charset "utf-8";
 /* tipiX Navigation CSS */
 
+
+#nav-container {
+	clear:both;
+	margin: 0 auto;
+	left:50%;
+	margin-left:-450px;
+	width:900px;
+	position:fixed;
+	top:0px;
+	height:50px;
+	/*
+	background: -moz-linear-gradient(top,#008dfd 0,#0370ea 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0,#008dfd),color-stop(100%,#0370ea));
+	background: -webkit-linear-gradient(top,#008dfd 0,#0370ea 100%);
+	background: -o-linear-gradient(top,#008dfd 0,#0370ea 100%);
+	background: -ms-linear-gradient(top,#008dfd 0,#0370ea 100%);
+	background: linear-gradient(top,#008dfd 0,#0370ea 100%);*/
+	border-bottom: 1px solid #dbdbdb;
+/*	background-color:#FFF;
+	box-shadow:0px 0px 50px 50px #FFF;*/
+	z-index:20;
+}
+
+#nav-container a {
+	float:right;
+	display:inline-block;
+	width:100px;
+	font-size:16px;
+	font-family:"Roboto",Helvetica;
+	text-align:center;
+	border-bottom:3px solid #008dfd;
+	margin:25px 10px 0 10px;
+	line-height:20px;
+	padding-bottom:2px;
+	color:#008dfd;
+}
+
+#nav-container a:hover {
+	color:#F90;
+}
+
+
 #sets-tab {
-	width:1200px;
+	width:9600px;
 	height:200px;
 	overflow-x: scroll;
 	overflow-y: hidden;
@@ -32,8 +74,20 @@
 	border:0px;
 }
 
+#examples-tab {
+	width:960px;
+	text-align:center;
+}
+
+#examples-tab img {
+	height:135px;
+	padding-right:10px;
+/*	float:left;*/
+	border:0px;
+}
+
 .set-container {
-	width: 400px;
+	width: 300px;
 	height:200px;
 	float:left;
 	padding:10px;
@@ -42,24 +96,56 @@
 }
 
 #userSets-tab {
-	margin:auto;
-	border: 1px solid #EFEFEF;
-	padding:10px;
+	vertical-align:middle;	
+	margin: 0 auto;
+	top:50%;
+	left:50%;
+	position:absolute;
+	width:760px;
+	margin-left:-400px;
+	height:320px;
+	margin-top:-160px;
+}
+
+#userSets-menu {
+	width:600px; 
+	height:20px;
+	text-align:center; 
+	margin-left:auto; 
+	margin-right:auto;
+}
+
+#about-tab {
+	text-align:center;
+	vertical-align:middle;	
+	margin: 0 auto;
+	top:50%;
+	left:50%;
+	position:absolute;
+	width:660px;
+	margin-left:-350px;
+	height:300px;
+	margin-top:-150px;
 }
 
 
-
-#info-container {
-	clear:both;
-	margin-left:auto;
-	margin-right:auto;
+#menu-container {
+	position:absolute;
+	text-align:center;
+	vertical-align:middle;	
+	margin: 0 auto;
+	top:50%;
+	left:50%;
 	width:1200px;
-	margin-bottom:10px;
+	margin-left:-600px;
+	height:800px;
+	margin-top:-400px;
+	z-index:10;
 }
 
 #tab-title-container {
 	padding-top:0px;
-	width:1010px; /** n * #tabs + border **/
+	width:610px; /** n * #tabs + border **/
 	height:50x;
 	margin-left:auto;
 	margin-right:auto;
@@ -67,6 +153,31 @@
 
 #edit-tab {
 	padding:20px;
+}
+
+
+.loadtab-title {
+	width:300px;
+	float:left;
+	text-align:center;
+	color:#06F;
+}
+
+
+
+#loadtab-wrapper {
+	width:750px; 
+	height:150px;
+	padding:5px;
+	border:1px solid #DEDEDE; 
+}
+
+#load-web {
+	display:none;
+}
+
+#load-local-title {	
+	border-bottom:	3px solid #0370ea
 }
 
 .tab-title {
@@ -77,24 +188,348 @@
 	color:#06F;
 }
 
+
+#drop_zone_main_text {
+	position:absolute;
+	margin: 0 auto;
+	top:50%;
+	left:50%;
+	height:40px;
+	margin-top:-30px;	
+	width:100px;
+	margin-left:-50px;	
+}
+
+#drop_zone_main {
+	position:relative;
+	margin: 0 auto;
+	top:50%;
+	left:50%;
+	width:300px; 
+	margin-left:-150px;
+	height:100px;
+	margin-top:-50px;
+	border:1px dashed #CCC; 
+	text-align:center;
+	vertical-align:middle;
+}
+
+#drop_zone_main.on {
+	background-color:#FAFAFA;	
+}
+
+#drop_zone_main.off {
+	background-color:inherit;	
+}
+
+
+
+
+
+#drop_zone_text {
+	position:absolute;
+	margin: 0 auto;
+	top:50%;
+	left:50%;
+	height:40px;
+	margin-top:-20px;	
+	width:200px;
+	margin-left:-100px;	
+}
+
+#drop_zone {
+	position:absolute;
+	margin: 0 auto;
+	top:50%;
+	left:50%;
+	width:600px; 
+	margin-left:-300px;
+	height:100px;
+	margin-top:25px;
+	border:1px dashed #CCC; 
+	padding:5px; 
+	text-align:center;
+	vertical-align:middle;
+}
+
+#drop_zone.on {
+	background-color:#FAFAFA;	
+}
+
+#drop_zone.off {
+	background-color:inherit;	
+}
+
+#files {
+	display:none;	
+}
+
+#browse-click {
+	width:600px; 
+	margin:0px 0px 0px 0px; 
+	height:100px; 
+	border:1px dashed #CCC; 
+	padding:5px; 
+	text-align:center;	
+}
+
 #tab-container {
-	clear:both;
-	padding-top:0px;
-	margin-top:50px;
-	width:1200px;
-	border: 1px solid #EFEFEF;	
-	border-top: 1px solid #787878;	/* this is ugly, should be made to work in tab-title-container, border:bottom */
+	margin: 0 auto;
+	top:50%;
+	left:50%;
+	position:absolute;
+	width:1000px;
+	margin-left:-500px;
+	height:300px;
+	margin-top:-150px;
 }
 
 .tab {
 	display:none;
+	border: 1px solid #EFEFEF;	
+	background: rgba(255, 255, 255, 0.9);
+	padding:20px;
+	border-radius: 7px;
+	box-shadow:0px 0px 30px 0px #999;
 }
 
 
-#about-tab {
-	text-align:center;	
+
+
+#controls-tab {
+	text-align:center;
+	vertical-align:middle;	
+	margin: 0 auto;
+	top:50%;
+	left:50%;
+	position:absolute;
+	width:700px;
+	margin-left:-350px;
+	height:300px;
+	margin-top:-150px;
 }
 
 #tutorial-tab {
 	padding:10px;
+}
+
+
+
+#control-container {
+	background-color:#000;
+	position:absolute;
+	right:100px;
+	width:200px;
+	height:200px;
+	opacity:0.5;
+	filter:alpha(opacity=50); /* For IE8 and earlier */
+	color:#FFF;
+	-webkit-transition:bottom 0.5s ease-in-out;
+	-moz-transition:bottom 0.5s ease-in-out;
+	-o-transition:bottom 0.5s ease-in-out;	
+	transition:bottom 0.5s ease-in-out;
+}
+
+#control-container.down{
+	bottom:-175px;
+}
+
+#control-container.up {
+	bottom:0px;
+}
+
+
+#control-title {
+	top:0px;
+	height:25px;
+	padding:5px;
+	width:200px
+}
+
+#control-text {
+	text-align:center;
+}
+
+#control-text a {
+	display:block;
+}
+
+
+.close_button a{
+	position:absolute;
+	right:3px;
+	top:3px;
+	width:30px;	
+	height:30px;
+	border-radius: 7px;
+	line-height:30px;
+	background: rgb(239,239,239);
+	color:#000;
+	text-align:center;
+}
+
+.close_button a:hover{
+	background: rgb(205,205,205);
+	color:#000;
+}
+
+
+
+#info-clip {
+	float:right;
+	right:0px;
+	top:0px;
+	position:fixed;
+	margin-top:0px;
+	width:30px;
+	height:30px;
+	background: rgba(201, 201, 201, 0.5);
+	-webkit-transition:right 0.3s ease-in-out;
+	-moz-transition:right 0.3s ease-in-out;
+	-o-transition:right 0.3s ease-in-out;	
+	transition:right 0.3s ease-in-out;
+	text-align:center;
+	vertical-align:middle;
+	z-index:100;
+}
+
+#info-clip:hover {
+	color:#000;
+	background-color:#CCC;
+}
+
+#info-clip.on {
+	right:250px;
+}
+
+#info-clip.off {
+	right:0px;
+}
+
+
+#info-container {
+	background: rgba(201, 201, 201, 0.5);
+	position:fixed;
+	top:0px;
+	right:-250px;
+	width:230px;
+	height:100%;
+	padding:10px;
+/*	opacity:0.5;
+	filter:alpha(opacity=50); /* For IE8 and earlier */
+	-webkit-transition:right 0.3s ease-in-out;
+	-moz-transition:right 0.3s ease-in-out;
+	-o-transition:right 0.3s ease-in-out;	
+	transition:right 0.3s ease-in-out;
+	z-index:99;
+}
+
+#info-container.down{
+	right:-250px;
+	color:#000;
+}
+
+#info-container.up {
+	right:0px;
+}
+
+
+#info-title {
+	top:0px;
+	height:25px;
+	padding:5px;
+}
+
+#info-text {
+	height:200px;
+	padding:5px;
+}
+
+#info-text a {
+	color:#000;
+	display:block;
+}
+
+#info-text span.title {
+	float: left;
+	width:120px;
+}
+
+#info-text span {
+	float: left;
+	width:70px;
+}
+
+
+
+
+
+
+#loading-container {
+	background-color:#000;
+	margin-left:auto;
+	margin-right:auto;
+	height:450px;
+	width:200px;
+	position:relative;
+	top:200px;
+	left:-510px;
+	z-index:-100;
+	opacity:0.5;
+	filter:alpha(opacity=50); /* For IE8 and earlier */
+	color:#FFF;
+	-webkit-transition:left 0.3s ease-in-out;
+	-moz-transition:left 0.3s ease-in-out;
+	-o-transition:left 0.3s ease-in-out;	
+	transition:left 0.3s ease-in-out;
+	box-shadow:0px 0px 50px 0px #DDD;
+}
+
+#loading-container.in{
+	left:-510px;
+}
+
+#loading-container.out {
+	left:-700px;
+}
+
+#loading-canvas-container {
+	width:200px;
+	height:400px;
+}
+
+
+
+
+
+#preview-container {
+	background-color:#000;
+	margin-left:auto;
+	margin-right:auto;
+	height:450px;
+	width:200px;
+	position:relative;
+	top:-250px;
+	right:-510px;
+	z-index:-100;
+	opacity:0.5;
+	filter:alpha(opacity=50); /* For IE8 and earlier */
+	color:#FFF;
+	-webkit-transition:right 0.3s ease-in-out;
+	-moz-transition:right 0.3s ease-in-out;
+	-o-transition:right 0.3s ease-in-out;	
+	transition:right 0.3s ease-in-out;
+	box-shadow:0px 0px 50px 0px #DDD;
+}
+
+#preview-container.in{
+	right:-510px;
+}
+
+#preview-container.out {
+	right:-700px;
+}
+
+#preview-canvas-container {
+	width:200px;
 }

@@ -16,13 +16,16 @@
  * @param choice - String - a set choice (see cases for options).
  * @returns {Array} - 1d or 2d pictureBox objects 
  */ 
-function launchDisplay(choice) {
+function launchDisplay(choice, evt) {
 	switch (choice) {
 		case "boston4day":
 			loadObj = loadBoston4Day();
 			break;
-		case "boston5day":
-			loadObj = loadBoston5Day();
+		case "lupus":
+			loadObj = lupus();
+			break;
+		case "emerald":
+			loadObj = loadEmerald();
 			break;
 		case "bostonStorm":
 			loadObj = loadBostonStorm();
@@ -33,11 +36,11 @@ function launchDisplay(choice) {
 		case "lakePlacidDrive":
 			loadObj = loadLakePlacidDrive();
 			break;
-		case "emerald":
-			loadObj = loadEmerald();
-			break;
 		case "userSet":
 			loadObj = loadUserSet();
+			break;
+		case "userSetLocal":
+			loadObj = loadUserSetLocal(evt);
 			break;
 		default:
 			alert('Not a valid case'); 
@@ -57,11 +60,31 @@ function launchDisplay(choice) {
 	// close nav
 	nav(currentTab);
 	
+	// TODO: initiate loading canvas
+	xSize = document.getElementById("loadingCanvas").width;
+	binsPerPixel = loadObj.xBins / xSize;
+	
+	if (loadObj.yBins == undefined)
+		yBins = 1;
+	else
+		yBins = loadObj.yBins;
+
+	ySize = Math.ceil(yBins / binsPerPixel);
+	ySize = Math.max(ySize, 10);
+	ySize = Math.min(ySize, 300); //TODO hardcoded?
+	document.getElementById("loadingCanvas").height = ySize;
+	document.getElementById("loadMatrix").height = ySize;
+	//TODO get also the loading parent to be that big!
+	
+	// force a reshape of window on first picture draw.
+	fixedAspectRatio = 0;
+	
 	// return the images
 	return pictureBoxes;
 }
 
 function loadBoston4Day() {
+	loadObj.type = "web";
 	loadObj.nDims = 2;
 	loadObj.xBins = 5;
 	loadObj.yBins = 24;
@@ -69,7 +92,18 @@ function loadBoston4Day() {
 	return loadObj;
 }
 
+function lupus() {
+	loadObj.type = "web";
+	loadObj.nDims = 2;
+	loadObj.xBins = 5;
+	loadObj.yBins = 56;
+	loadObj.fileName = CORE_SET_PATH + '/imageSets/lupus/lupus_%d_%d.jpg'; 
+	return loadObj;
+}
+
+
 function loadBoston5Day() {
+	loadObj.type = "web";
 	loadObj.nDims = 2;
 	loadObj.xBins = 5;
 	loadObj.yBins = 24;
@@ -78,6 +112,7 @@ function loadBoston5Day() {
 }
 
 function loadBostonStorm() {
+	loadObj.type = "web";
 	loadObj.nDims = 1;
 	loadObj.xBins = 30;
 	loadObj.fileName = CORE_SET_PATH + '/imageSets/bostonStorm/l_average_img_%d.jpg'; 
@@ -85,6 +120,7 @@ function loadBostonStorm() {
 }
 
 function loadVermontDrive() {
+	loadObj.type = "web";
 	loadObj.nDims = 1;
 	loadObj.xBins = 60;
 	loadObj.fileName = CORE_SET_PATH + '/imageSets/vermontDrive/l_average_img_%d.jpg';
@@ -92,6 +128,7 @@ function loadVermontDrive() {
 }
 
 function loadLakePlacidDrive() {
+	loadObj.type = "web";
 	loadObj.nDims = 1;
 	loadObj.xBins = 26;
 	loadObj.fileName = CORE_SET_PATH + '/imageSets/lakePlacidDrive/l_average_img_%d.jpg';
@@ -99,6 +136,7 @@ function loadLakePlacidDrive() {
 }
 
 function loadEmerald() {
+	loadObj.type = "web";
 	loadObj.nDims = 1;
 	loadObj.xBins = 337;
 	loadObj.fileName = CORE_SET_PATH + '/imageSets/emerald/img (%d).jpg';
@@ -120,8 +158,10 @@ function loadUserSet() {
 		loadObj.yBins = parseInt(oForm.elements['yBins'].value);	
 	}
 	loadObj.fileName = oForm.elements['filename'].value;
+	loadObj.type = "web";
 	return loadObj;
 }
+
 
 
 /******************************************************************************
@@ -130,6 +170,12 @@ function loadUserSet() {
 
 // original settings and global variables
 var DRAW_CANVAS_NAME = 'mainDisplay';
+var MAX_CANVAS_WIDTH = 1200;
+var MAX_CANVAS_HEIGHT = 900;
+var MAX_EMPTY_CANVAS_WIDTH = 600;
+var MAX_EMPTY_CANVAS_HEIGHT = 450;
+var MIN_CANVAS_WIDTH = 400;
+var MIN_CANVAS_HEIGHT = 300;
 var canvasOn = false; 
 var currentX = 0;
 var currentY = 0;
@@ -138,32 +184,60 @@ var startTime = 0;
 var loadObj = new Object();
 var curPictureBox = null;
 var currentTab = 'about';
-var currentTabState = true;
+var currentLoadTab = 'local';
+var currentTabState = false;
 var CORE_SET_PATH = 'http://www.mit.edu/~adalca/tipiX';
 var logoImage;
 var lockx = false;
 var locky = false;
 var global_x = -1;
-
+var fixedAspectRatio = 0;
 
 // key presses
 $(document).keyup(function(e) {
   if (e.keyCode == 88) { 
   	lockx = !lockx; 
+	document.getElementById('lockx').innerHTML = lockx;
 	}   // x
   if (e.keyCode == 89) { 
   	locky = !locky; 
+	document.getElementById('locky').innerHTML = locky;
 	}   // x
   if (e.keyCode == 27) { 
   	lockx = false; 
   	locky = false; 
-	}   // x
-	
+	document.getElementById('lockx').innerHTML = lockx;
+	document.getElementById('locky').innerHTML = locky;
+	}   // esc
+	if (e.keyCode == 67) { //c
+		nav('about');
+	}
+	if (e.keyCode == 73) { //i
+		onOff('info-clip');
+		updownContainer('info-container');
+	}
 });
+
+
+
+// files listener. TODO: why is this like this, can't it be a click event?
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+// Setup the dnd listeners.
+var dropZone = document.getElementById('drop_zone');
+dropZone.addEventListener('dragover', handleDragOver, false);
+dropZone.addEventListener('drop', handleFileSelectDrop, false);
+
+var dropZoneMain = document.getElementById('drop_zone_main');
+dropZoneMain.addEventListener('dragover', handleDragOver, false);
+dropZoneMain.addEventListener('drop', handleFileSelectDrop, false);
 
 
 // canvas and listener
 var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
+
+
+
 canvas.onclick = function () { console.log((global_x+1).toString()); };
 canvas.addEventListener('mousemove', function(evt) {
 	if (canvasOn) {
