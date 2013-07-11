@@ -61,7 +61,7 @@ function launchDisplay(choice, evt) {
 	nav(currentTab);
 	
 	// TODO: initiate loading canvas
-	xSize = document.getElementById("loadingCanvas").width;
+	/*xSize = document.getElementById("loadingCanvas").width;
 	binsPerPixel = loadObj.xBins / xSize;
 	
 	if (loadObj.yBins == undefined)
@@ -73,7 +73,7 @@ function launchDisplay(choice, evt) {
 	ySize = Math.max(ySize, 10);
 	ySize = Math.min(ySize, 300); //TODO hardcoded?
 	document.getElementById("loadingCanvas").height = ySize;
-	document.getElementById("loadMatrix").height = ySize;
+	document.getElementById("loadMatrix").height = ySize;*/
 	//TODO get also the loading parent to be that big!
 	
 	// force a reshape of window on first picture draw.
