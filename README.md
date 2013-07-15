@@ -24,10 +24,12 @@ External Libraries used:
 TODOs:
 ------
 - First load: have a (non-obvious) drag & drop over tipix, or a button over tipix that launches 'About', or: all three About \cdot load \cdot example - that dissapear once a button is clicked, and reappears as long as nothing is loaded?
+- address bar dataset load
 - clean code 
 - add nifti support via xio.
 - fix +1 issue 
 - clean loading screens, etc 
+ - have a loading screen even for Very large images?
 - preview - have a button that, when pressed, shows that matrix (or similar one) in the main window. 
 - maintain a separate page with *many* of my own datasets.
  - Add some information about the original images (Camera Make, Total Count, ETC)
@@ -35,3 +37,7 @@ TODOs:
 - clean-up css
 - put images in preview div as they load
 - do youtube-style tutorial
+
+Bug Reports:
+------------
+- for 1-D example (timelapse) initiated right after loading website, the canvas does not re-size to max possible.
