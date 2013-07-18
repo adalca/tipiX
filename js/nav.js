@@ -42,7 +42,7 @@ $(document).ready(function(){
 	logoImage.src = 'http://www.mit.edu/~adalca/tipiX/images/logo.png'
 	
 	
-	
+
 
 
 	// form hide yBins by default
@@ -54,6 +54,13 @@ $(document).ready(function(){
 			$('#yBins').hide();
 		}
 	});
+	
+	// get any pre-load datasets:
+	console.log(currentTabState);
+	if (location.search.indexOf('?') >= 0)
+		launchDisplay('userSetAddressBar');
+	console.log(currentTabState);
+	
 });
  
 

@@ -4,9 +4,21 @@ tipiX
 tipiX - time picture explorer is an experimental tool for exploring time (or other dimensions) of image sets, generally images from similar view points (e.g. frames from timelapses). 
 Take a test drive by trying an example dataset or load your own. Once loaded, movement with the mouse along x or y can explore difference dimensions of the data.
 
+Use:
+----
+1. Load a dataset (see instructions under 'load' tab)
+2. Move mouse over image to switch between images
+
 Demo:
 -----
 http://www.mit.edu/~adalca/tipiX/
+
+Address-bar query:
+------------------------
+example:
+http://www.mit.edu/~adalca/tipiX/?path=http://people.csail.mit.edu/adalca/vb/initVol_%d_%d.jpg&xBins=30&dims=2&yBins=30#
+- path: same as the path required in the load menu
+- xBins, yBins, dims - all self-explanatory :)
 
 License Info:
 -------------
@@ -23,8 +35,11 @@ External Libraries used:
 
 TODOs:
 ------
+- allow people to share via address bar if data is from the web with a share button (email, facebook, g+)
+- have loading screen (just 0..100) separate from <i> panel
+- + and - button to change size of window.
+- (repeating) play button for 1D stuff.
 - First load: have a (non-obvious) drag & drop over tipix, or a button over tipix that launches 'About', or: all three About \cdot load \cdot example - that dissapear once a button is clicked, and reappears as long as nothing is loaded?
-- address bar dataset load
 - clean code 
 - add nifti support via xio.
 - fix +1 issue 

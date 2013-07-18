@@ -27,20 +27,15 @@ function launchDisplay(choice, evt) {
 		case "emerald":
 			loadObj = loadEmerald();
 			break;
-		case "bostonStorm":
-			loadObj = loadBostonStorm();
-			break;
-		case "vermontDrive":
-			loadObj = loadVermontDrive();
-			break;
-		case "lakePlacidDrive":
-			loadObj = loadLakePlacidDrive();
-			break;
-		case "userSet":
-			loadObj = loadUserSet();
+		case "userSetWeb":
+			loadObj = loadUserSetWeb();
 			break;
 		case "userSetLocal":
 			loadObj = loadUserSetLocal(evt);
+			break;
+		case "userSetAddressBar":
+			loadObj = loadUserSetAddressBar();
+			currentTabState = true;
 			break;
 		default:
 			alert('Not a valid case'); 
@@ -101,40 +96,6 @@ function lupus() {
 	return loadObj;
 }
 
-
-function loadBoston5Day() {
-	loadObj.type = "web";
-	loadObj.nDims = 2;
-	loadObj.xBins = 5;
-	loadObj.yBins = 24;
-	loadObj.fileName = CORE_SET_PATH + '/imageSets/boston5day/l_average_img_%d_%d.jpg'; 
-	return loadObj;
-}
-
-function loadBostonStorm() {
-	loadObj.type = "web";
-	loadObj.nDims = 1;
-	loadObj.xBins = 30;
-	loadObj.fileName = CORE_SET_PATH + '/imageSets/bostonStorm/l_average_img_%d.jpg'; 
-	return loadObj;
-}
-
-function loadVermontDrive() {
-	loadObj.type = "web";
-	loadObj.nDims = 1;
-	loadObj.xBins = 60;
-	loadObj.fileName = CORE_SET_PATH + '/imageSets/vermontDrive/l_average_img_%d.jpg';
-	return loadObj;
-}
-
-function loadLakePlacidDrive() {
-	loadObj.type = "web";
-	loadObj.nDims = 1;
-	loadObj.xBins = 26;
-	loadObj.fileName = CORE_SET_PATH + '/imageSets/lakePlacidDrive/l_average_img_%d.jpg';
-	return loadObj;
-}
-
 function loadEmerald() {
 	loadObj.type = "web";
 	loadObj.nDims = 1;
@@ -143,7 +104,37 @@ function loadEmerald() {
 	return loadObj;
 }
 
-function loadUserSet() {
+function loadUserSetAddressBar() {
+	loadObj.type = "web";
+	var dims = getParameterByName('dims');
+	if (dims == '' || parseInt(dims) == 1) {
+		loadObj.nDims = 1;
+	} else {
+		assert(parseInt(dims) == 2, 'need dims to be 1 or 2');
+		loadObj.nDims = 2;
+	}
+	
+	var xBins = getParameterByName('xBins');
+	loadObj.xBins = xBins;
+	assert(!isNaN(parseInt(xBins)), 'need xBins to be integer');
+	
+	if (loadObj.nDims == 2) {
+		var yBins = getParameterByName('yBins');
+		assert(!isNaN(parseInt(yBins)), 'need yBins to be integer');
+		loadObj.yBins = yBins;
+	}
+	
+	var path = getParameterByName('path');
+	assert(path != '', 'Need a full path');
+	loadObj.fileName = path;
+	
+	console.log(loadObj)
+	
+	return loadObj;
+	
+}
+
+function loadUserSetWeb() {
 	var oForm = document.getElementById('userSet');
 	
 	var radios = document.getElementsByName('nDims');
