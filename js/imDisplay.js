@@ -785,10 +785,10 @@ function changePlayState() {
 	// TODO - check if js has ifelse ?:
 	if (playState) {
 		document.getElementById('play').value = "stop";
-		document.getElementById('iframe-play').value = "stop";
+		document.getElementById('iframe-info').innerHTML = "video";
 	} else {
 		document.getElementById('play').value = "play";
-		document.getElementById('iframe-play').value = "play";			
+		document.getElementById('iframe-info').innerHTML = "interactive (press x to lock frame)";			
 	}
 }
 
@@ -803,7 +803,7 @@ function continuousPlay(i) {
 		setTimeout(function() {
 			drawImage(pictureBox.img, canvas);
 			continuousPlay(nexti)
-			}, 30);
+			}, PLAY_MS_WAIT);
 	}
 }
 
@@ -836,6 +836,3 @@ function getDataURL() {
 function openDataURL(target) {
 	window.open(getDataURL(), target);
 }
-
-
-

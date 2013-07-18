@@ -90,10 +90,15 @@ $(document).ready(function(){
 		
 		var playRes = getParameterByName('play');
 		console.log(playRes);
-		if (playRes == 'true') {
+		if (playRes != '') {
+			if (playRes != 'true') {
+				PLAY_MS_WAIT = parseInt(playRes);
+				assert(!isNaN(PLAY_MS_WAIT));
+			}
 			changePlayState(); 
 			continuousPlay(0);
 		}
+		
 
 	}
 		

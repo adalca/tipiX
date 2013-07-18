@@ -167,6 +167,7 @@ var MAX_EMPTY_CANVAS_WIDTH = 600;
 var MAX_EMPTY_CANVAS_HEIGHT = 450;
 var MIN_CANVAS_WIDTH = 400;
 var MIN_CANVAS_HEIGHT = 300;
+var PLAY_MS_WAIT = 30;
 var canvasOn = false; 
 var currentX = 0;
 var currentY = 0;
@@ -184,6 +185,7 @@ var locky = false;
 var global_x = -1;
 var fixedAspectRatio = 0;
 var playState = false;
+var iFrameMode = false;
 
 // key presses
 $(document).keyup(function(e) {
@@ -232,8 +234,18 @@ var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
 
 canvas.onclick = function () { console.log((global_x+1).toString()); };
 canvas.addEventListener('mousemove', function(evt) {
+	
 	if (canvasOn) {
 		var mousePos = getMousePos(canvas, evt);
 		drawImageAtPosition(mousePos);
 	}
 }, false);
+
+
+canvas.addEventListener('click', function(evt) {
+	if (iFrameMode) {
+		changePlayState(); 
+		continuousPlay(0);
+	}
+}, false);
+
