@@ -33,13 +33,16 @@ $(document).ready(function(){
 		document.getElementById(tabTitle).style.lineHeight = '20px';
 		document.getElementById(tabTitle).style.paddingBottom = '2px';
 		document.getElementById(tabTitle).style.borderBottom = '3px solid #0370ea';
+	} else {
+		document.getElementById('tab-container').style.display = 'none';
+		document.getElementById('menu-container').style.display = 'none';
 	}
 
 
 	// fill in logo. 
 	logoImage = new Image();
 	logoImage.onload = function () { drawLogo(); };
-	logoImage.src = 'http://www.mit.edu/~adalca/tipiX/images/logo.png'
+	logoImage.src = 'http://www.mit.edu/~adalca/tipiX/images/logo.png';
 	
 	
 
@@ -55,10 +58,48 @@ $(document).ready(function(){
 		}
 	});
 	
-	// get any pre-load datasets:
-	console.log(currentTabState);
-	if (location.search.indexOf('?') >= 0)
-		launchDisplay('userSetAddressBar');
+	
+	
+	
+	if (location.search.indexOf('?') >= 0) {
+		
+		
+		// check for iframe mode
+		var iframeRes = getParameterByName('iframe');
+		// TODO - force a minimum iframe size!
+		// TODO - error checking.....
+		if (iframeRes != '') {
+			iFrameMode = true;	
+			var xLoc = iframeRes.indexOf('x');
+			MIN_CANVAS_WIDTH = iframeRes.substring(0, xLoc);
+			MAX_CANVAS_WIDTH = MIN_CANVAS_WIDTH;
+			MAX_EMPTY_CANVAS_WIDTH = MIN_CANVAS_WIDTH;
+			MIN_CANVAS_HEIGHT = iframeRes.substring(xLoc + 1);
+			MAX_CANVAS_HEIGHT = MIN_CANVAS_HEIGHT;
+			MAX_EMPTY_CANVAS_HEIGHT = MIN_CANVAS_HEIGHT;
+			document.getElementById('iframe-controls-container').style.visibility = 'visible';
+			document.getElementById('nav-container').style.visibility = 'hidden';
+		}		
+		
+		// get any pre-load datasets:
+		try {
+			launchDisplay('userSetAddressBar');
+		} catch (err) {
+			console.log('No addressbar dataset loaded');
+		}
+		
+		var playRes = getParameterByName('play');
+		console.log(playRes);
+		if (playRes == 'true') {
+			changePlayState(); 
+			continuousPlay(0);
+		}
+
+	}
+		
+		
+
+	
 	console.log(currentTabState);
 	
 });

@@ -106,7 +106,7 @@ function loadEmerald() {
 
 function loadUserSetAddressBar() {
 	loadObj.type = "web";
-	var dims = getParameterByName('dims');
+	var dims = getParameterByName('nDims');
 	if (dims == '' || parseInt(dims) == 1) {
 		loadObj.nDims = 1;
 	} else {
@@ -183,6 +183,7 @@ var lockx = false;
 var locky = false;
 var global_x = -1;
 var fixedAspectRatio = 0;
+var playState = false;
 
 // key presses
 $(document).keyup(function(e) {

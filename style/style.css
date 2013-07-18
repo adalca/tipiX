@@ -104,6 +104,7 @@ a:hover {
 	background-repeat:no-repeat;
 	background-attachment:fixed;
 	background-position:center;
+	display:block;
 }
 
 #mainDisplay {

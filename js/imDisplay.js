@@ -322,6 +322,8 @@ function writeDebug(msg) {
  * @param pos - the position of the mouse
  */
 function drawImageAtPosition(pos) {
+	if (playState) return;
+	
 	nDims = loadObj.nDims;
 	
 	// TODO: add lockx, locky information on screen
@@ -766,9 +768,74 @@ function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
         results = regex.exec(location.search);
-	console.log(name);
-	console.log(results[1].replace(/\+/g, " "));
 	return results == null ? "" : results[1].replace(/\+/g, " ");
 //    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 
 }
+
+
+
+
+// TODO - make sure this works reasonably....
+function changePlayState() {
+	assert(loadObj.nDims == 1, 'dataset should be 1D for playing');
+	
+	playState = ~playState;	
+	
+	// TODO - check if js has ifelse ?:
+	if (playState) {
+		document.getElementById('play').value = "stop";
+		document.getElementById('iframe-play').value = "stop";
+	} else {
+		document.getElementById('play').value = "play";
+		document.getElementById('iframe-play').value = "play";			
+	}
+}
+
+function continuousPlay(i) {
+	var canvas = document.getElementById(DRAW_CANVAS_NAME);
+
+	if (playState) {
+
+		var pictureBox = pictureBoxes[i];
+		var nexti = (i + 1) % loadObj.xBins;
+	
+		setTimeout(function() {
+			drawImage(pictureBox.img, canvas);
+			continuousPlay(nexti)
+			}, 30);
+	}
+}
+
+
+
+
+function getDataURL() {
+	var url = 'http://www.mit.edu/~adalca/tipiX/'
+	
+	if (loadObj.type != 'web') {// TODO: check in a better way if dataset is loaded or exists?
+		return url;
+	}
+	
+	url = url + '?';
+	
+	url = url + 'path=' + loadObj.fileName;
+	url = url + '&xBins=' + loadObj.xBins;
+	
+	if (loadObj.nDims == 2) {
+		url = url + '&nDims=' + loadObj.nDims;
+		url = url + '&yBins=' + loadObj.yBins;
+	}
+	
+	return url;
+	
+	
+	
+}
+
+function openDataURL(target) {
+	window.open(getDataURL(), target);
+}
+
+
+

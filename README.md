@@ -16,7 +16,7 @@ http://www.mit.edu/~adalca/tipiX/
 Address-bar query:
 ------------------------
 example:
-http://www.mit.edu/~adalca/tipiX/?path=http://people.csail.mit.edu/adalca/vb/initVol_%d_%d.jpg&xBins=30&dims=2&yBins=30#
+http://www.mit.edu/~adalca/tipiX/?path=http://people.csail.mit.edu/adalca/vb/initVol_%d_%d.jpg&xBins=30&nDims=2&yBins=30#
 - path: same as the path required in the load menu
 - xBins, yBins, dims - all self-explanatory :)
 
@@ -36,9 +36,10 @@ External Libraries used:
 TODOs:
 ------
 - allow people to share via address bar if data is from the web with a share button (email, facebook, g+)
+ - allow embedding? via iframe. (done)
 - have loading screen (just 0..100) separate from <i> panel
 - + and - button to change size of window.
-- (repeating) play button for 1D stuff.
+- (repeating) play button for 1D stuff. (done! needs cleanup maybe)
 - First load: have a (non-obvious) drag & drop over tipix, or a button over tipix that launches 'About', or: all three About \cdot load \cdot example - that dissapear once a button is clicked, and reappears as long as nothing is loaded?
 - clean code 
 - add nifti support via xio.
