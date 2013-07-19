@@ -1,54 +1,44 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<link href="style/style.css" rel="stylesheet" type="text/css">
+<link href="style/demoStyle.css" rel="stylesheet" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>tipiX Embed Demo</title>
 </head>
 <body>
-<center>
+
+<div id="title-container">
 <h1>tipiX: embedding demo</h1>
+</div>	
 
-<br />
-<br />
+<div id="main-container">
+
 You can now embed tipiX datasets in other webpages. <br />
-On this page we demonstrate some new features of tipiX and embedding tipiXes.
+On this page we show examples of tipiX embedding and features.
 
-<br />
-<br />
 <h2> Two-dimentional Exploration </h2>
-<br />
-Here is an example of standard tipiX behaviour: A dataset that can be explored in two directions - time of day (top to bottom) and different days (left to right). <br /> Just move the mouse around to explore the space.
-<br />
+
+<p>Here is an example of standard tipiX behaviour: A dataset that can be explored in two directions - time of day (top to bottom) and different days (left to right). Just move the mouse around to explore the space.</p>
+
 <iframe src="http://www.mit.edu/~adalca/tipiX/?path=http://www.mit.edu/~adalca/tipiX/imageSets/boston4day_255/average_img_%d_%d.jpg&xBins=5&nDims=2&yBins=24&iframe=340x255"  width="340px" height="255px" frameborder="0"></iframe> 
 
-<br />
-<br />
 <h2> One-dimentional Exploration (e.g. Timelapse)</h2>
 <p>For timelapses, we can start them in <em>play</em> mode, with the "&play=true" address bar option. 
-<br />
+
 To <em>stop</em> a timelapse from playing, simply click on the timelapse, which starts the exploration mode (move the mouse left to right to visualize the frames). To freeze a frame, press <em>x</em> while stopped.</p>
 <iframe src="http://www.mit.edu/~adalca/tipiX/?path=http://www.mit.edu/~adalca/tipiX/imageSets/emerald_255/IMG_(%d).jpg&xBins=168&iframe=453x255&play=30"  width="453px" height="255px" frameborder="0"></iframe> 
 
 <iframe src="http://www.mit.edu/~adalca/tipiX/?path=http://www.mit.edu/~adalca/tipiX/imageSets/maligne_255/img_(%d).jpg&xBins=337&iframe=453x255&play=30"  width="453px" height="255px" frameborder="0"></iframe> 
 
 
-
-
-
-
-<br /> <br />
 <h2> Display Results and Graphs: Exploration </h2>
 
-In some exercises, you might get entire graphs (e.g. ROC curves) given some set parameters. 
-<br />
-Here, you can quickly explore your results varying two parameters (in this example, <em>a</em> and <em>b</em> of the gamma distribution):
-<br />
+<p>In some exercises, you might get entire graphs (e.g. ROC curves) given some set parameters. 
+Here, you can quickly explore your results varying two parameters (in this example, <em>a</em> and <em>b</em> of the gamma distribution):</p>
+
 <iframe src="http://www.mit.edu/~adalca/tipiX/?path=http://www.mit.edu/~adalca/tipiX/imageSets/gamma/gamma_%d_%d.png&xBins=10&nDims=2&yBins=10&iframe=600x450"  width="600px" height="450px" frameborder="0"></iframe> 
 
-
-
-</center>
+</div>
 
 </body>
 </html>

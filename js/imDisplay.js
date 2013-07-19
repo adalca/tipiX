@@ -152,7 +152,6 @@ function loadImage(loadObj, filenames, idx) {
 		pictureBox.fileName = filenames[idx[0]]; //sprintf(loadObj.fileName, idx[0]);
 		pictureBox.loadBoxName = sprintf('#load_%d', idx[0]);
 		pictureBox.previewBoxName = sprintf('#preview_%d', idx[0]);
-
 	} else {
 		pictureBox.fileName = filenames[idx[0]][idx[1]]; //sprintf(loadObj.fileName, idx[0], idx[1]);
 		pictureBox.loadBoxName = sprintf('#load_%d_%d', idx[0], idx[1]);
@@ -166,6 +165,12 @@ function loadImage(loadObj, filenames, idx) {
 		pictureBox.loaded = true;
 		checkLoaded(loadObj);
 		writeLoadingTime();
+		
+		if (curPictureBox == null) { 
+			var canvas = document.getElementById(DRAW_CANVAS_NAME); 
+			drawImage(pictureBox.img, canvas);
+			curPictureBox = pictureBox;
+		}
 	};
 
 	// set css and write loading time for this image
