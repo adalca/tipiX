@@ -38,6 +38,9 @@ TODOs:
 - allow people to share via address bar if data is from the web with a share button (email, facebook, g+)
  - allow embedding? via iframe. (done)
 - have loading screen (just 0..100) separate from <i> panel
+- drag&drop: if no number detection, just let images be 1d, random order
+- add graph exploration to tipiX examples. 
+ - make better (prettier) gamma graphs, maybe with google charts or js
 - + and - button to change size of window.
 - (repeating) play button for 1D stuff. (done! needs cleanup maybe)
 - First load: have a (non-obvious) drag & drop over tipix, or a button over tipix that launches 'About', or: all three About \cdot load \cdot example - that dissapear once a button is clicked, and reappears as long as nothing is loaded?

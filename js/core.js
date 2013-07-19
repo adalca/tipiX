@@ -243,7 +243,7 @@ canvas.addEventListener('mousemove', function(evt) {
 
 
 canvas.addEventListener('click', function(evt) {
-	if (iFrameMode) {
+	if (iFrameMode && loadObj.nDims == 1) {
 		changePlayState(); 
 		continuousPlay(0);
 	}
