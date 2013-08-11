@@ -86,6 +86,8 @@ $(document).ready(function(){
 			launchDisplay('userSetAddressBar');
 		} catch (err) {
 			console.log('No addressbar dataset loaded');
+			console.log(err);	
+			console.log(loadObj);	
 		}
 		
 		var playRes = getParameterByName('play');

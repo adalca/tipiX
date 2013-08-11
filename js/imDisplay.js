@@ -76,8 +76,9 @@ function buildMatrix(loadObj, type) {
 
 
 function prepareFilenames(loadObj) {
-	
-	
+
+	loadObj.fileName = loadObj.fileName.replace(/\$/g,"%d")
+		
 	if (loadObj.type == 'web') {
 		// TODO - +1 issue??? Right now, default to 1..N, but code is for 0..(N-1)
 		if (loadObj.nDims == 1) {

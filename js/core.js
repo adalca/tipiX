@@ -129,7 +129,6 @@ function loadUserSetAddressBar() {
 	loadObj.fileName = path;
 	
 	console.log(loadObj)
-	
 	return loadObj;
 	
 }
