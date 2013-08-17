@@ -35,6 +35,9 @@ External Libraries used:
 
 TODOs:
 ------
+Bugs:
+- iframe --> full link should have '$' instead of '%d' in number placeholders. 
+
 Redesign as an entire website?
 - think of redesign considering all current and near-future features and uses
 - have succinct about page, but have several links to examples

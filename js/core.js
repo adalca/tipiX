@@ -128,7 +128,6 @@ function loadUserSetAddressBar() {
 	assert(path != '', 'Need a full path');
 	loadObj.fileName = path;
 	
-	console.log(loadObj)
 	return loadObj;
 	
 }

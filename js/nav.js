@@ -91,7 +91,6 @@ $(document).ready(function(){
 		}
 		
 		var playRes = getParameterByName('play');
-		console.log(playRes);
 		if (playRes != '') {
 			if (playRes != 'true') {
 				PLAY_MS_WAIT = parseInt(playRes);
@@ -101,14 +100,13 @@ $(document).ready(function(){
 			continuousPlay(0);
 		}
 		
-
+		var quiet = getParameterByName('quiet');
+		if (quiet != '') {
+			document.getElementById('iFrameLogoText').style.height = "15px";
+			document.getElementById('info-clip').style.visibility = "hidden";
+			document.getElementById('info-container').style.visibility = "hidden";
+		}
 	}
-		
-		
-
-	
-	console.log(currentTabState);
-	
 });
  
 
