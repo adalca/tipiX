@@ -102,7 +102,8 @@ $(document).ready(function(){
 		
 		var quiet = getParameterByName('quiet');
 		if (quiet != '') {
-			document.getElementById('iFrameLogoText').style.height = "15px";
+			document.getElementById('iFrameLogoText').src = "http://www.mit.edu/~adalca/tipiX/images/logoText_10.png";
+			document.getElementById('iframe-controls-container').style.height = "10px";
 			document.getElementById('info-clip').style.visibility = "hidden";
 			document.getElementById('info-container').style.visibility = "hidden";
 		}
