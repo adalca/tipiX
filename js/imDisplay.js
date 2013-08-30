@@ -833,7 +833,7 @@ function getDataURL() {
 		url = url + '&nDims=' + loadObj.nDims;
 		url = url + '&yBins=' + loadObj.yBins;
 	}
-	
+	console.log(url);
 	return url;
 	
 	
