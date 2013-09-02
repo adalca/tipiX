@@ -826,7 +826,7 @@ function getDataURL() {
 	
 	url = url + '?';
 	
-	url = url + 'path=' + loadObj.fileName.replace(/\$/g,"%d");
+	url = url + 'path=' + loadObj.fileName.replace(/\%d/g, "$");
 	url = url + '&xBins=' + loadObj.xBins;
 	
 	if (loadObj.nDims == 2) {
