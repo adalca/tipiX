@@ -496,7 +496,7 @@ function writeLoadingPerc(perc) {
  */
 function imgBoxSet(loadBoxName, bgStr, xBins) {
 	var width = document.getElementById('loadMatrix').offsetWidth;
-	var binWidth = Math.floor(width / xBins);
+	var binWidth = width / xBins;
 	
 	
 	if (bgStr[0] == '#') { // if it's a color
