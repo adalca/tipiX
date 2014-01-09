@@ -24,6 +24,10 @@ Bug Reports:
 ------------
 - for 1-D example (timelapse) initiated right after loading website, the canvas does not re-size to max possible.
 
+Contact:
+--------
+[Adrian Dalca](http://adalca.mit.edu)
+
 License Info:
 -------------
 tipiX is licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php)
