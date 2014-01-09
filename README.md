@@ -26,7 +26,7 @@ Bug Reports:
 
 Contact:
 --------
-[Adrian Dalca](http://adalca.mit.edu)
+For any questions, discussion, suggestions or feature requests please contact [Adrian Dalca](http://adalca.mit.edu).
 
 License Info:
 -------------
