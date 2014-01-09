@@ -13,13 +13,6 @@ Demo:
 -----
 http://www.mit.edu/~adalca/tipiX/
 
-Address-bar query:
-------------------------
-example:
-http://www.mit.edu/~adalca/tipiX/?path=http://www.mit.edu/~adalca/tipiX/imageSets/boston4day/average_img_$_$.jpg&xBins=5&nDims=2&yBins=24#
-- path: same as the path required in the load menu
-- xBins, yBins, nDims - all self-explanatory :)
-
 External Libraries used:
 ------------------------
 - [sprintf](http://www.diveintojavascript.com/projects/javascript-sprintf)
@@ -33,6 +26,5 @@ Bug Reports:
 
 License Info:
 -------------
-tipiX is licensed under the MIT License:
-http://www.opensource.org/licenses/mit-license.php
+tipiX is licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php)
 See LICENSE file for more information
