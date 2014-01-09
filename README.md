@@ -20,24 +20,19 @@ http://www.mit.edu/~adalca/tipiX/?path=http://www.mit.edu/~adalca/tipiX/imageSet
 - path: same as the path required in the load menu
 - xBins, yBins, nDims - all self-explanatory :)
 
-License Info:
--------------
-tipiX is licensed under the MIT License:
-http://www.opensource.org/licenses/mit-license.php
-See LICENSE file for more information
-
 External Libraries used:
 ------------------------
 - [sprintf](http://www.diveintojavascript.com/projects/javascript-sprintf)
 - [sscanf](http://phpjs.org/functions/sscanf/)
 - [jquery](http://jquery.com/download/)
-- [xio (not yet)](https://github.com/xtk/XIO)
-
-TODOs:
-------
-Bugs:
-- iframe --> full link should have '$' instead of '%d' in number placeholders. 
+- [xio](https://github.com/xtk/XIO)
 
 Bug Reports:
 ------------
 - for 1-D example (timelapse) initiated right after loading website, the canvas does not re-size to max possible.
+
+License Info:
+-------------
+tipiX is licensed under the MIT License:
+http://www.opensource.org/licenses/mit-license.php
+See LICENSE file for more information
