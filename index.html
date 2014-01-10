@@ -6,11 +6,15 @@
 <link href="style/nav.css" rel="stylesheet" type="text/css">
 
 <!-- scripts -->
+<script type="text/javascript" src='ext-js/xio.js'></script>
 <script src="ext-js/sprintf-0.7-beta1.js" type="text/javascript"></script>
 <script src="ext-js/sscanf.js" type="text/javascript"></script>
 <script src="ext-js/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="js/niitools.js"  type="text/javascript"></script>
 <script src="js/imDisplay.js"  type="text/javascript"></script>
 <script src="js/nav.js"  type="text/javascript"></script>
+<script src="js/tools.js"  type="text/javascript"></script>
+<script src="js/load.js"  type="text/javascript"></script>
 <title>tipiX - time picture explorer</title>
 
 <!-- LICENSE Info:
@@ -127,6 +131,7 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
     <canvas id="mainDisplay" width="1200" height="900"></canvas>
   </div>
 </div>
+  
   <div id="iframe-controls-container">
     <span id="iframe-info"></span>
     
@@ -136,7 +141,8 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
    </a>
   </div>
 
-
+<canvas id="mainDisplayTest" width="200" height="200" style="border-width:1px; visibility:hidden;">
+</canvas>
 
 <!-- Info Container. Current_data, Load_data, TODOs, itneraction interface --> 
 
