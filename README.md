@@ -13,17 +13,6 @@ Demo:
 -----
 http://www.mit.edu/~adalca/tipiX/
 
-External Libraries used:
-------------------------
-- [sprintf](http://www.diveintojavascript.com/projects/javascript-sprintf)
-- [sscanf](http://phpjs.org/functions/sscanf/)
-- [jquery](http://jquery.com/download/)
-- [xio](https://github.com/xtk/XIO)
-
-Bug Reports:
-------------
-- for 1-D example (timelapse) initiated right after loading website, the canvas does not re-size to max possible.
-
 Contact:
 --------
 For any questions, discussion, suggestions or feature requests please contact [Adrian Dalca](http://adalca.mit.edu).
@@ -32,3 +21,10 @@ License Info:
 -------------
 tipiX is licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php)
 See LICENSE file for more information
+
+External Libraries used:
+------------------------
+- [sprintf](http://www.diveintojavascript.com/projects/javascript-sprintf)
+- [sscanf](http://phpjs.org/functions/sscanf/)
+- [jquery](http://jquery.com/download/)
+- [xio](https://github.com/xtk/XIO)
