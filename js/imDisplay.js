@@ -192,6 +192,67 @@ function loadImage(loadObj, filenames, idx) {
 
 
 
+
+function loadNiisWithPrep(localLoadObj) {
+
+	// transform 1D to 2D
+	assert(localLoadObj.nDims == 1, 'nifti only supports 1d loading since the Y dim is the slices'); 
+	filenames = prepareFilenames(loadObj); // overkill
+	localLoadObj.nDims = 2;
+	
+	// get yBins
+	firstfile = filenames[0];
+	X.io.load(firstfile, 'nii'); // TODO - actually extract extension
+	X.io.onparse = function(id) {
+		if (id && (id.localeCompare(firstfile) == 0)) {
+			// get yBins
+			var input = X.io.get(id);
+			localLoadObj.yBins = input.header.dim[3];
+			loadObj = localLoadObj;
+			
+			// go on with loading
+			loadNiis(localLoadObj, filenames);
+			
+		}
+	}
+	
+}
+
+function loadNiis(loadObj, filenames) {
+
+	// transform 1d into 2d.
+	assert(loadObj.nDims == 2, 'nifti loadObj should be updated at this point'); 
+	
+	// some setup. TODO: clean this up and do same for loadImages...
+	document.getElementById('loadTime').innerHTML = "Loading...";
+	buildMatrix(loadObj, 'load');
+	buildMatrix(loadObj, 'preview');
+	document.getElementById('previewMatrixLink').style.display = 'inherit';
+	writeLoadingPerc(0); // clean loading percentage
+	
+	// record starting time
+	startTime = new Date().getTime();
+	writeLoadingTime(startTime); // clean loading times
+
+	// initiate pictureBoxes
+	pictureBoxes = new Array(loadObj.yBins);
+	for ( var i = 0; i < loadObj.yBins; i++) {
+		pictureBoxes[i] = new Array(loadObj.xBins);
+	} // for loop
+	
+	
+	// add pictureBox objects
+	for ( var j = 0; j < loadObj.xBins; j++) {
+		niiFile2pictureBoxs(loadObj, filenames, j, 'mainDisplayTest');
+	} // for loop
+	
+	// clean current picture box
+	curPictureBox = null;
+	
+	// return pictureBoxes
+	return pictureBoxes;
+}
+
 /**
  * Pre-load pictureBoxes into image objects
  * 
@@ -223,7 +284,7 @@ function loadImages(loadObj) {
 	mainBins = (loadObj.nDims == 1 ? loadObj.xBins : loadObj.yBins);
 
 	// go through the sources
-	var pictureBoxes = new Array(mainBins);
+	pictureBoxes = new Array(mainBins);
 	for ( var i = 0; i < mainBins; i++) {
 
 		// add pictureBox objects
@@ -360,7 +421,7 @@ function drawImageAtPosition(pos) {
 	} else {
 
 		discreteX = getDiscretePosition(pos.x, canvas.width,
-				pictureBoxes[1].length);
+				pictureBoxes[0].length);
 		discreteY = getDiscretePosition(pos.y, canvas.height,
 				pictureBoxes.length);
 
@@ -429,37 +490,6 @@ function drawImage(img, canvas) {
 	context.drawImage(img, 0, 0, canvas.width, canvas.height);
 }
 
-
-
-/** Obtain mouse position
- * 
- * @param canvas - the canvas
- * @param evt - the event.
- * @returns object with x and y variables
- */
-function getMousePos(canvas, evt) {
-	var rect = canvas.getBoundingClientRect();
-	return {
-		x : evt.clientX - rect.left,
-		y : evt.clientY - rect.top
-	};
-}
-
-/** Standard assert function
- * source: http://cse.csusb.edu/turner/wiki/Javascript_Assert_Function
- * @param expression - the expression to assert
- * @param msg [optional] - the message if assertion fails
- */
-function assert(expression, msg) {
-	if (!expression) {
-		if (msg === undefined) {
-			window.alert("Assertion failed.");
-		} else {
-			window.alert("Assertion failed: " + msg);
-		}
-		throw "stop execution";
-	}
-}
 
 /** 
  * Writes loading time to the loadTime span.
@@ -603,114 +633,7 @@ function handleFileSelect(evt) {
 }
 
 
-function loadUserSetLocal(evt) {
-	
-	var files = evt.target.files; // FileList object
-	if (!files)
-		files = evt.dataTransfer.files; // FileList object.
-	loadObj.files = files;	
-		
-	// detect which type of images there are - 1D or 2D
-	var f = files[0];
-	var name = f.name; escape(f.name)
-	var innr = false;
-	var chrIndex = 0;
-	var template = '';
-	var dims = 0;
-	for (var j = 0; j < name.length; j++) {
-		var isdigit = !isNaN(name[j]) && name[j] != ' ';
-		if (isdigit && !innr) {
-			innr = true;
-			template = template + '%d';
-			dims++;
-		}
-		
-		if (!isdigit) {
-			innr = false;
-			template = template + name[j];
-		}
-	}
-	
-	// warn if don't find 1 or 2 directions
-	msg = 'did not find 1 or 2 direction naming';
-	assert(dims == 1 || dims == 2, msg);
-	loadObj.nDims = dims;
-	
-	
-	
-	
-	
-	
-	
-	// get the min and max numbers, and populate loadObj.files
-	if (loadObj.nDims == 1) {
-		
-		// get min and max nrs
-		minx = Infinity;
-		maxx = 0;
-		for (var i = 0, f; f = files[i]; i++) {
-			x = sscanf(f.name, template);
-			
-			minx = Math.min(minx, x);
-			maxx = Math.max(maxx, x);
-		}
-		
-		msg = 'Found files ranging from %d to %d';
-		writeDebug(sprintf(msg, minx, maxx));
-		
-		// populate new files array in the right order.
-		loadObj.fileIdx = new Array(maxx-minx+1);
-		for (var i = 0, f; f = files[i]; i++) {
-			x = sscanf(f.name, template);
-			loadObj.fileIdx[x - minx] = i;
-		}
-		
-	} else {
-		
-		// get min and max nrs
-		var minx = Infinity;	
-		var miny = Infinity;	
-		var maxx = 0;	
-		var maxy = 0;	
-		for (var i = 0, f; f = files[i]; i++) {
-			xy = sscanf(f.name, template);
-			y = xy[0];
-			x = xy[1];
-			
-			minx = Math.min(minx, x);
-			maxx = Math.max(maxx, x);
-			miny = Math.min(miny, y);
-			maxy = Math.max(maxy, y);
-		}
 
-		// dump some info
-		msg = 'Found files ranging from [%d, %d] to [%d, %d]';
-		writeDebug(sprintf(msg, miny, minx, maxy, maxx));
-
-		// prepare structure
-		loadObj.fileIdx = new Array(maxy-miny+1);
-		for (var i = 0; i < (maxy-miny+1); i++) {
-			loadObj.fileIdx[i] = new Array(maxy-miny+1);
-		}
-		
-		// populate files structure
-		for (var i = 0, f; f = files[i]; i++) {
-			x = sscanf(f.name, template);
-			loadObj.fileIdx[x[0] - miny][x[1] - minx] = i;
-		}
-	}
-		
-	
-	if (loadObj.nDims == 1) {
-		loadObj.xBins = maxx-minx+1;
-	} else {
-		loadObj.yBins = maxy-miny+1;
-		loadObj.xBins = maxx-minx+1;
-	}
-		
-	loadObj.type = "local";
-	return loadObj;
-}
 
 function reshapeCanvas() {
 
@@ -838,8 +761,4 @@ function getDataURL() {
 	
 	
 	
-}
-
-function openDataURL(target) {
-	window.open(getDataURL(), target);
 }

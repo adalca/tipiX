@@ -42,113 +42,33 @@ function launchDisplay(choice, evt) {
 			break;
 	}
 	
+	// get file type
+	if (loadObj.fileName) {
+		loadObj.inputType = inputType(loadObj.fileName);
+	} else {
+		loadObj.inputType = inputType(loadObj.files[0].name);
+	}
+	
 	// get the images according to the sources.
-	pictureBoxes = loadImages(loadObj);
+	if (loadObj.inputType.localeCompare('image')==0) {
+		loadImages(loadObj);
+	} else {
+		loadNiisWithPrep(loadObj);
+	}
 	
 	// canvas should be turned on
 	canvasOn = true;
 
+	// draw logo on main canvas
 	var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
 	canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
 	drawLogo();
 	
 	// close nav
 	nav(currentTab);
-	
-	// TODO: initiate loading canvas
-	/*xSize = document.getElementById("loadingCanvas").width;
-	binsPerPixel = loadObj.xBins / xSize;
-	
-	if (loadObj.yBins == undefined)
-		yBins = 1;
-	else
-		yBins = loadObj.yBins;
 
-	ySize = Math.ceil(yBins / binsPerPixel);
-	ySize = Math.max(ySize, 10);
-	ySize = Math.min(ySize, 300); //TODO hardcoded?
-	document.getElementById("loadingCanvas").height = ySize;
-	document.getElementById("loadMatrix").height = ySize;*/
-	//TODO get also the loading parent to be that big!
-	
 	// force a reshape of window on first picture draw.
 	fixedAspectRatio = 0;
-	
-	// return the images
-	return pictureBoxes;
-}
-
-function loadBoston4Day() {
-	loadObj.type = "web";
-	loadObj.nDims = 2;
-	loadObj.xBins = 5;
-	loadObj.yBins = 24;
-	loadObj.fileName = CORE_SET_PATH + '/imageSets/boston4day/average_img_%d_%d.jpg'; 
-	return loadObj;
-}
-
-function lupus() {
-	loadObj.type = "web";
-	loadObj.nDims = 2;
-	loadObj.xBins = 5;
-	loadObj.yBins = 56;
-	loadObj.fileName = CORE_SET_PATH + '/imageSets/lupus/lupus_%d_%d.jpg'; 
-	return loadObj;
-}
-
-function loadEmerald() {
-	loadObj.type = "web";
-	loadObj.nDims = 1;
-	loadObj.xBins = 337;
-	loadObj.fileName = CORE_SET_PATH + '/imageSets/emerald/img (%d).jpg';
-	return loadObj;
-}
-
-function loadUserSetAddressBar() {
-	loadObj.type = "web";
-	var dims = getParameterByName('nDims');
-	if (dims == '' || parseInt(dims) == 1) {
-		loadObj.nDims = 1;
-	} else {
-		assert(parseInt(dims) == 2, 'need dims to be 1 or 2');
-		loadObj.nDims = 2;
-	}
-	
-	var xBins = getParameterByName('xBins');
-	loadObj.xBins = xBins;
-	assert(!isNaN(parseInt(xBins)), 'need xBins to be integer');
-	
-	if (loadObj.nDims == 2) {
-		var yBins = getParameterByName('yBins');
-		assert(!isNaN(parseInt(yBins)), 'need yBins to be integer');
-		loadObj.yBins = yBins;
-	}
-	
-	var path = getParameterByName('path');
-	assert(path != '', 'Need a full path');
-	loadObj.fileName = path;
-	
-	return loadObj;
-	
-}
-
-function loadUserSetWeb() {
-	var oForm = document.getElementById('userSet');
-	
-	var radios = document.getElementsByName('nDims');
-	for (var i = 0, length = radios.length; i < length; i++) {
-		if (radios[i].checked) {
-			loadObj.nDims = radios[i].value;
-		}
-	}
-	
-	loadObj.xBins = parseInt(oForm.elements['xBins'].value);
-	if (loadObj.nDims == 2) {
-		loadObj.yBins = parseInt(oForm.elements['yBins'].value);	
-	}
-	loadObj.fileName = oForm.elements['filename'].value;
-	loadObj.type = "web";
-	return loadObj;
 }
 
 

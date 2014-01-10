@@ -14,7 +14,8 @@
 
 $(document).ready(function(){
 
-
+	
+	
 	// navigation
 	$('#sets-container').hide();
 	$('#userSet-container').hide();
@@ -57,10 +58,10 @@ $(document).ready(function(){
 			$('#yBins').hide();
 		}
 	});
-	
-	
-	
-	
+});
+ 
+ 
+$(window).load(function () {
 	if (location.search.indexOf('?') >= 0) {
 		
 		
@@ -80,6 +81,12 @@ $(document).ready(function(){
 			document.getElementById('iframe-controls-container').style.visibility = 'visible';
 			document.getElementById('nav-container').style.visibility = 'hidden';
 		}		
+		
+		var debug = getParameterByName('debug');
+		if (debug != '') {
+			onOff('info-clip');
+			updownContainer('info-container');
+		}
 		
 		// get any pre-load datasets:
 		try {
@@ -107,9 +114,11 @@ $(document).ready(function(){
 			document.getElementById('info-clip').style.visibility = "hidden";
 			document.getElementById('info-container').style.visibility = "hidden";
 		}
+		
+
+		
 	}
 });
- 
 
 
 function nav(newTabName) {
@@ -208,31 +217,3 @@ function navLoad(newTabName) {
 }
 
 
-function onOff(containerName) {
-
-	state = document.getElementById(containerName).className
-	if (state == 'on')
-		document.getElementById(containerName).className = 'off';
-	else
-		document.getElementById(containerName).className = 'on';
-}
-
-
-function updownContainer(containerName) {
-
-	state = document.getElementById(containerName).className
-	if (state == 'up')
-		document.getElementById(containerName).className = 'down';
-	else
-		document.getElementById(containerName).className = 'up';
-}
-		
-		
-function inoutContainer(containerName) {
-
-	state = document.getElementById(containerName).className
-	if (state == 'in')
-		document.getElementById(containerName).className = 'out';
-	else
-		document.getElementById(containerName).className = 'in';
-}
