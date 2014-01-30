@@ -204,7 +204,7 @@ function loadNiisWithPrep(localLoadObj) {
 	firstfile = filenames[0];
 	X.io.load(firstfile, 'nii'); // TODO - actually extract extension
 	X.io.onparse = function(id) {
-		if (id && (id.localeCompare(firstfile) == 0)) {
+		if (id && (id.localeCompare(firstfile) == 0) && false) {
 			// get yBins
 			var input = X.io.get(id);
 			localLoadObj.yBins = input.header.dim[3];
@@ -408,6 +408,8 @@ function drawImageAtPosition(pos) {
 		discretePos = getDiscretePosition(pos.x, canvas.width,
 				pictureBoxes.length);
 
+		global_x = discretePos;
+				
 		if (currentX != discretePos) {
 			redraw = true;
 			currentX = discretePos;
