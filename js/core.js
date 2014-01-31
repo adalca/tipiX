@@ -50,7 +50,7 @@ function launchDisplay(choice, evt) {
 	}
 	
 	// get the images according to the sources.
-	if (loadObj.inputType.localeCompare('image')==0) {
+	if (loadObj.inputType.localeCompare('image') == 0) {
 		loadImages(loadObj);
 	} else {
 		loadNiisWithPrep(loadObj);
