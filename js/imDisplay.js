@@ -204,7 +204,8 @@ function loadNiisWithPrep(localLoadObj) {
 	firstfile = filenames[0];
 	X.io.load(firstfile, 'nii'); // TODO - actually extract extension
 	X.io.onparse = function(id) {
-		if (id && (id.localeCompare(firstfile) == 0) && false) {
+		if (id && (id.localeCompare(firstfile) == 0)) {
+		
 			// get yBins
 			var input = X.io.get(id);
 			localLoadObj.yBins = input.header.dim[3];
@@ -578,6 +579,7 @@ function checkLoaded(loadObj) {
 	}
 
 	writeLoadingPerc(perc);	
+	return nLoaded;
 }
 
 
