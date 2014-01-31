@@ -34,7 +34,6 @@ function loadUserSetAddressBar() {
 	var path = getParameterByName('path');
 	assert(path != '', 'Need a full path');
 	loadObj.fileName = path;
-	
 	return loadObj;
 	
 }
@@ -65,7 +64,8 @@ function loadUserSetLocal(evt) {
 	if (!files)
 		files = evt.dataTransfer.files; // FileList object.
 	loadObj.files = files;	
-		
+	
+	
 	// detect which type of images there are - 1D or 2D
 	var f = files[0];
 	var name = f.name; escape(f.name)
@@ -86,6 +86,7 @@ function loadUserSetLocal(evt) {
 			template = template + name[j];
 		}
 	}
+	
 	
 	// warn if don't find 1 or 2 directions
 	msg = 'did not find 1 or 2 direction naming';
@@ -150,7 +151,7 @@ function loadUserSetLocal(evt) {
 			loadObj.fileIdx[x[0] - miny][x[1] - minx] = i;
 		}
 	}
-		
+	
 	
 	if (loadObj.nDims == 1) {
 		loadObj.xBins = maxx-minx+1;
