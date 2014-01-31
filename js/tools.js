@@ -20,7 +20,7 @@ function inputType(fileName) {
 	
 	// if it's .gz', recurse. This may fail for jpg.gz, etc...
 	if (ext.localeCompare('gz') == 0) {
-		assert(inputType(file).localeCompare('nifti'));
+		assert(inputType(file).localeCompare('nifti') == 0, 'wrong inputType (' + inputType(file) + ')');
 		return 'nifti';
 	} else if (ext.localeCompare('jpg') == 0 || ext.localeCompare('png') == 0) {
 		return 'image';
@@ -88,12 +88,12 @@ function getMousePos(canvas, evt) {
  * @TODO make height and TMP_DISPLAY optional. if TMP_DISPLAY not provided, make a random string and 
  * 	create a canvas with that name.
  */
-function array2img(array, width, height, TMP_DISPLAY) {
+function array2img(array, width, height, isColor, TMP_DISPLAY) {
 
 	// first, get image data
 	var canvas = document.getElementById(TMP_DISPLAY);
 	var ctx = canvas.getContext('2d');
-	var imgData = array2imgData(array, width, height, TMP_DISPLAY);
+	var imgData = array2imgData(array, width, height, isColor, TMP_DISPLAY);
 	
 	// put the imgData in the canvas
 	// NOTSURE: need to set canvas width and height for when you do toDataURL?
@@ -123,20 +123,25 @@ function array2img(array, width, height, TMP_DISPLAY) {
  * @TODO make height and TMP_DISPLAY optional. if TMP_DISPLAY not provided, make a random string and 
  * 	create a canvas with that name.
  */
-function array2imgData(array, width, height, TMP_DISPLAY) {
+function array2imgData(array, width, height, isColor, TMP_DISPLAY) {
 
 	// first, get image data
 	var canvas = document.getElementById(TMP_DISPLAY);
 	var ctx = canvas.getContext('2d');
 	var imgData = ctx.createImageData(width, height); 
 	var data = imgData.data;
-
+	
+	//console.log(array.length);
+	//console.log(width * height);
+	
 	// copy img byte-per-byte into our ImageData
 	for (var i = 0, len = width * height * 4; i < len; i += 4) {
 		var j = i/4
+		if (isColor) {k = j + width*height; l = k + width*height; }
+		else {k = j; l = j;}
 		data[i] = array[j];
-		data[i+1] = array[j];
-		data[i+2] = array[j];
+		data[i+1] = array[k];
+		data[i+2] = array[l];
 		data[i+3] = 255;
 	}
 	
