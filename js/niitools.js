@@ -20,6 +20,7 @@ function niiFile2pictureBoxs(loadObj, filenames, idx, TMP_DISPLAY) {
     X.io.onparse = function(file) {
 		
 		if (file) {
+			console.log(file);
 			var thisidx = niiFile2idx(filenames, file);
 		
 			// get the file, constructor, and useful dimensions
@@ -43,7 +44,10 @@ function niiFile2pictureBoxs(loadObj, filenames, idx, TMP_DISPLAY) {
 	}
 	
 	//
-	X.io.load(filenames[idx], 'nii');
+	var name = loadObj.files[0].name;
+	var extidx = name.lastIndexOf('.');
+	var ext = name.substr(extidx + 1);
+	X.io.load(filenames[idx], ext);
 }
 
 function niiFile2idx(filenames, file) {
@@ -66,14 +70,20 @@ function nii2sliceArray(input, TMP_DISPLAY) {
 	var width = input.header.dim[1];
 	var height = input.header.dim[2];
 	var nSlices = input.header.dim[3];
+	var isColor = input.header.dim[5] == 3;
 	
 	// get the slices in the image form.
 	var slices = new Array(nSlices)
 	var slice = 0;
 	
+	//console.log(input.data.image.length);
+	//console.log(input);
+	//console.log(nSlices);
+	
 	for (var i = 0; i < nSlices; i++) {
 		 slice = new classConstructor(input.data.image[i]); 
-		 slices[i] = array2img(slice, width, height, TMP_DISPLAY);
+		 //console.log(slice);
+		 slices[i] = array2img(slice, width, height, isColor, TMP_DISPLAY);
 	}
 	
 	return slices;
