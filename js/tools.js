@@ -101,7 +101,7 @@ function array2img(array, width, height, isColor, TMP_DISPLAY) {
 	canvas.height = height;
 	ctx.putImageData(imgData, 0, 0);
 	
-	// get the image from the hidden canvas? 
+	// get the image from the hidden canvas
 	var img = document.createElement("img");
 	img.src = canvas.toDataURL("image/png");
 	
