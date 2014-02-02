@@ -25,8 +25,10 @@
  * @param type - the type of matrix, e.g. "load" or "preview"
  */
 function buildMatrix(loadObj, type) {
-
+	error('unused');
+	/*
 	matrixID = sprintf('%sMatrix', type);
+	
 	
 	// if one-dimension
 	if (loadObj.nDims == 1) {
@@ -44,11 +46,12 @@ function buildMatrix(loadObj, type) {
 		// TODO: clean this - this is duplicate code with loadImage!
 		for ( var i = 0; i < loadObj.xBins; i++) {
 			loadBoxName = sprintf('#%s_%d', type, i); 
-			imgBoxSet(loadBoxName, "#AAAAAA", loadObj.xBins);
+			imgBoxSet(loadBoxName, "#AAAAAA", loadObj.xBins, loadMatrixWidth);
 		}				
 		
 	// if two-dimension
 	} else {
+		
 		
 		// write to div element loadMatrix a set of smaller divs which will 
 		// indicate loading, or lack thereof
@@ -67,10 +70,10 @@ function buildMatrix(loadObj, type) {
 		for ( var i = 0; i < loadObj.yBins; i++) {
 			for ( var j = 0; j < loadObj.xBins; j++) {
 				loadBoxName = sprintf('#%s_%d_%d', type, i, j); // TODO: - fix copied code with loadImage!
-				imgBoxSet(loadBoxName, "#AAAAAA", loadObj.xBins);
+				imgBoxSet(loadBoxName, "#AAAAAA", loadObj.xBins, loadMatrixWidth);
 			}
 		}
-	}
+	}*/
 }
 
 
@@ -161,8 +164,9 @@ function loadImage(loadObj, filenames, idx) {
 	}
 	
 	// set css and write loading time for this image 	
+	
 	pictureBox.img.onload = function() {
-		imgBoxSet(pictureBox.loadBoxName, "#99db99", loadObj.xBins);
+		//imgBoxSet(pictureBox.loadBoxName, "#99db99", loadObj.xBins, loadMatrixWidth);
 		//imgBoxSet(pictureBox.previewBoxName, pictureBox.fileName, loadObj.xBins);
 		pictureBox.loaded = true;
 		checkLoaded(loadObj);
@@ -175,10 +179,11 @@ function loadImage(loadObj, filenames, idx) {
 		}
 	};
 
+	
 	// set css and write loading time for this image
 	pictureBox.img.onerror = function() {
-		imgBoxSet(pictureBox.loadBoxName, "#db9999", loadObj.xBins);
-		imgBoxSet(pictureBox.previewBoxName, "#db9999", loadObj.xBins);
+		//imgBoxSet(pictureBox.loadBoxName, "#db9999", loadObj.xBins, loadMatrixWidth);
+		//imgBoxSet(pictureBox.previewBoxName, "#db9999", loadObj.xBins, loadMatrixWidth);
 		pictureBox.error = true;
 		checkLoaded(loadObj);
 		writeLoadingTime();
@@ -199,18 +204,25 @@ function loadNiisWithPrep(localLoadObj) {
 	assert(localLoadObj.nDims == 1, 'nifti only supports 1d loading since the Y dim is the slices'); 
 	filenames = prepareFilenames(loadObj); // overkill
 	localLoadObj.nDims = 2;
+
+	var delt = new Date().getTime() / 1000 - txStartTime;
+	console.log('first load started @ ' + sprintf('%5.3f', delt) + ' seconds');
 	
 	// get yBins
 	firstfile = filenames[0];
 	X.io.load(firstfile, 'nii'); // TODO - actually extract extension
 	X.io.onparse = function(id) {
 		if (id && (id.localeCompare(firstfile) == 0)) {
+			var delt = new Date().getTime() / 1000 - txStartTime;
+			console.log('first load done started @ ' + sprintf('%5.3f', delt) + ' seconds');
 		
 			// get yBins
 			var input = X.io.get(id);
 			localLoadObj.yBins = input.header.dim[3];
 			loadObj = localLoadObj;
 			
+			var delt = new Date().getTime() / 1000 - txStartTime;
+			console.log('full load started @ ' + sprintf('%5.3f', delt) + ' seconds');
 			// go on with loading
 			loadNiis(localLoadObj, filenames);
 			
@@ -226,8 +238,8 @@ function loadNiis(loadObj, filenames) {
 	
 	// some setup. TODO: clean this up and do same for loadImages...
 	document.getElementById('loadTime').innerHTML = "Loading...";
-	buildMatrix(loadObj, 'load');
-	buildMatrix(loadObj, 'preview');
+	//buildMatrix(loadObj, 'load');
+	//buildMatrix(loadObj, 'preview');
 	document.getElementById('previewMatrixLink').style.display = 'inherit';
 	writeLoadingPerc(0); // clean loading percentage
 	
@@ -239,11 +251,19 @@ function loadNiis(loadObj, filenames) {
 	pictureBoxes = new Array(loadObj.yBins);
 	for ( var i = 0; i < loadObj.yBins; i++) {
 		pictureBoxes[i] = new Array(loadObj.xBins);
+		
+		for (var j = 0; j < loadObj.xBins; j++) {
+			pictureBoxes[i][j] = {
+				'loaded':false,
+				'error':false,
+				'fileName':filenames[j]
+			}
+		}
 	} // for loop
 	
 	
 	// add pictureBox objects
-	for ( var j = 0; j < loadObj.xBins; j++) {
+	for ( var j = 0; j < txLoadCores; j++) {//loadObj.xBins; j++) {
 		niiFile2pictureBoxs(loadObj, filenames, j, 'mainDisplayTest');
 	} // for loop
 	
@@ -270,8 +290,8 @@ function loadImages(loadObj) {
 
 	// some setup
 	document.getElementById('loadTime').innerHTML = "Loading...";
-	buildMatrix(loadObj, 'load');
-	buildMatrix(loadObj, 'preview');
+	//buildMatrix(loadObj, 'load');
+	//buildMatrix(loadObj, 'preview');
 	document.getElementById('previewMatrixLink').style.display = 'inherit';
 	writeLoadingPerc(0); // clean loading percentage
 	
@@ -309,7 +329,7 @@ function loadImages(loadObj) {
 
 
 function loadPreviewMatrix(loadObj) {
-	
+	error('loadPreviewPatrix is disabled');
 	if (loadObj.xBins == undefined) {
 		alert('Please first load a dataset!');
 		return;
@@ -323,10 +343,11 @@ function loadPreviewMatrix(loadObj) {
 	var ans = confirm("Warning: Preview can be *very* memory intensive! Continue?");
 	if (!ans) return;
 	
+
 	if (loadObj.nDims == 1) {
 		for (var j = 0; j < loadObj.xBins; j++) {
 			if (pictureBoxes[j].loaded){
-				imgBoxSet(pictureBoxes[j].previewBoxName, pictureBoxes[j].fileName, loadObj.xBins);
+				//imgBoxSet(pictureBoxes[j].previewBoxName, pictureBoxes[j].fileName, loadObj.xBins, loadMatrixWidth);
 			}
 		}
 		
@@ -334,7 +355,7 @@ function loadPreviewMatrix(loadObj) {
 		for ( var i = 0; i < loadObj.yBins; i++) {
 			for (var j = 0; j < loadObj.xBins; j++) {
 				if (pictureBoxes[i][j].loaded){
-					imgBoxSet(pictureBoxes[i][j].previewBoxName, pictureBoxes[i][j].fileName, loadObj.xBins);
+					//imgBoxSet(pictureBoxes[i][j].previewBoxName, pictureBoxes[i][j].fileName, loadObj.xBins, loadMatrixWidth);
 				}
 			}
 		}
@@ -348,7 +369,7 @@ function clearPreviewMatrix(loadObj) {
 		return;
 	} 
 	
-	buildMatrix(loadObj, 'preview');
+	//buildMatrix(loadObj, 'preview');
 }
 
 
@@ -450,7 +471,8 @@ function drawImageAtPosition(pos) {
 		// color the load box of previous image back to original color
 		if (curPictureBox != null) { 
 			curColor = (curPictureBox.loaded) ? "#99db99" : "#db9999";
-			imgBoxSet(curPictureBox.loadBoxName, curColor, loadObj.xBins);
+			//imgBoxSet(curPictureBox.loadBoxName, curColor, loadObj.xBins, loadMatrixWidth);
+			
 		}
 		
 		// display the image
@@ -462,7 +484,7 @@ function drawImageAtPosition(pos) {
 		
 		// color the load box 
 		curColor = (pictureBox.loaded) ? "#00FF00" : "#FF0000";
-		imgBoxSet(pictureBox.loadBoxName, curColor, loadObj.xBins);
+		//imgBoxSet(pictureBox.loadBoxName, curColor, loadObj.xBins, loadMatrixWidth);
 	}
 	curPictureBox = pictureBox;
 }
@@ -526,9 +548,12 @@ function writeLoadingPerc(perc) {
  * @param loadBoxName
  * @param bgStr
  * @param xBins
- */
-function imgBoxSet(loadBoxName, bgStr, xBins) {
-	var width = document.getElementById('loadMatrix').offsetWidth;
+ *
+function imgBoxSet(loadBoxName, bgStr, xBins, width) {
+	//if (typeof width === "undefined") { 
+	//	var width = document.getElementById('loadMatrix').offsetWidth; // EXPENSIVE
+	//}
+		
 	var binWidth = width / xBins;
 	
 	
@@ -544,7 +569,7 @@ function imgBoxSet(loadBoxName, bgStr, xBins) {
 	document.getElementById(loadBoxName).style.cssFloat = "left";
 	
 	// TODO - add processing for xBIns' pixel --- http://www.w3schools.com/tags/canvas_imagedata_data.asp
-}
+}*/
 
 
 function drawLogo() {
@@ -570,7 +595,8 @@ function checkLoaded(loadObj) {
 		var nLoaded = 0;
 		for (var i = 0; i < loadObj.yBins; i++) {
 			for (var j = 0; j < loadObj.xBins; j++) {
-				if (pictureBoxes[i][j].loaded || pictureBoxes[i][j].error) {
+				if (pictureBoxes[i] && pictureBoxes[i][j] && 
+					(pictureBoxes[i][j].loaded || pictureBoxes[i][j].error)) {
 					nLoaded++;
 				}
 			}
@@ -578,11 +604,60 @@ function checkLoaded(loadObj) {
 		var perc = nLoaded/(loadObj.xBins * loadObj.yBins) * 100;
 	}
 
+	if (nLoaded == (loadObj.xBins * loadObj.yBins)) {
+		datasetLoaded(loadObj);
+	}
+	
+	if (perc > 10) {
+		// canvas should be turned on
+		canvasOn = true;
+	}
+	
 	writeLoadingPerc(perc);	
 	return nLoaded;
 }
 
+function datasetLoaded(loadObj) {
 
+	var delt = new Date().getTime() / 1000 - txStartTime;
+	console.log('full load done @ ' + sprintf('%5.3f', delt) + ' seconds');
+
+	// draw loadedMatrix
+	var data = new Array(loadObj.xBins * loadObj.yBins);
+	
+	if (loadObj.nDims == 1) {
+		for (var i = 0; i < loadObj.xBins; i++) {
+			if (pictureBoxes[i].loaded) {
+				data[i] = 255; 
+			} else { // should be pictureBoxes[i].error
+				data[i] = 0; 
+			}
+		}
+		
+	} else {
+		assert(loadObj.nDims == 2);
+		
+		for (var i = 0; i < loadObj.yBins; i++) {
+			for (var j = 0; j < loadObj.xBins; j++) {
+				if (pictureBoxes[i][j].loaded) {
+					data[i*loadObj.xBins + j] = 255;
+				} else {
+					data[i*loadObj.xBins + j] = 0;
+				}
+			}
+		}
+	}
+	
+	isColor = false; // todo: do true for g/r
+	img = array2img(data, loadObj.xBins, loadObj.yBins, isColor,  'mainDisplayTest');
+	
+	var canvas = document.getElementById('loadingCanvas');
+	var context = canvas.getContext('2d');
+	context.drawImage(img, 0, 0, canvas.width, canvas.height);
+	
+	var delt = new Date().getTime() / 1000 - txStartTime;
+	console.log('canvas started @ ' + sprintf('%5.3f', delt) + ' seconds');
+}
 
 function prepareLoadingCanvas(loadObj) {
 	// TODO: create image as big as needed, and just when showing/putting it into canvas to re-size! Just make sure resize is proportional. Maybe do the latter... when you initiate page loadObj.

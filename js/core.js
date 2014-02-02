@@ -42,12 +42,18 @@ function launchDisplay(choice, evt) {
 			break;
 	}
 	
+	txStartTime = new Date().getTime() / 1000;
+	console.log('display launched');
+	
 	// get file type
 	if (loadObj.fileName) {
 		loadObj.inputType = inputType(loadObj.fileName);
 	} else {
 		loadObj.inputType = inputType(loadObj.files[0].name);
 	}
+	
+	var delt = new Date().getTime() / 1000 - txStartTime;
+	console.log('loading started @ ' + sprintf('%5.3f', delt) + ' seconds');
 	
 	// get the images according to the sources.
 	if (loadObj.inputType.localeCompare('image') == 0) {
@@ -56,8 +62,7 @@ function launchDisplay(choice, evt) {
 		loadNiisWithPrep(loadObj);
 	}
 	
-	// canvas should be turned on
-	canvasOn = true;
+
 
 	// draw logo on main canvas
 	var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
@@ -104,6 +109,9 @@ var global_x = -1;
 var fixedAspectRatio = 0;
 var playState = false;
 var iFrameMode = false;
+var txStartTime = 0;
+var txLoadCores = 3; // number of loading cores
+console.log('working with ' + txLoadCores + ' cores');
 
 // key presses
 $(document).keyup(function(e) {
@@ -151,8 +159,9 @@ var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
 
 
 canvas.onclick = function () { console.log((global_x+1).toString()); };
+
 canvas.addEventListener('mousemove', function(evt) {
-	
+
 	if (canvasOn) {
 		var mousePos = getMousePos(canvas, evt);
 		drawImageAtPosition(mousePos);
@@ -161,6 +170,7 @@ canvas.addEventListener('mousemove', function(evt) {
 
 
 canvas.addEventListener('click', function(evt) {
+
 	if (iFrameMode && loadObj.nDims == 1) {
 		changePlayState(); 
 		continuousPlay(0);

@@ -4,50 +4,51 @@
 
 function niiFile2pictureBoxs(loadObj, filenames, idx, TMP_DISPLAY) {
 
+	var worker = new Worker('js/webworker.js');
 	
+	worker.onmessage = function(e) {
 	
-	for (var i = 0; i < loadObj.yBins; i++) {
-		pictureBoxes[i][idx] = {}
-		pictureBoxes[i][idx].loaded = false;
-		pictureBoxes[i][idx].error = false;
-		
-		pictureBoxes[i][idx].fileName = filenames[idx]; 
-		pictureBoxes[i][idx].loadBoxName = sprintf('#load_%d_%d', i, idx);
-		pictureBoxes[i][idx].previewBoxName = sprintf('#preview_%d_%d', i, idx);
-	}
+		input = e.data.input;
+		thisidx = e.data.thisidx;
 	
-	// callback, when everything was loaded
-    X.io.onparse = function(file) {
-		
-		if (file) {
-			console.log(file);
-			var thisidx = niiFile2idx(filenames, file);
-		
-			// get the file, constructor, and useful dimensions
-			input = X.io.get(file);
-			slices = nii2sliceArray(input, TMP_DISPLAY);
-			
-			for (var i = 0; i < loadObj.yBins; i++) {
-				imgBoxSet(pictureBoxes[i][thisidx].loadBoxName, "#99db99", loadObj.xBins);
-				pictureBoxes[i][thisidx].loaded = true;
-				pictureBoxes[i][thisidx].img = slices[i];
-			}
-			checkLoaded(loadObj);
-			writeLoadingTime();
-			
-			if (curPictureBox == null) { 
-				var canvas = document.getElementById(DRAW_CANVAS_NAME); 
-				drawImage(pictureBoxes[0][thisidx].img, canvas);
-				curPictureBox = pictureBoxes;
-			}
+		slices = nii2sliceArray(input, TMP_DISPLAY);
+	
+		for (var i = 0; i < loadObj.yBins; i++) {
+			//imgBoxSet(pictureBoxes[i][thisidx].loadBoxName, "#99db99", loadObj.xBins);
+			pictureBoxes[i][thisidx].loaded = true;
+			pictureBoxes[i][thisidx].img = slices[i];
 		}
+		
+		checkLoaded(loadObj);
+		writeLoadingTime();
+		
+		if (curPictureBox == null) { 
+			var canvas = document.getElementById(DRAW_CANVAS_NAME); 
+			drawImage(pictureBoxes[0][thisidx].img, canvas);
+			curPictureBox = pictureBoxes;
+		}
+		
+		// load the next nii on this core.
+		var nextIdx = thisidx + txLoadCores;
+		if (nextIdx < loadObj.xBins)  {
+		
+			worker.postMessage({
+				'cmd':'load', 
+				'filenames':filenames, 
+				'loadObj':loadObj,
+				'idx':new Number(nextIdx)
+			});
+		}
+		
 	}
 	
-	//
-	var name = loadObj.files[0].name;
-	var extidx = name.lastIndexOf('.');
-	var ext = name.substr(extidx + 1);
-	X.io.load(filenames[idx], ext);
+	worker.postMessage({
+		'cmd':'load', 
+		'filenames':filenames, 
+		'loadObj':loadObj,
+		'idx':new Number(idx)
+	});
+	
 }
 
 function niiFile2idx(filenames, file) {
@@ -66,6 +67,7 @@ function niiFile2idx(filenames, file) {
 }
 
 function nii2sliceArray(input, TMP_DISPLAY) {
+	
 	var classConstructor = input.header.data_type.constructor;
 	var width = input.header.dim[1];
 	var height = input.header.dim[2];
