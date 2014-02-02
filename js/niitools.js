@@ -17,6 +17,8 @@ function niiFile2pictureBoxs(loadObj, filenames, idx, TMP_DISPLAY) {
 			//imgBoxSet(pictureBoxes[i][thisidx].loadBoxName, "#99db99", loadObj.xBins);
 			pictureBoxes[i][thisidx].loaded = true;
 			pictureBoxes[i][thisidx].img = slices[i];
+			pictureBoxes[i][thisidx].x = thisidx;
+			pictureBoxes[i][thisidx].y = i;
 		}
 		
 		checkLoaded(loadObj);
@@ -77,14 +79,10 @@ function nii2sliceArray(input, TMP_DISPLAY) {
 	// get the slices in the image form.
 	var slices = new Array(nSlices)
 	var slice = 0;
-	
-	//console.log(input.data.image.length);
-	//console.log(input);
-	//console.log(nSlices);
+
 	
 	for (var i = 0; i < nSlices; i++) {
 		 slice = new classConstructor(input.data.image[i]); 
-		 //console.log(slice);
 		 slices[i] = array2img(slice, width, height, isColor, TMP_DISPLAY);
 	}
 	

@@ -112,6 +112,7 @@ var iFrameMode = false;
 var txStartTime = 0;
 var txLoadCores = 3; // number of loading cores
 console.log('working with ' + txLoadCores + ' cores');
+var txLoaded = false;
 
 // key presses
 $(document).keyup(function(e) {

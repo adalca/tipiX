@@ -123,7 +123,7 @@ function array2img(array, width, height, isColor, TMP_DISPLAY) {
  * @TODO make height and TMP_DISPLAY optional. if TMP_DISPLAY not provided, make a random string and 
  * 	create a canvas with that name.
  */
-function array2imgData(array, width, height, isColor, TMP_DISPLAY) {
+function array2imgData(array, width, height, colorMode, TMP_DISPLAY) {
 
 	// first, get image data
 	var canvas = document.getElementById(TMP_DISPLAY);
@@ -137,8 +137,21 @@ function array2imgData(array, width, height, isColor, TMP_DISPLAY) {
 	// copy img byte-per-byte into our ImageData
 	for (var i = 0, len = width * height * 4; i < len; i += 4) {
 		var j = i/4
-		if (isColor) {k = j + width*height; l = k + width*height; }
-		else {k = j; l = j;}
+		// assuming 3 channels one after another. 
+		if (colorMode == 1) {
+			
+			k = j + width*height; 
+			l = k + width*height; 
+			
+		// assuming imgData ordering
+		} else if (colorMode == 2) {
+			j = i;
+			k = j + 1;
+			l = k + 1;
+		} else {
+			k = j; l = j;
+		}
+		
 		data[i] = array[j];
 		data[i+1] = array[k];
 		data[i+2] = array[l];

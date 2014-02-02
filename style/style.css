@@ -146,9 +146,11 @@ a:hover {
 
 /* Loading Matrix */
 #loadMatrix {
-	width:190px;
-	height:90px;
+	width:200px;
+	height:200px;
 	margin:5px;
+	
+
 }
 
 .loadBox {
@@ -161,8 +163,8 @@ a:hover {
 /* Preview Matrix */
 #previewMatrix {
 	margin:auto;
-	width:190px;
-	height:90px;
+	width:200px;
+	height:200px;
 	margin:5px;
 }
 
@@ -182,4 +184,9 @@ a:hover {
 
 #loadingCanvas {
 	background-color:#063;	
+	image-rendering: -moz-crisp-edges;         /* Firefox */
+	image-rendering:   -o-crisp-edges;         /* Opera */
+	image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+	image-rendering: crisp-edges;
+	-ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
 }

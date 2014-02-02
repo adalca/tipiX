@@ -144,30 +144,31 @@ function prepareFilenames(loadObj) {
  */
 function loadImage(loadObj, filenames, idx) {
 	// idx is an element of an array of 2 elements, all elements start at 1
-
+	
 	// start from
 	// http://stackoverflow.com/qfuestions/5678899/change-image-source-if-file-exists
-	
 	var pictureBox = {};
 	pictureBox.img = new Image();
 	pictureBox.loaded = false;
 	pictureBox.error = false;
-
+	
 	if (idx.length == 1) {
-		pictureBox.fileName = filenames[idx[0]]; //sprintf(loadObj.fileName, idx[0]);
-		pictureBox.loadBoxName = sprintf('#load_%d', idx[0]);
-		pictureBox.previewBoxName = sprintf('#preview_%d', idx[0]);
+		pictureBox.y = 0;
+		pictureBox.x = idx[0];
 	} else {
-		pictureBox.fileName = filenames[idx[0]][idx[1]]; //sprintf(loadObj.fileName, idx[0], idx[1]);
-		pictureBox.loadBoxName = sprintf('#load_%d_%d', idx[0], idx[1]);
-		pictureBox.previewBoxName = sprintf('#preview_%d_%d', idx[0], idx[1]);
+		pictureBox.y = idx[0];;
+		pictureBox.x = idx[1];;
+	}
+	
+	if (idx.length == 1) {
+		pictureBox.fileName = filenames[idx]; //sprintf(loadObj.fileName, idx[0]);
+	} else {
+		pictureBox.fileName = filenames[idx[0]][idx[1]]; 
 	}
 	
 	// set css and write loading time for this image 	
 	
 	pictureBox.img.onload = function() {
-		//imgBoxSet(pictureBox.loadBoxName, "#99db99", loadObj.xBins, loadMatrixWidth);
-		//imgBoxSet(pictureBox.previewBoxName, pictureBox.fileName, loadObj.xBins);
 		pictureBox.loaded = true;
 		checkLoaded(loadObj);
 		writeLoadingTime();
@@ -182,8 +183,6 @@ function loadImage(loadObj, filenames, idx) {
 	
 	// set css and write loading time for this image
 	pictureBox.img.onerror = function() {
-		//imgBoxSet(pictureBox.loadBoxName, "#db9999", loadObj.xBins, loadMatrixWidth);
-		//imgBoxSet(pictureBox.previewBoxName, "#db9999", loadObj.xBins, loadMatrixWidth);
 		pictureBox.error = true;
 		checkLoaded(loadObj);
 		writeLoadingTime();
@@ -468,24 +467,42 @@ function drawImageAtPosition(pos) {
 	// recolor old picture box to original color, and new picture box to new color
 	if (redraw) {
 		
-		// color the load box of previous image back to original color
-		if (curPictureBox != null) { 
-			curColor = (curPictureBox.loaded) ? "#99db99" : "#db9999";
-			//imgBoxSet(curPictureBox.loadBoxName, curColor, loadObj.xBins, loadMatrixWidth);
-			
+		var loadCanvas = document.getElementById('loadingCanvas');
+		var loadContext = loadCanvas.getContext('2d');
+		
+		if (txLoaded) {
+			// instead of re-sizing width and height, could do this in a hidden canvas and copy
+			loadData = loadContext.getImageData(0, 0, loadCanvas.width, loadCanvas.height);
 		}
 		
+		// color the load box of previous image back to original color
+		if (txLoaded && curPictureBox != null) { 
+			oldidx = (curPictureBox.y * loadObj.xBins + curPictureBox.x) * 4;
+			loadData.data[oldidx] = curPictureBox.loaded ? 0 : 128;
+			loadData.data[oldidx + 1] = curPictureBox.loaded ? 128 : 0;
+			loadData.data[oldidx + 2] = 0;
+			loadData.data[oldidx + 3] = 255;
+		}
+			
 		// display the image
 		if (pictureBox.loaded) {
-//			document.getElementById('imgnr').innerHTML = msg;
 			document.getElementById('mouse-position').innerHTML = msg;
 			drawImage(pictureBox.img, canvas);
 		}
 		
 		// color the load box 
-		curColor = (pictureBox.loaded) ? "#00FF00" : "#FF0000";
-		//imgBoxSet(pictureBox.loadBoxName, curColor, loadObj.xBins, loadMatrixWidth);
+		if (txLoaded) {
+			newidx = (pictureBox.y * loadObj.xBins + pictureBox.x) * 4;
+			loadData.data[newidx] = pictureBox.loaded ? 0 : 255;
+			loadData.data[newidx + 1] = pictureBox.loaded ? 255 : 0;
+			loadData.data[newidx + 2] = 0;
+			loadData.data[newidx + 3] = 255;			
+			
+			// re-size and put back image
+			loadContext.putImageData(loadData, 0, 0); 
+		}
 	}
+	
 	curPictureBox = pictureBox;
 }
 
@@ -583,11 +600,17 @@ function checkLoaded(loadObj) {
 	if (loadObj.nDims == 1) {
 		var nLoaded = 0;
 		for (var i = 0; i < loadObj.xBins; i++) {
-			if (pictureBoxes[i].loaded || pictureBoxes[i].error) {
+			if (pictureBoxes[i] && 
+				(pictureBoxes[i].loaded || pictureBoxes[i].error)) {
 				nLoaded++;
 			}
 		}
 		var perc = nLoaded/loadObj.xBins * 100;
+		
+		if (nLoaded == loadObj.xBins) {
+			datasetLoaded(loadObj);
+		}
+
 		
 	} else {
 		assert(loadObj.nDims == 2);
@@ -602,11 +625,13 @@ function checkLoaded(loadObj) {
 			}
 		}
 		var perc = nLoaded/(loadObj.xBins * loadObj.yBins) * 100;
+		
+		if (nLoaded == (loadObj.xBins * loadObj.yBins)) {
+			datasetLoaded(loadObj);
+		}
 	}
+		
 
-	if (nLoaded == (loadObj.xBins * loadObj.yBins)) {
-		datasetLoaded(loadObj);
-	}
 	
 	if (perc > 10) {
 		// canvas should be turned on
@@ -623,40 +648,58 @@ function datasetLoaded(loadObj) {
 	console.log('full load done @ ' + sprintf('%5.3f', delt) + ' seconds');
 
 	// draw loadedMatrix
-	var data = new Array(loadObj.xBins * loadObj.yBins);
+	
 	
 	if (loadObj.nDims == 1) {
+		var data = new Array(loadObj.xBins * 4);
 		for (var i = 0; i < loadObj.xBins; i++) {
+			idx = i * 4;
 			if (pictureBoxes[i].loaded) {
-				data[i] = 255; 
+				data[idx+1] = 128; 
 			} else { // should be pictureBoxes[i].error
-				data[i] = 0; 
+				data[idx] = 128; 
 			}
+			data[idx+3] = 255; 
 		}
+		loadObj.yBins = 1;
 		
 	} else {
 		assert(loadObj.nDims == 2);
 		
+		var data = new Array(loadObj.xBins * loadObj.yBins * 4);
 		for (var i = 0; i < loadObj.yBins; i++) {
 			for (var j = 0; j < loadObj.xBins; j++) {
+				idx = i*loadObj.xBins + j;
+				aidx = idx * 4;
 				if (pictureBoxes[i][j].loaded) {
-					data[i*loadObj.xBins + j] = 255;
+					data[aidx+1] = 128;
 				} else {
-					data[i*loadObj.xBins + j] = 0;
+					data[aidx] = 128;
 				}
+				data[aidx + 3] = 255;
 			}
 		}
 	}
 	
-	isColor = false; // todo: do true for g/r
-	img = array2img(data, loadObj.xBins, loadObj.yBins, isColor,  'mainDisplayTest');
+	colorMode = 2; 
+	
+	img = array2img(data, loadObj.xBins, loadObj.yBins, colorMode, 'mainDisplayTest');
 	
 	var canvas = document.getElementById('loadingCanvas');
 	var context = canvas.getContext('2d');
+
+	canvas.style.width = canvas.width + "px";
+	canvas.style.height = canvas.height + "px";
+	canvas.width = loadObj.xBins;
+	canvas.height = loadObj.yBins;
 	context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
 	
 	var delt = new Date().getTime() / 1000 - txStartTime;
 	console.log('canvas started @ ' + sprintf('%5.3f', delt) + ' seconds');
+	
+	// loaded
+	txLoaded = true;
 }
 
 function prepareLoadingCanvas(loadObj) {
