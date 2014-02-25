@@ -28,8 +28,14 @@ self.onmessage = function(e) {
 		}
 	} 
 	
-	//
-	var name = loadObj.files[0].name;
+	//	
+	if (loadObj.type === 'web') {
+		var name = loadObj.fileName;
+	} else {
+		var name = loadObj.files[0].name;
+	}
+		
+		
 	var extidx = name.lastIndexOf('.');
 	var ext = name.substr(extidx + 1);
 	X.io.load(filenames[idx], ext);
