@@ -91,10 +91,17 @@ function getMousePos(canvas, evt) {
 function array2img(array, width, height, isColor, TMP_DISPLAY) {
 
 	// first, get image data
+
+	var imgData = array2imgData(array, width, height, isColor, TMP_DISPLAY);
+	return arrayData2img(imgData, width, height, isColor, TMP_DISPLAY);
+
+}
+
+function arrayData2img(imgData, width, height, isColor, TMP_DISPLAY){
+
 	var canvas = document.getElementById(TMP_DISPLAY);
 	var ctx = canvas.getContext('2d');
-	var imgData = array2imgData(array, width, height, isColor, TMP_DISPLAY);
-	
+
 	// put the imgData in the canvas
 	// NOTSURE: need to set canvas width and height for when you do toDataURL?
 	canvas.width = width;
@@ -108,6 +115,8 @@ function array2img(array, width, height, isColor, TMP_DISPLAY) {
 	// return
 	return img;
 }
+
+
 
 /**
  * Transform an integer array to a imgData object.
@@ -191,3 +200,47 @@ function inoutContainer(containerName) {
 	else
 		document.getElementById(containerName).className = 'in';
 }
+
+function permuteData() {
+	
+	// put image on canvas
+	
+	// take images from canvas as 2-D array (not 1D!)
+	
+	// put all images in the last two  dimensions
+	
+	// get all dimension lengths.
+
+	// go over 
+
+}
+
+
+function arrayFlipHorz(array, width, height) {
+// does not preserve class
+
+	newarr = new Array(array.length);
+	for (var j = 0; j < height; j++) {
+		for (var i = 0; i < width; i++) {
+			newarr[j*width+i] = array[j*width + width - i - 1];
+		}
+	}
+	
+	return newarr;
+}
+
+function arrayFlipVert(array, width, height) {
+// does not preserve class
+
+	newarr = new Array(array.length);
+	for (var j = 0; j < height; j++) {
+		for (var i = 0; i < width; i++) {
+			newarr[j*width+i] = array[(height - j - 1)*width + i];
+		}
+	}
+	
+	return newarr;
+}
+
+
+

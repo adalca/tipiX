@@ -29,7 +29,7 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
 <meta charset="utf-8">
 </head>
 <body onload="reshapeCanvas();" onResize="reshapeCanvas();">
-<div id="nav-container">
+<div id="nav-container" style="visibility:hidden">
   <h1>tipiX - time picture explorer</h1>
   <a id="examples-tab-title" onClick="nav('examples')" href="#"> Examples </a> <a id="userSets-tab-title" onClick="nav('userSets')" href="#"> Load </a> <a id="about-tab-title"  onClick="nav('about')" href="#"> About </a> </div>
 
@@ -85,9 +85,9 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
       <div class="close_button"><a href="#" onClick="nav('userSets')">x</a></div>
       <h2>Load dataset</h2>
       The files should be numbered similar to: <em>file_1.jpg</em>, <em>file_2.jpg</em>, ... <em>file_57.jpg</em><br>
-      You can have missing file (they will just show up as red in the load matrix).
+      Many medical and image formats are accepted.
       </p>
-      <p>For exploring data in 2 directions (e.g. time and exposure), use: <em>file_1_1.jpg</em>, <em>file_1_2.jpg</em>, ... <em>file_1_15.jpg</em>, <em>file_2_1.jpg</em>. <br />
+      <p>For exploring data in 2 meta-dimensions with images, use: <em>file_1_1.jpg</em>, <em>file_1_2.jpg</em>, ... <em>file_1_15.jpg</em>, <em>file_2_1.jpg</em>. <br />
         The first number will be used as the y (rows) coordinate in the 2D matrix.</p>
       <div id="userSets-menu"> <a id="load-local-title" class="loadtab-title" onClick="navLoad('local')" href="#"> Load from computer </a> <a id="load-web-title" class="loadtab-title" onClick="navLoad('web')" href="#"> Load from Web </a> </div>
       <div id="loadtab-wrapper">
@@ -137,7 +137,7 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
     
     <a href="#" onclick="openDataURL('_blank')">
    
-    <img src="http://www.mit.edu/~adalca/tipiX/images/logoText_25.png" style="right:0px; position:fixed; opacity:0.5; padding:10px; bottom:0px;" id="iFrameLogoText">
+    <img src="../images/logoText_25.png" style="right:0px; position:fixed; opacity:0.5; padding:10px; bottom:0px;" id="iFrameLogoText">
    </a>
   </div>
 
@@ -173,16 +173,16 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
 	</div>
   </div>
   <hr>
-  <div id="preview-canvas-container">
+  <div id="preview-canvas-container" style="visibility:hidden">
     <h3>Preview </h3>
     <div id="previewMatrixLink"> <a href="#" onClick="loadPreviewMatrix(loadObj);">Preview Data</a> | <a href="#" onClick="clearPreviewMatrix(loadObj);">Clear</a> </div>
     <div id="previewMatrix">
 		<canvas id="previewCanvas" width="200" height="200"></canvas>
 	</div>
   </div>
-  <div id="debug"></div>
-  <div id="imgnr"></div>
-  <div id="time"></div>
+  <div id="debug" style="visibility:hidden"></div>
+  <div id="imgnr" style="visibility:hidden"></div>
+  <div id="time" style="visibility:hidden"></div>
   <output id="list"></output>
 </div>
 <script src="js/core.js"></script> 
