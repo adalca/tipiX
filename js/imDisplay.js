@@ -700,6 +700,9 @@ function datasetLoaded(loadObj) {
 	
 	// loaded
 	txLoaded = true;
+	
+	//
+	reshapeCanvas();
 }
 
 function prepareLoadingCanvas(loadObj) {

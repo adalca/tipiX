@@ -79,14 +79,32 @@ function nii2sliceArray(input, TMP_DISPLAY) {
 	// get the slices in the image form.
 	var slices = new Array(nSlices)
 	var slice = 0;
-
 	
+	// flip files. 
 	for (var i = 0; i < nSlices; i++) {
-		 slice = new classConstructor(input.data.image[i]); 
-		 slices[i] = array2img(slice, width, height, isColor, TMP_DISPLAY);
+		slice = new classConstructor(input.data.image[i]); 
+		/*
+		//console.log(slice);
+		flippedslice = new Array(slice.length);
+		for (var j = 0; j < slice.length; j++) {
+			flippedslice[j] = slice[j];
+		}		
+		//console.log(slice);
+		flippedslice.reverse();
+		//console.log(flippedslice);
+		slices[i] = array2img(flippedslice, width, height, isColor, TMP_DISPLAY);
+		*/
+		//console.log(slice);
+		flippedslice = arrayFlipVert(slice, width, height);
+		//console.log(flippedslice);
+		slices[i] = array2img(flippedslice, width, height, isColor, TMP_DISPLAY);
+		//slices.reverse();
+		
+		//sliceImgData = array2imgData(slice, width, height, isColor, TMP_DISPLAY);
+		
 	}
+	
+	slices.reverse();
 	
 	return slices;
 }
-
-
