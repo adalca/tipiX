@@ -34,6 +34,9 @@ function loadUserSetAddressBar() {
 	var path = getParameterByName('path');
 	assert(path != '', 'Need a full path');
 	loadObj.fileName = path;
+	
+	loadObj.crossOrigin = getParameterByName('crossOrigin');
+	
 	return loadObj;
 	
 }
@@ -54,6 +57,9 @@ function loadUserSetWeb() {
 	}
 	loadObj.fileName = oForm.elements['filename'].value;
 	loadObj.type = "web";
+	
+	loadObj.crossOrigin = false;
+	
 	return loadObj;
 }
 
@@ -161,6 +167,9 @@ function loadUserSetLocal(evt) {
 	}
 		
 	loadObj.type = "local";
+	
+	loadObj.crossOrigin = true;
+	
 	return loadObj;
 }
 
@@ -170,6 +179,7 @@ function loadBoston4Day() {
 	loadObj.xBins = 5;
 	loadObj.yBins = 24;
 	loadObj.fileName = CORE_SET_PATH + '/imageSets/boston4day/average_img_%d_%d.jpg'; 
+	loadObj.crossOrigin = true;
 	return loadObj;
 }
 
@@ -179,6 +189,7 @@ function lupus() {
 	loadObj.xBins = 5;
 	loadObj.yBins = 56;
 	loadObj.fileName = CORE_SET_PATH + '/imageSets/lupus/lupus_%d_%d.jpg'; 
+	loadObj.crossOrigin = true;
 	return loadObj;
 }
 
@@ -187,5 +198,6 @@ function loadEmerald() {
 	loadObj.nDims = 1;
 	loadObj.xBins = 337;
 	loadObj.fileName = CORE_SET_PATH + '/imageSets/emerald/img (%d).jpg';
+	loadObj.crossOrigin = true;
 	return loadObj;
 }

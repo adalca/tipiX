@@ -1,5 +1,5 @@
 /** tipiX - TIme PIcture eXplorer
- * 
+ *
  * Copyright (c) 2013 TIPIX <adalca@mit.edu>
  *
  * tipiX is licensed under the MIT License:
@@ -12,10 +12,10 @@
 
 
 /** Launch display of a set given a set choice
- * 
+ *
  * @param choice - String - a set choice (see cases for options).
- * @returns {Array} - 1d or 2d pictureBox objects 
- */ 
+ * @returns {Array} - 1d or 2d pictureBox objects
+ */
 function launchDisplay(choice, evt) {
 	switch (choice) {
 		case "boston4day":
@@ -38,37 +38,37 @@ function launchDisplay(choice, evt) {
 			currentTabState = true;
 			break;
 		default:
-			alert('Not a valid case'); 
+			alert('Not a valid case');
 			break;
 	}
-	
+
 	txStartTime = new Date().getTime() / 1000;
 	console.log('display launched');
-	
+
 	// get file type
 	if (loadObj.fileName) {
 		loadObj.inputType = inputType(loadObj.fileName);
 	} else {
 		loadObj.inputType = inputType(loadObj.files[0].name);
 	}
-	
+
 	var delt = new Date().getTime() / 1000 - txStartTime;
 	console.log('loading started @ ' + sprintf('%5.3f', delt) + ' seconds');
-	
+
 	// get the images according to the sources.
 	if (loadObj.inputType.localeCompare('image') == 0) {
 		loadImages(loadObj);
 	} else {
 		loadNiisWithPrep(loadObj);
 	}
-	
+
 
 
 	// draw logo on main canvas
 	var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
 	canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
 	drawLogo();
-	
+
 	// close nav
 	nav(currentTab);
 
@@ -83,6 +83,7 @@ function launchDisplay(choice, evt) {
  *****************************************************************************/
 
 // original settings and global variables
+var orig_4d = [];
 var DRAW_CANVAS_NAME = 'mainDisplay';
 var MAX_CANVAS_WIDTH = 1200;
 var MAX_CANVAS_HEIGHT = 900;
@@ -91,7 +92,7 @@ var MAX_EMPTY_CANVAS_HEIGHT = 450;
 var MIN_CANVAS_WIDTH = 400;
 var MIN_CANVAS_HEIGHT = 300;
 var PLAY_MS_WAIT = 30;
-var canvasOn = false; 
+var canvasOn = false;
 var currentX = 0;
 var currentY = 0;
 var pictureBoxes = [];
@@ -116,17 +117,17 @@ var txLoaded = false;
 
 // key presses
 $(document).keyup(function(e) {
-  if (e.keyCode == 88) { 
-  	lockx = !lockx; 
+  if (e.keyCode == 88) {
+  	lockx = !lockx;
 	document.getElementById('lockx').innerHTML = lockx;
 	}   // x
-  if (e.keyCode == 89) { 
-  	locky = !locky; 
+  if (e.keyCode == 89) {
+  	locky = !locky;
 	document.getElementById('locky').innerHTML = locky;
 	}   // x
-  if (e.keyCode == 27) { 
-  	lockx = false; 
-  	locky = false; 
+  if (e.keyCode == 27) {
+  	lockx = false;
+  	locky = false;
 	document.getElementById('lockx').innerHTML = lockx;
 	document.getElementById('locky').innerHTML = locky;
 	}   // esc
@@ -173,7 +174,7 @@ canvas.addEventListener('mousemove', function(evt) {
 canvas.addEventListener('click', function(evt) {
 
 	if (iFrameMode && loadObj.nDims == 1) {
-		changePlayState(); 
+		changePlayState();
 		continuousPlay(0);
 	}
 }, false);

@@ -88,6 +88,9 @@ $(window).load(function () {
 			updownContainer('info-container');
 		}
 		
+		var crossOrigin = getParameterByName('crossOrigin');
+		
+		
 		// get any pre-load datasets:
 		try {
 			launchDisplay('userSetAddressBar');
