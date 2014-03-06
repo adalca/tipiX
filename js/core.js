@@ -114,6 +114,7 @@ var txStartTime = 0;
 var txLoadCores = 3; // number of loading cores
 console.log('working with ' + txLoadCores + ' cores');
 var txLoaded = false;
+var rotationAngle = 0;
 
 // key presses
 $(document).keyup(function(e) {
@@ -163,7 +164,6 @@ var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
 canvas.onclick = function () { console.log((global_x+1).toString()); };
 
 canvas.addEventListener('mousemove', function(evt) {
-
 	if (canvasOn) {
 		var mousePos = getMousePos(canvas, evt);
 		drawImageAtPosition(mousePos);

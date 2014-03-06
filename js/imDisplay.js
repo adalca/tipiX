@@ -129,7 +129,7 @@ function prepareFilenames(loadObj) {
 
 function swapAxes(ax1, ax2) {
 
-    if (ax2 > ax1) {
+    if (ax2 < ax1) {
         var tmp = ax1;
         ax1 = ax2;
         ax2 = tmp;
@@ -137,23 +137,35 @@ function swapAxes(ax1, ax2) {
 
     var I = pictureBoxes.length;
     var J = pictureBoxes[0].length;
-	console.log(I)
-	console.log(J)
     var i,j;
-
+	console.log('new_init_4');
+	
     // First, gather up the data we have now into a 4D array
 	swapCanvas = document.getElementById('mainDisplayTest');
 	var context = swapCanvas.getContext('2d');
+	orig_4d = new Array(I);
     for (i=0; i<I; i++) {
-        for (j=0; j<J; J++) {
+		orig_4d[i] = new Array(J);
+        for (j=0; j<J; j++) {
+			if (!pictureBoxes[i][j].loaded) {
+				alert('no loaded. Swap will stop');
+			}
+				
             swapImg = pictureBoxes[i][j].img;
-            
-            drawImage(swapImg, canvas);
-            orig_4d[i][j] = context.getImageData(0, 0, swapImg.width, swapImg.height);
+			
+			width = pictureBoxes[i][j].imgWidth;
+			height = pictureBoxes[i][j].imgHeight;
+			
+			swapCanvas.width = width;
+			swapCanvas.height = height;
+			
+			context.drawImage(swapImg, 0, 0, width, height);
+            arr = context.getImageData(0, 0, width, height);
+			orig_4d[i][j] = imgData2Matrix(arr.data, width, height);
         }
-		console.log(i);
     }
-
+	console.log('done build');
+	
     // Transpose it
     // TODO replace with cleaner way of transposing
     if (ax1 === 0 && ax2 === 1) {
@@ -169,19 +181,38 @@ function swapAxes(ax1, ax2) {
     } else if (ax1 === 2 && ax2 === 3) {
         out = swap23(orig_4d);
     }
-	console.log('out' + out);
-	
+		
+	console.log('new');
+	//out = orig_4d;
     var II = out.length;
     var JJ = out[0].length;
 
-    for (i=0; i<II; i++) {
-        for (j=0; j<JJ; j++) {
-            arr = out[i][j];
-            var img = array2imgData(arr, arr.length, arr[0].length, swapCanvas);
-            out[i][j] = img;
-            pictureBoxes[i][j] = makePictureBox(img, i, j);
+	
+	pBcopy = new Array(II);
+	console.log('hi');
+    for (i=0; i < II; i++) {
+		pBcopy[i] = new Array(JJ);
+		console.log(i);
+        for (j=0; j < JJ; j++) {
+			pBcopy[i][j] = {};
+            arr = matrix2dcol2array(out[i][j]);
+			var img = array2img(arr, out[i][j][0].length, out[i][j].length, 2, 'mainDisplayTest');
+            //var img = array2imgData(arr, arr.length, arr[0].length, swapCanvas);
+            //out[i][j] = img;
+			
+            pBcopy[i][j].img = img;
+			pBcopy[i][j].error = false;
+			pBcopy[i][j].loaded = true;
+			pBcopy[i][j].x = j;
+			pBcopy[i][j].y = i;
+			pBcopy[i][j].imgHeight = out[i][j].length;
+			pBcopy[i][j].imgWidth = out[i][j][0].length;
+			// NOT DONE
         }
+		
     }
+	
+	pictureBoxes = pBcopy;
 }
 
 
@@ -233,7 +264,7 @@ function loadImage(loadObj, filenames, idx) {
 		writeLoadingTime();
 
 		if (curPictureBox == null) {
-			drawImage(pictureBox.img, canvas);
+			drawImage(pictureBox.img, canvas, rotationAngle);
 			curPictureBox = pictureBox;
 		}
 		
@@ -563,7 +594,7 @@ function drawImageAtPosition(pos) {
 		// display the image
 		if (pictureBox.loaded) {
 			document.getElementById('mouse-position').innerHTML = msg;
-			drawImage(pictureBox.img, canvas);
+			drawImage(pictureBox.img, canvas, rotationAngle);
 		}
 
 		// color the load box
@@ -584,9 +615,10 @@ function drawImageAtPosition(pos) {
 
 
 
-function drawImage(img, canvas) {
+function drawImage(img, canvas, angleInRadians) {
 	picWidth = img.width;
 	picHeight = img.height;
+	
 	// TODO - should have asserted ONLOAD that picWidth and picHeight are within canvas size.
 	canWidth = canvas.width;
 	canHeight = canvas.height;
@@ -605,7 +637,22 @@ function drawImage(img, canvas) {
 
 	// draw image
 	var context = canvas.getContext('2d');
-	context.drawImage(img, 0, 0, canvas.width, canvas.height);
+	if (!angleInRadians) {
+	
+		context.drawImage(img, 0, 0, canvas.width, canvas.height);
+	} else {
+		canvas.width = canvas.width;
+		var x = canvas.width / 2;
+		var y = canvas.height / 2;
+		var width = img.width;
+		var height = img.height;
+		
+		context.translate(x, y);
+		context.rotate(angleInRadians);
+		context.drawImage(img, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+		context.rotate(-angleInRadians);
+		context.translate(-x, -y);
+	}
 }
 
 
@@ -838,6 +885,7 @@ function handleFileSelect(evt) {
 
 function reshapeCanvas() {
 
+	var canvas = document.getElementById(DRAW_CANVAS_NAME); 
 	var windowHeight = $(window).height();
 	var windowWidth = $(window).width();
 

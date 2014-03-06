@@ -126,6 +126,9 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
 </div>
 
 
+<canvas id="mainDisplayTest" width="200" height="200" style="border-width:1px;"> visibility:hidden;
+</canvas>
+
 <div id="main-container">
   <div id="display-container">
     <canvas id="mainDisplay" width="1200" height="900"></canvas>
@@ -141,8 +144,6 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
    </a>
   </div>
 
-<canvas id="mainDisplayTest" width="200" height="200" style="border-width:1px; visibility:hidden;">
-</canvas>
 
 <!-- Info Container. Current_data, Load_data, TODOs, itneraction interface --> 
 
@@ -162,8 +163,11 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
   
   <!-- play button -->
   <form>
+	Controls:
     <input id="play" type="button" onclick="changePlayState(); continuousPlay(0);" value="play">
+	<input id="rotate" type="button" onclick="addRotateion(Math.PI/2);" value=" " style="background-image: url(images/arrow.png); background-size:contain; background-repeat:no-repeat;">
   </form>
+ 
   
   <hr>
   <div id="loading-canvas-container">
