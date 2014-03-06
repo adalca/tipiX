@@ -470,18 +470,13 @@ function drawImageAtPosition(pos) {
 		var loadCanvas = document.getElementById('loadingCanvas');
 		var loadContext = loadCanvas.getContext('2d');
 		
-		if (txLoaded) {
-			// instead of re-sizing width and height, could do this in a hidden canvas and copy
-			loadData = loadContext.getImageData(0, 0, loadCanvas.width, loadCanvas.height);
-		}
-		
 		// color the load box of previous image back to original color
 		if (txLoaded && curPictureBox != null) { 
 			oldidx = (curPictureBox.y * loadObj.xBins + curPictureBox.x) * 4;
-			loadData.data[oldidx] = curPictureBox.loaded ? 0 : 128;
-			loadData.data[oldidx + 1] = curPictureBox.loaded ? 128 : 0;
-			loadData.data[oldidx + 2] = 0;
-			loadData.data[oldidx + 3] = 255;
+			loadActiveData[oldidx] = curPictureBox.loaded ? 0 : 128;
+			loadActiveData[oldidx + 1] = curPictureBox.loaded ? 128 : 0;
+			loadActiveData[oldidx + 2] = 0;
+			loadActiveData[oldidx + 3] = 255;
 		}
 			
 		// display the image
@@ -493,13 +488,13 @@ function drawImageAtPosition(pos) {
 		// color the load box 
 		if (txLoaded) {
 			newidx = (pictureBox.y * loadObj.xBins + pictureBox.x) * 4;
-			loadData.data[newidx] = pictureBox.loaded ? 0 : 255;
-			loadData.data[newidx + 1] = pictureBox.loaded ? 255 : 0;
-			loadData.data[newidx + 2] = 0;
-			loadData.data[newidx + 3] = 255;			
+			loadActiveData[newidx] = pictureBox.loaded ? 0 : 255;
+			loadActiveData[newidx + 1] = pictureBox.loaded ? 255 : 0;
+			loadActiveData[newidx + 2] = 0;
+			loadActiveData[newidx + 3] = 255;			
 			
-			// re-size and put back image
-			loadContext.putImageData(loadData, 0, 0); 
+			img = array2img(loadActiveData, loadObj.xBins, loadObj.yBins, 2, 'mainDisplayTest');
+			loadContext.drawImage(img, 0, 0, loadCanvas.width, loadCanvas.height);
 		}
 	}
 	
@@ -651,49 +646,47 @@ function datasetLoaded(loadObj) {
 	
 	
 	if (loadObj.nDims == 1) {
-		var data = new Array(loadObj.xBins * 4);
+		loadActiveData = new Array(loadObj.xBins * 4);
 		for (var i = 0; i < loadObj.xBins; i++) {
 			idx = i * 4;
 			if (pictureBoxes[i].loaded) {
-				data[idx+1] = 128; 
+				loadActiveData[idx+1] = 128; 
 			} else { // should be pictureBoxes[i].error
-				data[idx] = 128; 
+				loadActiveData[idx] = 128; 
 			}
-			data[idx+3] = 255; 
+			loadActiveData[idx+3] = 255; 
 		}
 		loadObj.yBins = 1;
 		
 	} else {
 		assert(loadObj.nDims == 2);
 		
-		var data = new Array(loadObj.xBins * loadObj.yBins * 4);
+		loadActiveData = new Array(loadObj.xBins * loadObj.yBins * 4);
 		for (var i = 0; i < loadObj.yBins; i++) {
 			for (var j = 0; j < loadObj.xBins; j++) {
 				idx = i*loadObj.xBins + j;
 				aidx = idx * 4;
 				if (pictureBoxes[i][j].loaded) {
-					data[aidx+1] = 128;
+					loadActiveData[aidx+1] = 128;
 				} else {
-					data[aidx] = 128;
+					loadActiveData[aidx] = 128;
 				}
-				data[aidx + 3] = 255;
+				loadActiveData[aidx + 3] = 255;
 			}
 		}
 	}
 	
 	colorMode = 2; 
 	
-	img = array2img(data, loadObj.xBins, loadObj.yBins, colorMode, 'mainDisplayTest');
+	img = array2img(loadActiveData, loadObj.xBins, loadObj.yBins, colorMode, 'mainDisplayTest');
 	
 	var canvas = document.getElementById('loadingCanvas');
 	var context = canvas.getContext('2d');
+	context.imageSmoothingEnabled = false;
+	context.webkitImageSmoothingEnabled = false;
+	context.mozImageSmoothingEnabled = false;
 
-	canvas.style.width = canvas.width + "px";
-	canvas.style.height = canvas.height + "px";
-	canvas.width = loadObj.xBins;
-	canvas.height = loadObj.yBins;
 	context.drawImage(img, 0, 0, canvas.width, canvas.height);
-
 	
 	var delt = new Date().getTime() / 1000 - txStartTime;
 	console.log('canvas started @ ' + sprintf('%5.3f', delt) + ' seconds');

@@ -97,6 +97,7 @@ var currentY = 0;
 var pictureBoxes = [];
 var startTime = 0;
 var loadObj = new Object();
+var loadActiveData;
 var curPictureBox = null;
 var currentTab = 'about';
 var currentLoadTab = 'local';
