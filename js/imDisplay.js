@@ -138,7 +138,7 @@ function swapAxes(ax1, ax2) {
     var I = pictureBoxes.length;
     var J = pictureBoxes[0].length;
     var i,j;
-	console.log('new_init_4');
+	
 	
     // First, gather up the data we have now into a 4D array
 	swapCanvas = document.getElementById('mainDisplayTest');
@@ -164,7 +164,7 @@ function swapAxes(ax1, ax2) {
 			orig_4d[i][j] = imgData2Matrix(arr.data, width, height);
         }
     }
-	console.log('done build');
+	
 	
     // Transpose it
     // TODO replace with cleaner way of transposing
@@ -182,17 +182,17 @@ function swapAxes(ax1, ax2) {
         out = swap23(orig_4d);
     }
 		
-	console.log('new');
+	
 	//out = orig_4d;
     var II = out.length;
     var JJ = out[0].length;
 
 	
 	pBcopy = new Array(II);
-	console.log('hi');
+	
     for (i=0; i < II; i++) {
 		pBcopy[i] = new Array(JJ);
-		console.log(i);
+		
         for (j=0; j < JJ; j++) {
 			pBcopy[i][j] = {};
             arr = matrix2dcol2array(out[i][j]);
@@ -213,6 +213,8 @@ function swapAxes(ax1, ax2) {
     }
 	
 	pictureBoxes = pBcopy;
+	curPictureBox = pictureBoxes[0][0];
+	reshapeCanvas();
 }
 
 
@@ -577,11 +579,6 @@ function drawImageAtPosition(pos) {
 		var loadCanvas = document.getElementById('loadingCanvas');
 		var loadContext = loadCanvas.getContext('2d');
 
-		if (txLoaded) {
-			// instead of re-sizing width and height, could do this in a hidden canvas and copy
-			loadData = loadContext.getImageData(0, 0, loadCanvas.width, loadCanvas.height);
-		}
-
 		// color the load box of previous image back to original color
 		if (txLoaded && curPictureBox != null) {
 			oldidx = (curPictureBox.y * loadObj.xBins + curPictureBox.x) * 4;
@@ -600,13 +597,15 @@ function drawImageAtPosition(pos) {
 		// color the load box
 		if (txLoaded) {
 			newidx = (pictureBox.y * loadObj.xBins + pictureBox.x) * 4;
-			loadData.data[newidx] = pictureBox.loaded ? 0 : 255;
-			loadData.data[newidx + 1] = pictureBox.loaded ? 255 : 0;
-			loadData.data[newidx + 2] = 0;
-			loadData.data[newidx + 3] = 255;
+			loadActiveData[newidx] = pictureBox.loaded ? 0 : 255;
+			loadActiveData[newidx + 1] = pictureBox.loaded ? 255 : 0;
+			loadActiveData[newidx + 2] = 0;
+			loadActiveData[newidx + 3] = 255;
 
 			// re-size and put back image
-			loadContext.putImageData(loadData, 0, 0);
+
+			img = array2img(loadActiveData, loadObj.xBins, loadObj.yBins, 2, 'mainDisplayTest');
+			loadContext.drawImage(img, 0, 0, loadCanvas.width, loadCanvas.height);
 		}
 	}
 
@@ -778,11 +777,11 @@ function datasetLoaded(loadObj) {
 		for (var i = 0; i < loadObj.xBins; i++) {
 			idx = i * 4;
 			if (pictureBoxes[i].loaded) {
-				data[idx+1] = 128;
+				loadActiveData[idx+1] = 128;
 			} else { // should be pictureBoxes[i].error
-				data[idx] = 128;
+				loadActiveData[idx] = 128;
 			}
-			data[idx+3] = 255;
+			loadActiveData[idx+3] = 255;
 		}
 		loadObj.yBins = 1;
 

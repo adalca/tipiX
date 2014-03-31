@@ -385,3 +385,9 @@ function addRotateion(del) {
 	drawImage(pictureBox.img, canvas, rotationAngle);
 }
 
+function swapClick(form) {
+	a1 = parseInt(form.swap1.value, 10);
+	a2 = parseInt(form.swap2.value, 10);
+	swapAxes(a1, a2);
+}
+
