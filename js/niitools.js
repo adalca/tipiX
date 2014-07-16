@@ -17,6 +17,8 @@ function niiFile2pictureBoxs(loadObj, filenames, idx, TMP_DISPLAY) {
 			//imgBoxSet(pictureBoxes[i][thisidx].loadBoxName, "#99db99", loadObj.xBins);
 			pictureBoxes[i][thisidx].loaded = true;
 			pictureBoxes[i][thisidx].img = slices[i];
+			pictureBoxes[i][thisidx].imgWidth = pictureBoxes[i][thisidx].img.width;
+			pictureBoxes[i][thisidx].imgHeight = pictureBoxes[i][thisidx].img.height;
 			pictureBoxes[i][thisidx].x = thisidx;
 			pictureBoxes[i][thisidx].y = i;
 		}
@@ -27,7 +29,7 @@ function niiFile2pictureBoxs(loadObj, filenames, idx, TMP_DISPLAY) {
 		if (curPictureBox == null) { 
 			var canvas = document.getElementById(DRAW_CANVAS_NAME); 
 			drawImage(pictureBoxes[0][thisidx].img, canvas);
-			curPictureBox = pictureBoxes;
+			curPictureBox = pictureBoxes[0][thisidx];
 		}
 		
 		// load the next nii on this core.

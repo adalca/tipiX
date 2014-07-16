@@ -18,24 +18,17 @@
 <title>tipiX - time picture explorer</title>
 
 <!-- LICENSE Info:
-   tipiX - TIme PIcture eXplorer
-   Copyright (c) 2013 TIPIX <adalca@mit.edu>
-tipiX is licensed under the MIT License:
+mipiX is licensed under the MIT License:
 http://www.opensource.org/licenses/mit-license.php
 See LICENSE file for more information
-Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
-   -->
+-->
 
 <meta charset="utf-8">
 </head>
 <body onload="reshapeCanvas();" onResize="reshapeCanvas();">
-<div id="nav-container" style="visibility:hidden">
+<div id="nav-container">
   <h1>tipiX - time picture explorer</h1>
   <a id="examples-tab-title" onClick="nav('examples')" href="#"> Examples </a> <a id="userSets-tab-title" onClick="nav('userSets')" href="#"> Load </a> <a id="about-tab-title"  onClick="nav('about')" href="#"> About </a> </div>
-
-<!--
-  <a href="http://www.mit.edu/~adalca/"><h3>Adrian Dalca</h3></a>
-  -->
 
 <div id="menu-container">
   <div id="tab-container">
@@ -126,6 +119,9 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
 </div>
 
 
+<canvas id="mainDisplayTest" width="200" height="200" style="border-width:1px; visibility:hidden;"> 
+</canvas>
+
 <div id="main-container">
   <div id="display-container">
     <canvas id="mainDisplay" width="1200" height="900"></canvas>
@@ -141,8 +137,6 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
    </a>
   </div>
 
-<canvas id="mainDisplayTest" width="200" height="200" style="border-width:1px; visibility:hidden;">
-</canvas>
 
 <!-- Info Container. Current_data, Load_data, TODOs, itneraction interface --> 
 
@@ -162,8 +156,17 @@ Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
   
   <!-- play button -->
   <form>
-    <input id="play" type="button" onclick="changePlayState(); continuousPlay(0);" value="play">
+	Controls:<br />
+    <input id="play" type="button" onclick="changePlayState(); continuousPlay(0);" value="video play"><br />
+	<input id="rotate" type="button" onclick="addRotateion(Math.PI/2);" value="    rotate" style="background-image: url(images/arrow.png); background-size:contain; background-repeat:no-repeat;">
+	
+	<br /> Swap two dimensions in 4D data (this can take a minute) <br />
+	<input id="swap1" type="input" size="2" value="0">
+	<input id="swap2" type="input" size="2" value="2">
+	
+	<input id="swap" type="button" onclick="swapClick(this.form);" value="Swap">
   </form>
+ 
   
   <hr>
   <div id="loading-canvas-container">
