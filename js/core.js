@@ -17,63 +17,63 @@
  * @returns {Array} - 1d or 2d pictureBox objects
  */
 function launchDisplay(choice, evt) {
-	switch (choice) {
-		case "boston4day":
-			loadObj = loadBoston4Day();
-			break;
-		case "lupus":
-			loadObj = lupus();
-			break;
-		case "emerald":
-			loadObj = loadEmerald();
-			break;
-		case "userSetWeb":
-			loadObj = loadUserSetWeb();
-			break;
-		case "userSetLocal":
-			loadObj = loadUserSetLocal(evt);
-			break;
-		case "userSetAddressBar":
-			loadObj = loadUserSetAddressBar();
-			currentTabState = true;
-			break;
-		default:
-			alert('Not a valid case');
-			break;
-	}
+    switch (choice) {
+        case "boston4day":
+            loadObj = loadBoston4Day();
+            break;
+        case "lupus":
+            loadObj = lupus();
+            break;
+        case "emerald":
+            loadObj = loadEmerald();
+            break;
+        case "userSetWeb":
+            loadObj = loadUserSetWeb();
+            break;
+        case "userSetLocal":
+            loadObj = loadUserSetLocal(evt);
+            break;
+        case "userSetAddressBar":
+            loadObj = loadUserSetAddressBar();
+            currentTabState = true;
+            break;
+        default:
+            alert('Not a valid case');
+            break;
+    }
 
-	txStartTime = new Date().getTime() / 1000;
-	console.log('display launched');
+    txStartTime = new Date().getTime() / 1000;
+    console.log('display launched');
 
-	// get file type
-	if (loadObj.fileName) {
-		loadObj.inputType = inputType(loadObj.fileName);
-	} else {
-		loadObj.inputType = inputType(loadObj.files[0].name);
-	}
+    // get file type
+    if (loadObj.fileName) {
+        loadObj.inputType = inputType(loadObj.fileName);
+    } else {
+        loadObj.inputType = inputType(loadObj.files[0].name);
+    }
 
-	var delt = new Date().getTime() / 1000 - txStartTime;
-	console.log('loading started @ ' + sprintf('%5.3f', delt) + ' seconds');
+    var delt = new Date().getTime() / 1000 - txStartTime;
+    console.log('loading started @ ' + sprintf('%5.3f', delt) + ' seconds');
 
-	// get the images according to the sources.
-	if (loadObj.inputType.localeCompare('image') == 0) {
-		loadImages(loadObj);
-	} else {
-		loadNiisWithPrep(loadObj);
-	}
+    // get the images according to the sources.
+    if (loadObj.inputType.localeCompare('image') == 0) {
+        loadImages(loadObj);
+    } else {
+        loadNiisWithPrep(loadObj);
+    }
 
 
 
-	// draw logo on main canvas
-	var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
-	canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
-	drawLogo();
+    // draw logo on main canvas
+    var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
+    canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
+    drawLogo();
 
-	// close nav
-	nav(currentTab);
+    // close nav
+    nav(currentTab);
 
-	// force a reshape of window on first picture draw.
-	fixedAspectRatio = 0;
+    // force a reshape of window on first picture draw.
+    fixedAspectRatio = 0;
 }
 
 
@@ -120,26 +120,26 @@ var rotationAngle = 0;
 // key presses
 $(document).keyup(function(e) {
   if (e.keyCode == 88) {
-  	lockx = !lockx;
-	document.getElementById('lockx').innerHTML = lockx;
-	}   // x
+      lockx = !lockx;
+    document.getElementById('lockx').innerHTML = lockx;
+    }   // x
   if (e.keyCode == 89) {
-  	locky = !locky;
-	document.getElementById('locky').innerHTML = locky;
-	}   // x
+      locky = !locky;
+    document.getElementById('locky').innerHTML = locky;
+    }   // x
   if (e.keyCode == 27) {
-  	lockx = false;
-  	locky = false;
-	document.getElementById('lockx').innerHTML = lockx;
-	document.getElementById('locky').innerHTML = locky;
-	}   // esc
-	if (e.keyCode == 67) { //c
-		nav('about');
-	}
-	if (e.keyCode == 73) { //i
-		onOff('info-clip');
-		updownContainer('info-container');
-	}
+      lockx = false;
+      locky = false;
+    document.getElementById('lockx').innerHTML = lockx;
+    document.getElementById('locky').innerHTML = locky;
+    }   // esc
+    if (e.keyCode == 67) { //c
+        nav('about');
+    }
+    if (e.keyCode == 73) { //i
+        onOff('info-clip');
+        updownContainer('info-container');
+    }
 });
 
 
@@ -165,18 +165,18 @@ var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
 canvas.onclick = function () { console.log((global_x+1).toString()); };
 
 canvas.addEventListener('mousemove', function(evt) {
-	if (canvasOn) {
-		var mousePos = getMousePos(canvas, evt);
-		drawImageAtPosition(mousePos);
-	}
+    if (canvasOn) {
+        var mousePos = getMousePos(canvas, evt);
+        drawImageAtPosition(mousePos);
+    }
 }, false);
 
 
 canvas.addEventListener('click', function(evt) {
 
-	if (iFrameMode && loadObj.nDims == 1) {
-		changePlayState();
-		continuousPlay(0);
-	}
+    if (iFrameMode && loadObj.nDims == 1) {
+        changePlayState();
+        continuousPlay(0);
+    }
 }, false);
 
