@@ -37,6 +37,18 @@ function loadUserSetAddressBar() {
     
     loadObj.crossOrigin = getParameterByName('crossOrigin');
     
+	var xlabel = getParameterByName('xlabel');
+	if (xlabel != '') {
+		document.getElementById('xlabel').style.display = 'inline';
+		document.getElementById('xlabel').innerHTML = xlabel;
+		}
+	
+	var ylabel = getParameterByName('ylabel');
+	if (ylabel != '') {
+		document.getElementById('ylabel').style.display = 'inline';
+		document.getElementById('ylabel').innerHTML = ylabel;
+		}
+	
     return loadObj;
     
 }
