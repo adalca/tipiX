@@ -40,13 +40,13 @@ function loadUserSetAddressBar() {
 	var xlabel = getParameterByName('xlabel');
 	if (xlabel != '') {
 		document.getElementById('xlabel').style.display = 'inline';
-		document.getElementById('xlabel').innerHTML = xlabel;
+		document.getElementById('xlabelspan').innerHTML = xlabel;
 		}
 	
 	var ylabel = getParameterByName('ylabel');
 	if (ylabel != '') {
 		document.getElementById('ylabel').style.display = 'inline';
-		document.getElementById('ylabel').innerHTML = ylabel;
+		document.getElementById('ylabelspan').innerHTML = ylabel;
 		}
 	
     return loadObj;

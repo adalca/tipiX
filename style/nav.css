@@ -552,6 +552,13 @@
 	background-color: #EEE;
 	text-align:center;
 	display:none;
+	background-image: url(../images/xarrows.png);
+}
+
+#xlabelspan {
+	background-color:#EEE; 
+	padding-left:10px;
+	padding-right:10px;
 }
 
 #ylabel {
@@ -573,4 +580,11 @@
 	background-color: #EEE;
 	text-align:center;
 	display:none;
+	background-image: url(../images/xarrows.png);
+}
+
+#ylabelspan {
+	background-color:#EEE; 
+	padding-left:10px;
+	padding-right:10px;
 }

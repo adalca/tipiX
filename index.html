@@ -15,7 +15,7 @@
 <script src="js/nav.js"  type="text/javascript"></script>
 <script src="js/tools.js"  type="text/javascript"></script>
 <script src="js/load.js"  type="text/javascript"></script>
-<title>tipiX - time picture explorer</title>
+<title>tipiX - large dataset visualization</title>
 
 <!-- LICENSE Info:
 mipiX is licensed under the MIT License:
@@ -27,7 +27,7 @@ See LICENSE file for more information
 </head>
 <body onload="reshapeCanvas();" onResize="reshapeCanvas();">
 <div id="nav-container">
-  <h1>tipiX - time picture explorer</h1>
+  <h1>tipiX - large dataset visualization</h1>
   <a id="examples-tab-title" onClick="nav('examples')" href="#"> Examples </a> <a id="userSets-tab-title" onClick="nav('userSets')" href="#"> Load </a> <a id="about-tab-title"  onClick="nav('about')" href="#"> About </a> </div>
 
 <div id="menu-container">
@@ -126,8 +126,8 @@ See LICENSE file for more information
   <div id="display-container">
     <canvas id="mainDisplay" width="1200" height="900"></canvas>
   </div>
-  <div id="xlabel">xlabel</div>
-  <div id="ylabel">ylabel</div>
+  <div id="xlabel"><span id="xlabelspan">xlabel</span></div>
+  <div id="ylabel"><span id="ylabelspan">ylabel</span></div>
 </div>
   
   <div id="iframe-controls-container">
