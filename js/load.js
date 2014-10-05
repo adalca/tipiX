@@ -185,6 +185,7 @@ function loadUserSetLocal(evt) {
     return loadObj;
 }
 
+/* The following should not be built into the core code. They should exist as example links. */
 function loadBoston4Day() {
     loadObj.type = "web";
     loadObj.nDims = 2;
