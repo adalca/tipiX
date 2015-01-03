@@ -104,6 +104,8 @@ var currentTab = 'about';
 var currentLoadTab = 'local';
 var currentTabState = false;
 var CORE_SET_PATH = 'http://www.mit.edu/~adalca/tipiX';
+var CORE_SET_PATH_IFRAME_LOGO = 'http://www.mit.edu/~adalca/tipiX/images/logoText_10.png';
+var CORE_SET_PATH_LOGO = 'http://www.mit.edu/~adalca/tipiX/images/logo.png';
 var logoImage;
 var lockx = false;
 var locky = false;
@@ -179,4 +181,3 @@ canvas.addEventListener('click', function(evt) {
         continuousPlay(0);
     }
 }, false);
-

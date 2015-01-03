@@ -14,70 +14,6 @@
  * Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
  */
 
-
-
-
-/**
- * Build the loading html matrix
- *
- * @param loadObj - the main loading object for this set, see spec
- *     @ launchDisplay()
- * @param type - the type of matrix, e.g. "load" or "preview"
- */
-function buildMatrix(loadObj, type) {
-    error('unused');
-    /*
-    matrixID = sprintf('%sMatrix', type);
-
-
-    // if one-dimension
-    if (loadObj.nDims == 1) {
-
-        // write to div element typeMatrix a set of smaller divs which will
-        // indicate loading, or lack thereof
-        txt = sprintf('%s Matrix: <br />', type);
-        for ( var i = 0; i < loadObj.xBins; i++) {
-            divTxt = sprintf('<div class="%sBox" id="#%s_%d"></div>', type, type, i);
-            txt = txt + divTxt;
-        }
-        document.getElementById(matrixID).innerHTML = txt;
-
-        // color the new divs in with grey
-        // TODO: clean this - this is duplicate code with loadImage!
-        for ( var i = 0; i < loadObj.xBins; i++) {
-            loadBoxName = sprintf('#%s_%d', type, i);
-            imgBoxSet(loadBoxName, "#AAAAAA", loadObj.xBins, loadMatrixWidth);
-        }
-
-    // if two-dimension
-    } else {
-
-
-        // write to div element loadMatrix a set of smaller divs which will
-        // indicate loading, or lack thereof
-        txt = sprintf('%s Matrix: <br />', type);
-        for ( var i = 0; i < loadObj.yBins; i++) {
-            for ( var j = 0; j < loadObj.xBins; j++) {
-                divTxt = sprintf(
-                        '<div class="%sBox" id="#%s_%d_%d"></div>', type, type, i, j);
-                txt += divTxt;
-            }
-        }
-        document.getElementById(matrixID).innerHTML = txt;
-
-        // color the new divs in with grey
-        // TODO: clean this - this is duplicate code with loadImage!
-        for ( var i = 0; i < loadObj.yBins; i++) {
-            for ( var j = 0; j < loadObj.xBins; j++) {
-                loadBoxName = sprintf('#%s_%d_%d', type, i, j); // TODO: - fix copied code with loadImage!
-                imgBoxSet(loadBoxName, "#AAAAAA", loadObj.xBins, loadMatrixWidth);
-            }
-        }
-    }*/
-}
-
-
-
 function prepareFilenames(loadObj) {
 
     if (typeof loadObj.fileName != 'undefined')
@@ -680,35 +616,6 @@ function writeLoadingPerc(perc) {
     var percMsg = sprintf('%3d%%', perc);
     document.getElementById('loadPerc').innerHTML = percMsg;
 }
-
-/** Set the image box (div) with the given color and size
- * TODO: should set size and float at initiation!.
- *
- * @param loadBoxName
- * @param bgStr
- * @param xBins
- *
-function imgBoxSet(loadBoxName, bgStr, xBins, width) {
-    //if (typeof width === "undefined") {
-    //    var width = document.getElementById('loadMatrix').offsetWidth; // EXPENSIVE
-    //}
-
-    var binWidth = width / xBins;
-
-
-    if (bgStr[0] == '#') { // if it's a color
-        document.getElementById(loadBoxName).style.backgroundColor = bgStr;
-    } else {
-        document.getElementById(loadBoxName).style.backgroundColor = "transparent";
-        document.getElementById(loadBoxName).style.backgroundImage = sprintf("url('%s')", bgStr);
-        document.getElementById(loadBoxName).style.backgroundSize = sprintf("%dpx 10px", binWidth);
-    }
-
-    document.getElementById(loadBoxName).style.width = "" + binWidth + "px";
-    document.getElementById(loadBoxName).style.cssFloat = "left";
-
-    // TODO - add processing for xBIns' pixel --- http://www.w3schools.com/tags/canvas_imagedata_data.asp
-}*/
 
 
 function drawLogo() {
