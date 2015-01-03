@@ -138,8 +138,8 @@ function swapAxes(ax1, ax2) {
     var I = pictureBoxes.length;
     var J = pictureBoxes[0].length;
     var i,j;
-    
-    
+
+
     // First, gather up the data we have now into a 4D array
     swapCanvas = document.getElementById('mainDisplayTest');
     var context = swapCanvas.getContext('2d');
@@ -150,22 +150,22 @@ function swapAxes(ax1, ax2) {
             if (!pictureBoxes[i][j].loaded) {
                 alert('no loaded. Swap will stop');
             }
-                
+
             swapImg = pictureBoxes[i][j].img;
-            
+
             width = pictureBoxes[i][j].imgWidth;
             height = pictureBoxes[i][j].imgHeight;
-            
+
             swapCanvas.width = width;
             swapCanvas.height = height;
-            
+
             context.drawImage(swapImg, 0, 0, width, height);
             arr = context.getImageData(0, 0, width, height);
             orig_4d[i][j] = imgData2Matrix(arr.data, width, height);
         }
     }
-    
-    
+
+
     // Transpose it
     // TODO replace with cleaner way of transposing
     if (ax1 === 0 && ax2 === 1) {
@@ -181,25 +181,25 @@ function swapAxes(ax1, ax2) {
     } else if (ax1 === 2 && ax2 === 3) {
         out = swap23(orig_4d);
     }
-        
-    
+
+
     //out = orig_4d;
     var II = out.length;
     var JJ = out[0].length;
 
-    
+
     pBcopy = new Array(II);
-    
+
     for (i=0; i < II; i++) {
         pBcopy[i] = new Array(JJ);
-        
+
         for (j=0; j < JJ; j++) {
             pBcopy[i][j] = {};
             arr = matrix2dcol2array(out[i][j]);
             var img = array2img(arr, out[i][j][0].length, out[i][j].length, 2, 'mainDisplayTest');
             //var img = array2imgData(arr, arr.length, arr[0].length, swapCanvas);
             //out[i][j] = img;
-            
+
             pBcopy[i][j].img = img;
             pBcopy[i][j].error = false;
             pBcopy[i][j].loaded = true;
@@ -209,9 +209,9 @@ function swapAxes(ax1, ax2) {
             pBcopy[i][j].imgWidth = out[i][j][0].length;
             // NOT DONE
         }
-        
+
     }
-    
+
     pictureBoxes = pBcopy;
     curPictureBox = pictureBoxes[0][0];
     reshapeCanvas();
@@ -237,7 +237,7 @@ function loadImage(loadObj, filenames, idx) {
     // idx is an element of an array of 2 elements, all elements start at 1
     var canvas = document.getElementById(DRAW_CANVAS_NAME);
     var ctx = canvas.getContext("2d");
-    
+
     // start from
     // http://stackoverflow.com/qfuestions/5678899/change-image-source-if-file-exists
     var pictureBox = {};
@@ -269,10 +269,10 @@ function loadImage(loadObj, filenames, idx) {
             drawImage(pictureBox.img, canvas, rotationAngle);
             curPictureBox = pictureBox;
         }
-        
+
         pictureBox.imgWidth = this.width;
         pictureBox.imgHeight = this.height;
-        
+
         ///// ADDED
         //var tmpcanvas = document.getElementById("mainDisplayTest");
         //var tmpctx = tmpcanvas.getContext("2d");
@@ -293,9 +293,9 @@ function loadImage(loadObj, filenames, idx) {
     if (loadObj.crossOrigin) {
         pictureBox.img.crossOrigin = "anonymous";
     }
-        
+
     pictureBox.img.src = pictureBox.fileName;//pictureBox.fileName;
-        
+
 
 
 
@@ -617,7 +617,7 @@ function drawImageAtPosition(pos) {
 function drawImage(img, canvas, angleInRadians) {
     picWidth = img.width;
     picHeight = img.height;
-    
+
     // TODO - should have asserted ONLOAD that picWidth and picHeight are within canvas size.
     canWidth = canvas.width;
     canHeight = canvas.height;
@@ -637,7 +637,7 @@ function drawImage(img, canvas, angleInRadians) {
     // draw image
     var context = canvas.getContext('2d');
     if (!angleInRadians) {
-    
+
         context.drawImage(img, 0, 0, canvas.width, canvas.height);
     } else {
         canvas.width = canvas.width;
@@ -645,7 +645,7 @@ function drawImage(img, canvas, angleInRadians) {
         var y = canvas.height / 2;
         var width = img.width;
         var height = img.height;
-        
+
         context.translate(x, y);
         context.rotate(angleInRadians);
         context.drawImage(img, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
@@ -820,7 +820,7 @@ function datasetLoaded(loadObj) {
 
     // loaded
     txLoaded = true;
-    
+
     //
     reshapeCanvas();
 }
@@ -882,7 +882,7 @@ function handleFileSelect(evt) {
 
 function reshapeCanvas() {
 
-    var canvas = document.getElementById(DRAW_CANVAS_NAME); 
+    var canvas = document.getElementById(DRAW_CANVAS_NAME);
     var windowHeight = $(window).height();
     var windowWidth = $(window).width();
 
@@ -1004,7 +1004,226 @@ function getDataURL() {
     }
     console.log(url);
     return url;
+}
+
+function openDataURL(target) {
+    window.open(getDataURL(), target);
+}
 
 
 
+function onOff(containerName) {
+
+    state = document.getElementById(containerName).className
+    if (state == 'on')
+        document.getElementById(containerName).className = 'off';
+    else
+        document.getElementById(containerName).className = 'on';
+}
+
+
+function updownContainer(containerName) {
+
+    state = document.getElementById(containerName).className
+    if (state == 'up')
+        document.getElementById(containerName).className = 'down';
+    else
+        document.getElementById(containerName).className = 'up';
+}
+
+
+function inoutContainer(containerName) {
+
+    state = document.getElementById(containerName).className
+    if (state == 'in')
+        document.getElementById(containerName).className = 'out';
+    else
+        document.getElementById(containerName).className = 'in';
+}
+
+function permuteData() {
+
+    // put image on canvas
+
+    // take images from canvas as 2-D array (not 1D!)
+
+    // put all images in the last two  dimensions
+
+    // get all dimension lengths.
+
+    // go over
+
+}
+
+
+function arrayFlipHorz(array, width, height) {
+// does not preserve class
+
+    newarr = new Array(array.length);
+    for (var j = 0; j < height; j++) {
+        for (var i = 0; i < width; i++) {
+            newarr[j*width+i] = array[j*width + width - i - 1];
+        }
+    }
+
+    return newarr;
+}
+
+function arrayFlipVert(array, width, height) {
+// does not preserve class
+
+    newarr = new Array(array.length);
+    for (var j = 0; j < height; j++) {
+        for (var i = 0; i < width; i++) {
+            newarr[j*width+i] = array[(height - j - 1)*width + i];
+        }
+    }
+
+    return newarr;
+}
+
+
+
+
+
+
+/** Swap axes of 4D arrays **/
+function swap01(a) {
+    t = [];
+    for (var j=0; j < a[0].length; j++) {
+        t[j] = [];
+        for (var i=0; i< a.length; i++) {
+            t[j][i] = [];
+            for (var k=0; k < a[0][0].length; k++) {
+                t[j][i][k] = [];
+                for (var l=0; l < a[0][0][0].length; l++) {
+                    t[j][i][k][l] = a[i][j][k][l];
+                }
+            }
+        }
+    }
+    return t;
+}
+function swap02(a) {
+    t = [];
+    for (var k=0; k < a[0][0].length; k++) {
+        t[k] = [];
+        for (var j=0; j < a[0].length; j++) {
+            t[k][j] = [];
+            for (var i=0; i< a.length; i++) {
+                t[k][j][i] = [];
+                for (var l=0; l < a[0][0][0].length; l++) {
+                    t[k][j][i][l] = a[i][j][k][l];
+                }
+            }
+        }
+    }
+    return t;
+}
+function swap03(a) {
+    t = [];
+    for (var l=0; l < a[0][0][0].length; l++) {
+        t[l] = [];
+        for (var j=0; j < a[0].length; j++) {
+            t[l][j] = [];
+            for (var k=0; k < a[0][0].length; k++) {
+                t[l][j][k] = [];
+                for (var i=0; i< a.length; i++) {
+                    t[l][j][k][i] = a[i][j][k][l];
+                }
+            }
+        }
+    }
+    return t;
+}
+function swap12(a) {
+    t = [];
+    for (var i=0; i< a.length; i++) {
+        t[i] = [];
+        for (var k=0; k < a[0][0].length; k++) {
+            t[i][k] = [];
+            for (var j=0; j < a[0].length; j++) {
+                t[i][k][j] = [];
+                for (var l=0; l < a[0][0][0].length; l++) {
+                    t[i][k][j][l] = a[i][j][k][l];
+                }
+            }
+        }
+    }
+    return t;
+}
+function swap13(a) {
+    t = [];
+    for (var i=0; i< a.length; i++) {
+        t[i] = [];
+        for (var l=0; l < a[0][0][0].length; l++) {
+            t[i][j] = [];
+            for (var k=0; k < a[0][0].length; k++) {
+                t[i][l][k] = [];
+                for (var j=0; j < a[0].length; j++) {
+                    t[i][l][k][j] = a[i][j][k][l];
+                }
+            }
+        }
+    }
+    return t;
+}
+function swap23(a) {
+    t = [];
+    for (var i=0; i< a.length; i++) {
+        t[i] = [];
+        for (var j=0; j < a[0].length; j++) {
+            t[i][j] = [];
+            for (var l=0; l < a[0][0][0].length; l++) {
+                t[i][j][l] = [];
+                for (var k=0; k < a[0][0].length; k++) {
+                    t[i][j][l][k] = a[i][j][k][l];
+                }
+            }
+        }
+    }
+    return t;
+}
+
+
+function addRotateion(del) {
+    rotationAngle=rotationAngle+del;
+    drawImage(pictureBox.img, canvas, rotationAngle);
+}
+
+function swapClick(form) {
+    a1 = parseInt(form.swap1.value, 10);
+    a2 = parseInt(form.swap2.value, 10);
+    swapAxes(a1, a2);
+}
+
+/*
+ *    inputType
+ *    returns the type of file @fileName is, based on the extension
+ *    options so far are 'nifti' and 'image'
+ *
+ *
+ */
+function inputType(fileName) {
+    var idx = fileName.lastIndexOf('.');
+
+
+    if (idx == 0) {
+        return 0;
+    }
+
+    var ext = fileName.substr(idx + 1);
+    var file = fileName.substr(0, idx);
+
+    // if it's .gz', recurse. This may fail for jpg.gz, etc...
+    if (ext.localeCompare('gz') == 0) {
+        assert(inputType(file).localeCompare('nifti') == 0, 'wrong inputType (' + inputType(file) + ')');
+        return 'nifti';
+    } else if (ext.localeCompare('jpg') == 0 || ext.localeCompare('png') == 0) {
+        return 'image';
+    } else if (ext.localeCompare('nii') == 0) {
+        return 'nifti';
+    } else {
+        return undefined;
+    }
 }
