@@ -1,31 +1,42 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<link href="style/style.css" rel="stylesheet" type="text/css">
-<link href="style/iframe.css" rel="stylesheet" type="text/css">
-<link href="style/nav.css" rel="stylesheet" type="text/css">
+
+<!-- css -->
+<link href="res/css/style.css" rel="stylesheet" type="text/css">
+<link href="res/css/iframe.css" rel="stylesheet" type="text/css">
+<link href="res/css/nav.css" rel="stylesheet" type="text/css">
 
 <!-- scripts -->
-<script type="text/javascript" src='ext-js/xio.js'></script>
-<script src="ext-js/sprintf-0.7-beta1.js" type="text/javascript"></script>
-<script src="ext-js/sscanf.js" type="text/javascript"></script>
-<script src="ext-js/jquery-1.9.1.min.js" type="text/javascript"></script>
-<script src="js/niitools.js"  type="text/javascript"></script>
-<script src="js/imDisplay.js"  type="text/javascript"></script>
-<script src="js/nav.js"  type="text/javascript"></script>
-<script src="js/tools.js"  type="text/javascript"></script>
-<script src="js/load.js"  type="text/javascript"></script>
+<script src='libs/xio.js' type="text/javascript"></script>
+<script src="libs/sprintf-0.7-beta1.js" type="text/javascript"></script>
+<script src="libs/sscanf.js" type="text/javascript"></script>
+<script src="libs/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="res/js/niitools.js"  type="text/javascript"></script>
+<script src="res/js/imDisplay.js"  type="text/javascript"></script>
+<script src="res/js/nav.js"  type="text/javascript"></script>
+<script src="res/js/tools.js"  type="text/javascript"></script>
+<script src="res/js/load.js"  type="text/javascript"></script>
+
+
 <title>tipiX - large dataset visualization</title>
 
 <!-- LICENSE Info:
-mipiX is licensed under the MIT License:
+tipiX is licensed under the MIT License:
 http://www.opensource.org/licenses/mit-license.php
 See LICENSE file for more information
 -->
 
 <meta charset="utf-8">
 </head>
+
+
+
+<!-- Body -->
+
 <body onload="reshapeCanvas();" onResize="reshapeCanvas();">
+
 <div id="nav-container">
   <h1>tipiX - large dataset visualization</h1>
   <a id="examples-tab-title" onClick="nav('examples')" href="#"> Examples </a> <a id="userSets-tab-title" onClick="nav('userSets')" href="#"> Load </a> <a id="about-tab-title"  onClick="nav('about')" href="#"> About </a> </div>
@@ -71,9 +82,9 @@ See LICENSE file for more information
         337 shots <br />
         x axis: timelapse </div>
     </div>
-    
+
     <!-- Loading Dataset -->
-    
+
     <div id="userSets-tab" class="tab">
       <div class="close_button"><a href="#" onClick="nav('userSets')">x</a></div>
       <h2>Load dataset</h2>
@@ -119,7 +130,7 @@ See LICENSE file for more information
 </div>
 
 
-<canvas id="mainDisplayTest" width="200" height="200" style="border-width:1px; visibility:hidden;"> 
+<canvas id="mainDisplayTest" width="200" height="200" style="border-width:1px; visibility:hidden;">
 </canvas>
 
 <div id="main-container">
@@ -129,18 +140,18 @@ See LICENSE file for more information
   <div id="xlabel"><span id="xlabelspan">xlabel</span></div>
   <div id="ylabel"><span id="ylabelspan">ylabel</span></div>
 </div>
-  
+
   <div id="iframe-controls-container">
     <span id="iframe-info"></span>
-    
+
     <a href="#" onclick="openDataURL('_blank')">
-   
+
     <img src="../images/logoText_25.png" style="right:0px; position:fixed; opacity:0.5; padding:10px; bottom:0px;" id="iFrameLogoText">
    </a>
   </div>
 
 
-<!-- Info Container. Current_data, Load_data, TODOs, itneraction interface --> 
+<!-- Info Container. Current_data, Load_data, TODOs, itneraction interface -->
 
 <a href="#" id="info-clip" class="off" onMouseDown="onOff('info-clip'); updownContainer('info-container');"> i </a>
 <div id="info-container" class="down">
@@ -155,21 +166,21 @@ See LICENSE file for more information
     <span class="title">Lockx:</span><span id="lockx"> </span> <br />
     <span class="title">Locky:</span><span id="locky"> </span> <br />
   </div>
-  
+
   <!-- play button -->
   <form>
 	Controls:<br />
     <input id="play" type="button" onclick="changePlayState(); continuousPlay(0);" value="video play"><br />
 	<input id="rotate" type="button" onclick="addRotateion(Math.PI/2);" value="    rotate" style="background-image: url(images/arrow.png); background-size:contain; background-repeat:no-repeat;">
-	
+
 	<br /> Swap two dimensions in 4D data (this can take a minute) <br />
 	<input id="swap1" type="input" size="2" value="0">
 	<input id="swap2" type="input" size="2" value="2">
-	
+
 	<input id="swap" type="button" onclick="swapClick(this.form);" value="Swap">
   </form>
- 
-  
+
+
   <hr>
   <div id="loading-canvas-container">
     <h3>Loading </h3>
@@ -190,12 +201,12 @@ See LICENSE file for more information
   <div id="time" style="visibility:hidden"></div>
   <output id="list"></output>
 </div>
-<script src="js/core.js"></script> 
+<script src="js/core.js"></script>
 <script type="text/javascript">
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', 'UA-477540-7']);
 	_gaq.push(['_trackPageview']);
-	
+
 	(function() {
 	  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 	  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
