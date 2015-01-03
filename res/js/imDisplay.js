@@ -1094,7 +1094,7 @@ function swap23(a) {
 
 
 function addRotateion(del) {
-    rotationAngle=rotationAngle+del;
+    rotationAngle = rotationAngle+del;
     drawImage(pictureBox.img, canvas, rotationAngle);
 }
 
