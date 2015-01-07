@@ -11,31 +11,27 @@
  */
 
 
+//inputType == web
 function loadUserSetAddressBar() {
-    loadObj.type = "web";
+    var loabObj = new LoadObj()
+    loadObj.setProperty('inputType', "web");
+
     var dims = getParameterByName('nDims');
-    if (dims == '' || parseInt(dims) == 1) {
-        loadObj.nDims = 1;
+    if (dims == '') {
+        loadObj.setProperty('nDims', 1);
     } else {
-        assert(parseInt(dims) == 2, 'need dims to be 1 or 2');
-        loadObj.nDims = 2;
+        loadObj.setProperty('nDims', parseInt(dims));
     }
     
-    var xBins = getParameterByName('xBins');
-    loadObj.xBins = xBins;
-    assert(!isNaN(parseInt(xBins)), 'need xBins to be integer');
+    loadObj.setProperty('xBins', getParameterByName('xBins'));
     
-    if (loadObj.nDims == 2) {
-        var yBins = getParameterByName('yBins');
-        assert(!isNaN(parseInt(yBins)), 'need yBins to be integer');
-        loadObj.yBins = yBins;
+    nDims = loadObj.getProperty('nDims');
+    if (nDims == 2) {
+        loadObj.setProperty('yBins', getParameterByName('yBins'));
     }
     
-    var path = getParameterByName('path');
-    assert(path != '', 'Need a full path');
-    loadObj.fileName = path;
-    
-    loadObj.crossOrigin = getParameterByName('crossOrigin');
+    loadObj.setProperty('fileName', getParameterByName('path')); 
+    loadObj.setProperty('crossOrigin', getParameterByName('crossOrigin'));
     
 	var xlabel = getParameterByName('xlabel');
 	if (xlabel != '') {
@@ -48,47 +44,55 @@ function loadUserSetAddressBar() {
 		document.getElementById('ylabel').style.display = 'inline';
 		document.getElementById('ylabelspan').innerHTML = ylabel;
 		}
+
+    loadObj.verify();
 	
     return loadObj;
     
 }
 
+//inputType == web
 function loadUserSetWeb() {
+    var loadObj = new LoadObj();
+    loadObj.setProperty('inputType', 'web');
+
     var oForm = document.getElementById('userSet');
     
     var radios = document.getElementsByName('nDims');
     for (var i = 0, length = radios.length; i < length; i++) {
         if (radios[i].checked) {
-            loadObj.nDims = radios[i].value;
+            loadObj.setProperty('nDims', radios[i].value);
         }
     }
     
-    loadObj.xBins = parseInt(oForm.elements['xBins'].value);
-    if (loadObj.nDims == 2) {
-        loadObj.yBins = parseInt(oForm.elements['yBins'].value);    
+    loadObj.setProperty('xBins', parseInt(oForm.elements['xBins'].value));
+    if (loadObj.getProperty('nDims') == 2) {
+        loadObj.setProperty('yBins', parseInt(oForm.elements['yBins'].value));    
     }
-    loadObj.fileName = oForm.elements['filename'].value;
-    loadObj.type = "web";
+    loadObj.setProperty('fileName', oForm.elements['filename'].value);
     
-    loadObj.crossOrigin = false;
+    loadObj.setProperty('crossOrigin', false);
+
+    loadObj.verify();
     
     return loadObj;
 }
 
-
 function loadUserSetLocal(evt) {
-    
+
+    var loadObj = new LoadObj();
+
     var files = evt.target.files; // FileList object
     if (!files)
-        files = evt.dataTransfer.files; // FileList object.
-    loadObj.files = files;    
-    
-    
+        files = evt.dataTransfer.files; // FileList object -> List of files
+    //loadObj.files = files; //a file has attributes like name, size, type, etc.
+    loadObj.setProperty("files", files); 
+
     // detect which type of images there are - 1D or 2D
     var f = files[0];
-    var name = f.name; escape(f.name)
+    var name = f.name; escape(f.name) //f.name = "MassGen_2_2.jpg"
     var innr = false;
-    var chrIndex = 0;
+    //var chrIndex = 0;
     var template = '';
     var dims = 0;
     for (var j = 0; j < name.length; j++) {
@@ -108,12 +112,13 @@ function loadUserSetLocal(evt) {
     
     // warn if don't find 1 or 2 directions
     msg = 'did not find 1 or 2 direction naming';
-    assert(dims == 1 || dims == 2, msg);
-    loadObj.nDims = dims;
+    assert(dims === 1 || dims === 2, msg);
+    loadObj.setProperty("nDims", dims);
     
     
     // get the min and max numbers, and populate loadObj.files
-    if (loadObj.nDims == 1) {
+    var dimSizes = [];
+    if (loadObj.getProperty("nDims") === 1) {
         
         // get min and max nrs
         minx = Infinity;
@@ -129,13 +134,14 @@ function loadUserSetLocal(evt) {
         writeDebug(sprintf(msg, minx, maxx));
         
         // populate new files array in the right order.
-        loadObj.fileIdx = new Array(maxx-minx+1);
+        fileOrder = new Array(maxx - minx + 1);
         for (var i = 0, f; f = files[i]; i++) {
             x = sscanf(f.name, template);
-            loadObj.fileIdx[x - minx] = i;
+            fileOrder[x - minx] = i;
         }
-        
-    } else {
+        dimSizes.push([minx,maxx]);
+
+    } else if (loadObj.getProperty("nDims") ===  2) {
         
         // get min and max nrs
         var minx = Infinity;    
@@ -144,6 +150,10 @@ function loadUserSetLocal(evt) {
         var maxy = 0;    
         for (var i = 0, f; f = files[i]; i++) {
             xy = sscanf(f.name, template);
+            console.log("Iteration :" + i.toString());
+            console.log("Name: " + f.name);
+            console.log("Template: " + template);
+            console.log("xy: " + xy.toString());
             y = xy[0];
             x = xy[1];
             
@@ -156,36 +166,46 @@ function loadUserSetLocal(evt) {
         // dump some info
         msg = 'Found files ranging from [%d, %d] to [%d, %d]';
         writeDebug(sprintf(msg, miny, minx, maxy, maxx));
+        console.log(msg, miny, minx, maxy, maxx);
 
         // prepare structure
-        loadObj.fileIdx = new Array(maxy-miny+1);
+        fileOrder = new Array(maxy-miny+1);
         for (var i = 0; i < (maxy-miny+1); i++) {
-            loadObj.fileIdx[i] = new Array(maxy-miny+1);
+            fileOrder[i] = new Array(maxy-miny+1);
         }
         
         // populate files structure
         for (var i = 0, f; f = files[i]; i++) {
             x = sscanf(f.name, template);
-            loadObj.fileIdx[x[0] - miny][x[1] - minx] = i;
+            fileOrder[x[0] - miny][x[1] - minx] = i;
         }
+
+        dimSizes.push([minx, maxx]);
+        dimSizes.push([miny, maxy]);
     }
+
+    loadObj.setProperty("fileOrder", fileOrder);
+    loadObj.setProperty('dimSizes', dimSizes);
     
     
-    if (loadObj.nDims == 1) {
-        loadObj.xBins = maxx-minx+1;
+    
+    /*
+    if (loadObj.getProperty("nDims") == 1) {
+        loadObj.setProperty("xBins", maxx-minx+1);
     } else {
-        loadObj.yBins = maxy-miny+1;
-        loadObj.xBins = maxx-minx+1;
-    }
+        loadObj.setProperty("yBins", maxy-miny+1);
+        loadObj.setProperty("xBins", maxx-minx+1);  
+    } */
         
-    loadObj.type = "local";
+    loadObj.setProperty("loadType", "local");
     
-    loadObj.crossOrigin = true;
+    loadObj.setProperty("crossOrigin", true);
+
+    loadObj.verify();
     
     return loadObj;
 }
 
-/* The following should not be built into the core code. They should exist as example links. */
 function loadBoston4Day() {
     loadObj.type = "web";
     loadObj.nDims = 2;

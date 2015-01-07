@@ -46,23 +46,25 @@ function launchDisplay(choice, evt) {
     console.log('display launched');
 
     // get file type
-    if (loadObj.fileName) {
-        loadObj.inputType = inputType(loadObj.fileName);
+    var fileName = loadObj.getProperty('fileName');
+
+    var files = loadObj.getProperty('files');
+    if (fileName) {
+        loadObj.setProperty("inputType", inputType(fileName));
     } else {
-        loadObj.inputType = inputType(loadObj.files[0].name);
+        loadObj.setProperty("inputType", inputType(files[0].name));
     }
+    var iT = loadObj.getProperty("inputType");
 
     var delt = new Date().getTime() / 1000 - txStartTime;
     console.log('loading started @ ' + sprintf('%5.3f', delt) + ' seconds');
 
     // get the images according to the sources.
-    if (loadObj.inputType.localeCompare('image') == 0) {
+    if (iT.localeCompare('image') === 0) {
         loadImages(loadObj);
     } else {
         loadNiisWithPrep(loadObj);
     }
-
-
 
     // draw logo on main canvas
     var canvas = document.getElementById(DRAW_CANVAS_NAME); // main canvas
