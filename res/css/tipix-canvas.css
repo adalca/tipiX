@@ -1,0 +1,25 @@
+#tipix-main-canvas {
+  width:800px;
+  height:600px;
+  box-shadow:0px 0px 50px 0px #DDD;
+  z-index:100;
+}
+
+#tipix-main-canvas-container {
+  margin: 0 auto;
+  top:50%;
+  left:50%;
+  margin-left:-400px;
+  margin-top:-300px;
+  position:relative;
+  width:800px;
+  height:600px;
+  text-align:center;
+  float:left;
+  background-image:url('../images/logo.png');
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  background-position:center;
+  display:block;
+  z-index:100;
+}

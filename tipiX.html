@@ -37,32 +37,51 @@ See LICENSE file for more information
 
 <body onload="reshapeCanvas();" onResize="reshapeCanvas();">
 
+
+
+
+
+
+
+
 <div id="nav-container">
   <h1>tipiX - large dataset visualization</h1>
   <a id="examples-tab-title" onClick="nav('examples')" href="#"> Examples </a> <a id="userSets-tab-title" onClick="nav('userSets')" href="#"> Load </a> <a id="about-tab-title"  onClick="nav('about')" href="#"> About </a> </div>
 
 <div id="menu-container">
   <div id="tab-container">
+  
+  
     <div id="about-tab" class="tab" >
-      <div class="close_button"><a href="#" onClick="nav('about')">x</a></div>
+	
+      <div class="close_button"><a href="#" onClick="nav('about')">x</a>
+      </div>
+	  
       <h2> About tipiX </h2>
       tipiX is a tool for very quickly exploring different dimentions of image sets, for example the time-of-day vs seasons in landscape pictures from similar view points, or a medical dataset. It's also useful in visualizing simple datasets like timelapses. Try an <a href="#" onClick="nav('examples')">example</a> dataset or <a href="#" onClick="nav('userSets')">load your own</a> dataset. <br />
       Once loaded, movement with the mouse along x or y can explore different dimensions of the data. tipiX is written and maintained by <a href="http://adalca.mit.edu">Adrian Dalca</a>, and is open-sourced on <a href="https://github.com/adalca/tipiX">github</a>. <br />
       <br />
-      <div style="width:300px; display:inline-block;">
+      
+	  <div style="width:300px; display:inline-block;">
         <h2 style> Control shortcuts </h2>
-        <div id="control-text"> <a href="">Fix x (x) </a> <a href="">Fix y (y) </a> <a href="">toggle info panel (i)</a> <a href="">toggle control/about panel (c)</a> <a href="">reset state (esc)</a> </div>
+        <div id="control-text"> 
+			<a href="">Fix x (x) </a> <a href="">Fix y (y) </a> <a href="">toggle info panel (i)</a> <a href="">toggle control/about panel (c)</a> <a href="">reset state (esc)</a> 
+		</div>
       </div>
+	  
       <div style="width:300px; display:inline-block; float:right; ">
         <h2 style> Quick Load </h2>
         <div id="load-local-main"  class="loadtab" style="height:120px; width:300px; ">
           <input type="file" id="files" name="files[]" multiple />
           <div id="drop_zone_main" onMouseOver="onOff('drop_zone_main');" onMouseOut="onOff('drop_zone_main');" onClick="$('#files').click();">
-            <div id="drop_zone_main_text" > <strong>click</strong> or <strong>drag and drop</strong> <br />
-              to load images </div>
+			  <div id="drop_zone_main_text" > <strong>click</strong> or <strong>drag and drop</strong> <br />
+				to load images 
+			  </div>
           </div>
         </div>
       </div>
+	  
+	  
     </div>
     <div id="examples-tab" class="tab">
       <div class="close_button"><a href="#" onClick="nav('examples')">x</a></div>

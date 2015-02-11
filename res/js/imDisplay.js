@@ -620,7 +620,7 @@ function writeLoadingPerc(perc) {
 
 function drawLogo() {
     canvas = document.getElementById(DRAW_CANVAS_NAME);
-    drawImage(logoImage, canvas);
+    drawImage(state.tipixLogoImage, canvas);
 }
 
 function checkLoaded(loadObj) {
@@ -664,7 +664,7 @@ function checkLoaded(loadObj) {
 
     if (perc > 10) {
         // canvas should be turned on
-        canvasOn = true;
+        state.tipix.state = true;
     }
 
     writeLoadingPerc(perc);
@@ -859,36 +859,7 @@ function getParameterByName(name) {
 
 
 
-// TODO - make sure this works reasonably....
-function changePlayState() {
-    assert(loadObj.nDims == 1, 'dataset should be 1D for playing');
 
-    playState = ~playState;
-
-    // TODO - check if js has ifelse ?:
-    if (playState) {
-        document.getElementById('play').value = "stop";
-        document.getElementById('iframe-info').innerHTML = "video";
-    } else {
-        document.getElementById('play').value = "play";
-        document.getElementById('iframe-info').innerHTML = "interactive (press x to lock frame)";
-    }
-}
-
-function continuousPlay(i) {
-    var canvas = document.getElementById(DRAW_CANVAS_NAME);
-
-    if (playState) {
-
-        var pictureBox = pictureBoxes[i];
-        var nexti = (i + 1) % loadObj.xBins;
-
-        setTimeout(function() {
-            drawImage(pictureBox.img, canvas);
-            continuousPlay(nexti)
-            }, PLAY_MS_WAIT);
-    }
-}
 
 
 

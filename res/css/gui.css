@@ -1,0 +1,501 @@
+/** tipiX - TIme PIcture eXplorer
+ *
+ * Copyright (c) 2013 TIPIX <adalca@mit.edu>
+ *
+ * tipiX is licensed under the MIT License:
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ * See LICENSE file for more information
+ *
+ * Author: Adrian V. Dalca, http://www.mit.edu/~adalca/
+ */
+
+
+@charset "utf-8";
+/* CSS Document */
+
+#gui-top-container {
+	position: relative; /* necessary for positioning */
+	height: 50px;
+	width: 705px;
+
+	font-size:24px;
+	font-weight:300;
+	text-align:center;
+
+	margin: 0 auto;
+	z-index: 1000;
+	/*background-color:#777;*/
+}
+
+#gui-top-container img {
+	position: relative;
+	top:5px;
+}
+
+#gui-top-container span {
+	position: relative;
+	top:-10px;
+	left:10px;
+}
+
+#gui-quickstatus-container {
+	position: absolute; /* necessary for positioning */
+	height: 50px;
+	width: 400px;
+	-webkit-box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0px 0px15px 5px rgba(0,0,0,0.1);
+	box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
+	top: 100px;
+
+	left: -moz-calc(50% - 200px);
+	left: -webkit-calc(50% - 200px);
+	left: calc(50% - 200px);
+	margin: 0 auto;
+
+	z-index: 1000;
+	background: #333;
+	opacity:0;
+}
+
+#gui-bottom-container {
+	position: absolute; /* necessary for positioning */
+	height: 50px;
+	width: 100%;
+	/*-webkit-box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0px 0px15px 5px rgba(0,0,0,0.1);
+	box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);*/
+
+	margin: 0 auto;
+	bottom:0px;
+	z-index: 1000;
+	/*background: #333;*/
+	color: white;
+}
+
+
+
+#gui-left-container {
+	height: 700px;
+	width: 50px;
+	background-color: #333;
+	left: 0px;
+	-webkit-box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0px 0px15px 5px rgba(0,0,0,0.1);
+	box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
+
+	position: absolute;
+	top: 0;
+	bottom: 0;
+
+	margin-top: auto;
+	margin-bottom: auto;
+	z-index: 1000;
+}
+
+
+/*#gui-top-left-container {
+	height: 50px;
+	width: 150px;
+	margin-top: 10px;
+	margin-left: 10px;
+	background: url("../../res/images/logoText_50.png") no-repeat;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+	left: 0;
+	z-index: 1000;
+}
+
+#gui-bottom-left-container {
+	position: fixed;
+	height: 50px;
+	width: 150px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	background: url("../../res/images/logoText_50.png") no-repeat;
+	bottom: 0;
+	left: 0;
+	z-index: 1000;
+}*/
+
+
+
+
+#usable-area-container {
+	top: 50px;
+	left: 50px;
+	position: absolute;
+
+	width: -moz-calc(100% - 100px);
+	width: -webkit-calc(100% - 100px);
+	width: calc(100% - 100px);
+
+	height: -moz-calc(100% - 100px);
+	height: -webkit-calc(100% - 100px);
+	height: calc(100% - 100px);
+
+	min-height: -moz-calc(100% - 100px);
+	min-height: -webkit-calc(100% - 100px);
+	min-height: calc(100% - 100px);
+
+	margin: 0 auto;
+	z-index: 0;
+
+	/*background-color: #939;*/
+}
+
+#gui-xlabel-container {
+	position: absolute;
+	margin: 0 auto;
+	left: -moz-calc(50% - 100px);
+	left: -webkit-calc(50% - 100px);
+	left: calc(50% - 100px);
+	top: calc(85% + 15px);
+	top: -webkit-calc(85% + 15px);
+	top: -moz-calc(85% + 15px);
+
+	width: 200px;
+	height: 30px;
+	line-height: 30px;
+
+	font-size: 16px;
+	font-family: "Roboto", Helvetica;
+	border-radius: 10px;
+	text-align:center;
+	z-index:500;
+
+	background-image: url(../images/xarrows.png);
+	background-color:#EEE;
+	visibility:hidden;
+}
+
+#gui-xlabel {
+	background-color:#EEE;
+	padding-left:10px;
+	padding-right:10px;
+}
+
+#gui-ylabel-container {
+	position: absolute;
+	transform: rotate(-90deg);
+	top: -moz-calc(50% - 15px);
+	top: -webkit-calc(50% - 15px);
+	top: calc(50% - 15px);
+	left: -moz-calc(15% - 200px);
+	left: -webkit-calc(15% - 200px);
+	left: calc(15% - 200px);
+	width:200px;
+
+	height:30px;
+	line-height:30px;
+
+	font-size:16px;
+	font-family:"Roboto",Helvetica;
+	border-radius: 10px;
+	text-align:center;
+	z-index:500;
+
+	background-image: url(../images/xarrows.png);
+	background-color: #EEE;
+	visibility:hidden;
+}
+
+#gui-ylabel {
+	background-color:#EEE;
+	padding-left:10px;
+	padding-right:10px;
+}
+
+
+
+/****************************************************************
+ * Buttons and slideouts
+ ****************************************************************/
+.gui-button {
+	position:relative;
+	width: 50px;
+	height: 50px;
+
+	margin: 0px;
+	z-index: 990;
+	font-size:8px;
+	text-align:center;
+
+	background: #333;
+	cursor:pointer;
+}
+
+.gui-button p {
+	position:absolute;
+	top: 0px;
+	left: 50px;
+	color: white;
+	font-size: 16px;
+	font-weight:300;
+	overflow:visible;
+	background-color: #555;
+	padding: 5px;
+	/* hide originally */
+	visibility: hidden;
+  opacity: 0;
+	white-space: nowrap;
+	z-index:950;
+}
+
+.gui-button:hover p {
+	visibility: visible;
+	opacity: 1;
+}
+
+
+#gui-bottom-container .gui-button {
+	position:relative;
+	background: none;
+	float:right;
+	text-align:right;
+}
+
+#gui-bottom-container .gui-button p {
+	/*position: absolute;*/
+	position:relative;
+	font-size: 16px;
+	white-space: nowrap;
+	top: -100px;
+	left: 0px;
+	float: right;
+	color: #FFF;
+	background-color: #555;
+	opacity: 0;
+	visibility: hidden;
+}
+
+#gui-bottom-container .gui-button:hover p {
+	visibility: visible;
+	opacity: 1;
+}
+
+
+
+#gui-top-container .gui-button {
+	display: inline-block;
+	width: 150px;
+	color: #FFF;
+}
+
+#gui-top-container .gui-button img {
+	width: 132px;
+	height: 32px;
+	float:left;
+	padding: 9px;
+}
+
+.gui-button img {
+	width: 32px;
+	height: 32px;
+	padding: 9px;
+}
+
+.gui-button img:hover {
+	opacity: 0.5;
+}
+
+.gui-button .title {
+	text-align:center;
+	display:inline;
+	padding-top: 9px;
+	font-size:24px;
+	vertical-align: middle;
+	position:absolute;
+}
+
+.gui-button:hover {
+	cursor:grab;
+}
+
+
+.gui-button-slideout {
+	width: 200px;
+	position: absolute;
+	z-index: -10;
+	left: -200px;
+	top: 0px;
+	height: 44px;
+	padding: 3px;
+	background-color: #333;
+	color: white;
+
+	/* start hidden, but can't use visibility if want transition */
+	transition: 1s;
+	opacity: 0;
+}
+
+/* TODO: move this to automatic javascript */
+#gui-swap:active #gui-swap-slideout {
+	transition: 0.5s;
+	opacity: 1;
+	left: 50px;
+}
+
+
+
+
+/****************************************************************
+* Right (information) panel
+****************************************************************/
+
+#gui-right-container {
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	width: 300px;
+	height: 100%;
+	vertical-align: middle;
+
+	z-index: 1000;
+	visibility: hidden;
+
+	-webkit-transition:right 0.3s ease-in-out;
+	-moz-transition:right 0.3s ease-in-out;
+	-o-transition:right 0.3s ease-in-out;
+	transition:right 0.3s ease-in-out;
+}
+
+#gui-right-wrapper {
+	position: absolute;
+	width:300px;
+	background-color:rgba(50,50,50,0.3);
+ 	top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+	-webkit-box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0px 0px15px 5px rgba(0,0,0,0.1);
+	box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
+}
+
+#gui-info-container {
+	width:280px;
+	height:200px;
+	padding:10px;
+	/*background-color:#A00;*/
+
+	/*display:none;*/
+	z-index:910;
+}
+
+#gui-info-container.down {
+	right:-250px;
+	color:#000;
+}
+
+#gui-info-container.up {
+	right:0px;
+}
+
+#gui-info-text {
+	height:200px;
+	padding:5px;
+}
+
+#gui-info-text a {
+	color:#000;
+	display:block;
+}
+
+#gui-info-text span.title {
+	float: left;
+	width:120px;
+}
+
+#gui-info-text span {
+	float: left;
+	width:70px;
+}
+
+
+
+#gui-loading-container {
+	width:280px;
+	height:300px;
+	/*background-color:#00A;*/
+	/*display:none;*/
+	padding:10px;
+}
+
+#gui-preview-container {
+	width:280px;
+	padding:10px;
+	height:300px;
+	/*background-color:#0AA;*/
+	/*display:none;*/
+}
+
+#loadingCanvas {
+	background-color:#063;
+	image-rendering: -moz-crisp-edges;         /* Firefox */
+	image-rendering:   -o-crisp-edges;         /* Opera */
+	image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+	image-rendering: crisp-edges;
+	-ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
+}
+
+.loadBox {
+	height:10px;
+/*	float:left;*/
+}
+
+#gui-loading-matrix {
+
+}
+
+/* Preview Matrix */
+
+/*#preview-container {
+	background-color:#000;
+	margin-left:auto;
+	margin-right:auto;
+	height:450px;
+	width:200px;
+	position:relative;
+	top:-250px;
+	right:-510px;
+	z-index:-100;
+	opacity:0.5;
+	filter:alpha(opacity=50);
+	color:#FFF;
+	-webkit-transition:right 0.3s ease-in-out;
+	-moz-transition:right 0.3s ease-in-out;
+	-o-transition:right 0.3s ease-in-out;
+	transition:right 0.3s ease-in-out;
+	box-shadow:0px 0px 50px 0px #DDD;
+}
+
+#preview-container.in{
+	right:-510px;
+}
+
+#preview-container.out {
+	right:-700px;
+}*/
+
+#previewMatrix {
+	margin:auto;
+	width:200px;
+	height:200px;
+	margin:5px;
+}
+
+#previewMatrixLink {
+	width:190px;
+	height:20px;
+	margin:5px;
+}
+
+.previewBox {
+	height:10px;
+/*	float:left;*/
+}

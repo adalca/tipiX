@@ -27,7 +27,7 @@ function changePlayState() {
 }
 
 function continuousPlay(i) {
-    var canvas = document.getElementById(DRAW_CANVAS_NAME);
+    var canvas = document.getElementById(consts.html.tipix.canvas);
 
     if (playState) {
 
@@ -37,6 +37,6 @@ function continuousPlay(i) {
         setTimeout(function() {
             drawImage(pictureBox.img, canvas);
             continuousPlay(nexti)
-            }, PLAY_MS_WAIT);
+          }, state.video.fps);
     }
 }

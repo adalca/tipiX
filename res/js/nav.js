@@ -21,7 +21,7 @@ $(document).ready(function(){
   // hide preview matrix link
   document.getElementById('previewMatrixLink').style.display = 'none';
 
-  if (currentTabState) {
+  if (tipix.consts.html.gui.centerPanel.display) {
     // show selected tab
     tabName = currentTab + '-tab';
     document.getElementById(tabName).style.display = 'inline-block';
@@ -79,9 +79,9 @@ function nav(newTabName) {
 
     // updated currentTab
     currentTab = newTabName;
-    currentTabState = true;
+    state.gui.centerPanel.display = true;
 
-  } else if (currentTabState == true) {
+  } else if (state.gui.centerPanel.display == true) {
     // hide current tab
     var tabName = currentTab + '-tab';
     document.getElementById(tabName).style.display = 'none';
@@ -94,9 +94,9 @@ function nav(newTabName) {
     document.getElementById(tabTitle).style.paddingBottom = '2px';
     document.getElementById(tabTitle).style.borderBottom = '3px solid #008dfd';
 
-    currentTabState = false;
+    state.gui.centerPanel.display = false;
 
-  } else if (currentTabState == false) {
+  } else if (state.gui.centerPanel.display == false) {
     // show selected tab
     tabName = currentTab + '-tab';
     document.getElementById('menu-container').style.display = 'inline';
@@ -109,7 +109,7 @@ function nav(newTabName) {
     document.getElementById(tabTitle).style.paddingBottom = '2px';
     document.getElementById(tabTitle).style.borderBottom = '3px solid #0370ea';
 
-    currentTabState = true;
+    state.gui.centerPanel.display = true;
 
   }
 }

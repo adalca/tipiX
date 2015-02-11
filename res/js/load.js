@@ -211,7 +211,7 @@ function loadBoston4Day() {
     loadObj.nDims = 2;
     loadObj.xBins = 5;
     loadObj.yBins = 24;
-    loadObj.fileName = CORE_SET_PATH + '/imageSets/boston4day/average_img_%d_%d.jpg'; 
+    loadObj.fileName = consts.path.core + '/imageSets/boston4day/average_img_%d_%d.jpg'; 
     loadObj.crossOrigin = true;
     return loadObj;
 }
@@ -221,7 +221,7 @@ function lupus() {
     loadObj.nDims = 2;
     loadObj.xBins = 5;
     loadObj.yBins = 56;
-    loadObj.fileName = CORE_SET_PATH + '/imageSets/lupus/lupus_%d_%d.jpg'; 
+    loadObj.fileName = consts.path.core + '/imageSets/lupus/lupus_%d_%d.jpg'; 
     loadObj.crossOrigin = true;
     return loadObj;
 }
@@ -230,7 +230,7 @@ function loadEmerald() {
     loadObj.type = "web";
     loadObj.nDims = 1;
     loadObj.xBins = 337;
-    loadObj.fileName = CORE_SET_PATH + '/imageSets/emerald/img (%d).jpg';
+    loadObj.fileName = consts.path.core + '/imageSets/emerald/img (%d).jpg';
     loadObj.crossOrigin = true;
     return loadObj;
 }

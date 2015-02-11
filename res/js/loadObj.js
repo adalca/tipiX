@@ -5,7 +5,7 @@ AGENDA
 1. recoding
 2. tipiX GUI
 3. gridding an extra dimension
-	cDragon (Microsoft) - onload/use image compression for the images we don't see/etc. 
+	cDragon (Microsoft) - onload/use image compression for the images we don't see/etc.
 	img_1_5_7.png
 4. interaction with slice:drop
 5. interface with many tipiX for other projects (embedding)
@@ -45,7 +45,7 @@ var LoadObj = function() {
 	this.getImgFileNamesString = function(){
 		var imgs = ""
 		var lastIndex = this.imgFileNames.length-1
-		for (var i=0; i<lastIndex; i++) {
+		for (var i=0; i<lastIndex; i++) {asd
 			imgs = imgs.concat(this.imgFileNames[i] + ", ");
 		}
 		imgs = imgs.concat(this.imgFileNames[lastIndex])
@@ -71,6 +71,4 @@ var LoadObj = function() {
 
 		assert(!(this.loadType === 'web' && this.fileName === ''), 'Need a full path');
 	}
-
-	
 }

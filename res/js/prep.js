@@ -13,10 +13,6 @@
 /* prepare tipiX on load */
 $(window).load(function () {
 
-  // fill in logo.
-  logoImage = new Image();
-  logoImage.onload = function () { drawLogo(); };
-  logoImage.src = CORE_SET_PATH_LOGO;
 
   if (location.search.indexOf('?') >= 0) {
 
@@ -25,14 +21,14 @@ $(window).load(function () {
     // TODO - force a minimum iframe size!
     // TODO - error checking.....
     if (iframeRes != '') {
-      iFrameMode = true;
+      state.workspace.embedded  = true;
       var xLoc = iframeRes.indexOf('x');
-      MIN_CANVAS_WIDTH = iframeRes.substring(0, xLoc);
-      MAX_CANVAS_WIDTH = MIN_CANVAS_WIDTH;
-      MAX_EMPTY_CANVAS_WIDTH = MIN_CANVAS_WIDTH;
-      MIN_CANVAS_HEIGHT = iframeRes.substring(xLoc + 1);
-      MAX_CANVAS_HEIGHT = MIN_CANVAS_HEIGHT;
-      MAX_EMPTY_CANVAS_HEIGHT = MIN_CANVAS_HEIGHT;
+      state.tipix.canvas.minWidth = iframeRes.substring(0, xLoc);
+      state.tipix.canvas.maxWidth = state.tipix.canvas.minWidth;
+      MAX_EMPTY_CANVAS_WIDTH = state.tipix.canvas.minWidth;
+      state.tipix.canvas.minHeight = iframeRes.substring(xLoc + 1);
+      state.tipix.canvas.maxHeight = state.tipix.canvas.minHeight;
+      MAX_EMPTY_CANVAS_HEIGHT = state.tipix.canvas.minHeight;
       document.getElementById('iframe-controls-container').style.visibility = 'visible';
       document.getElementById('nav-container').style.visibility = 'hidden';
     }
@@ -57,8 +53,8 @@ $(window).load(function () {
     var playRes = getParameterByName('play');
     if (playRes != '') {
       if (playRes != 'true') {
-        PLAY_MS_WAIT = parseInt(playRes);
-        assert(!isNaN(PLAY_MS_WAIT));
+        state.video.fps = parseInt(playRes);
+        assert(!isNaN(state.video.fps));
       }
       changePlayState();
       continuousPlay(0);
@@ -67,7 +63,7 @@ $(window).load(function () {
     // iframe controls (quiet mode)
     var quiet = getParameterByName('quiet');
     if (quiet != '') {
-      document.getElementById('iFrameLogoText').src = CORE_SET_PATH_IFRAME_LOGO;
+      document.getElementById('iFrameLogoText').src = consts.path.logo10;
       document.getElementById('iframe-controls-container').style.height = "10px";
       document.getElementById('info-clip').style.visibility = "hidden";
       document.getElementById('info-container').style.visibility = "hidden";

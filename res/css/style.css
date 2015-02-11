@@ -1,5 +1,5 @@
 /** tipiX - TIme PIcture eXplorer
- * 
+ *
  * Copyright (c) 2013 TIPIX <adalca@mit.edu>
  *
  * tipiX is licensed under the MIT License:
@@ -19,9 +19,14 @@
 
 
 body {
-	font: 14px "Roboto",Helvetica,Helvetica Neue,Arial;	
+	font: 14px "Roboto",Helvetica,Helvetica Neue,Arial;
 	overflow:hidden;
 	background-image: url(../images/bg_white2.jpg);
+
+	margin:0px;
+	padding:0px;
+	height:100%;
+	min-height:100%;
 }
 
 h1 {
@@ -61,7 +66,7 @@ a:hover {
 	color:#F90;
 }
 
-#main-container {
+/*#main-container {
 	margin: 0 auto;
 	top:50%;
 	left:50%;
@@ -73,9 +78,9 @@ a:hover {
 	background-color:#FFF;
 	box-shadow:0px 0px 250px 100px white;
 	z-index:0;
-}
+}*/
 
-#side-container {
+/*#side-container {
 	left:0px;
 	width:200px;
 	height:900px;
@@ -87,43 +92,22 @@ a:hover {
 	width:200px;
 	height:900px;
 	float:right;
-}
-
-#display-container {
-	margin: 0 auto;
-	top:50%;
-	left:50%;
-	margin-left:-600px;
-	margin-top:-450px;
-	position:relative;
-	width:1200px;
-	height:900px;
-	text-align:center;
-	float:left;
-	background-image:url('../images/logo.png');
-	background-repeat:no-repeat;
-	background-attachment:fixed;
-	background-position:center;
-	display:block;
-}
-
-#mainDisplay {
-	width:1200px;
-	height:900px;
-	box-shadow:0px 0px 50px 0px #DDD;
-	z-index:100;
-}
+}*/
 
 
-#left-container {
+
+
+
+
+/*#left-container {
 	width:200px;
 	text-align:center;
 	height:600px;
-}
+}*/
 
 
 
-#imgnr {
+/*#imgnr {
 	margin:auto;
 	width:190px;
 	height:20px;
@@ -141,52 +125,4 @@ a:hover {
 	width:190px;
 	height:50px;
 	margin:5px;
-}
-
-
-/* Loading Matrix */
-#loadMatrix {
-	width:200px;
-	height:200px;
-	margin:5px;
-	
-
-}
-
-.loadBox {
-	height:10px;
-/*	float:left;*/
-}
-
-
-
-/* Preview Matrix */
-#previewMatrix {
-	margin:auto;
-	width:200px;
-	height:200px;
-	margin:5px;
-}
-
-#previewMatrixLink {
-	margin:auto;
-	width:190px;
-	height:20px;
-	margin:5px;
-}
-
-.previewBox {
-	height:10px;
-/*	float:left;*/
-}
-
-
-
-#loadingCanvas {
-	background-color:#063;	
-	image-rendering: -moz-crisp-edges;         /* Firefox */
-	image-rendering:   -o-crisp-edges;         /* Opera */
-	image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
-	image-rendering: crisp-edges;
-	-ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
-}
+}*/

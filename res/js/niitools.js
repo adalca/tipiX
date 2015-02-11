@@ -27,13 +27,13 @@ function niiFile2pictureBoxs(loadObj, filenames, idx, TMP_DISPLAY) {
     writeLoadingTime();
 
     if (curPictureBox == null) {
-      var canvas = document.getElementById(DRAW_CANVAS_NAME);
+      var canvas = document.getElementById(consts.html.tipix.canvas);
       drawImage(pictureBoxes[0][thisidx].img, canvas);
       curPictureBox = pictureBoxes[0][thisidx];
     }
 
     // load the next nii on this core.
-    var nextIdx = thisidx + txLoadCores;
+    var nextIdx = thisidx + state.cores;
     if (nextIdx < loadObj.xBins)  {
 
       worker.postMessage({
